@@ -1,0 +1,4 @@
+tests
+testOkay
+
+	^self
