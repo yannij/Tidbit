@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "TBModel",
+	"category" : "Tidbit-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"description",
+		"done"
+	],
+	"name" : "TBToDoItem",
+	"type" : "normal"
+}

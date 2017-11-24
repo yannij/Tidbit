@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "",
+	"super" : "TBModel",
+	"category" : "Tidbit-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"userId",
+		"firstName",
+		"lastName"
+	],
+	"name" : "TBUser",
+	"type" : "normal"
+}
