@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "MDLAbstractHeaderSection",
+	"category" : "Tidbit-MaterialDesignLite",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TBHeaderSection",
+	"type" : "normal"
+}

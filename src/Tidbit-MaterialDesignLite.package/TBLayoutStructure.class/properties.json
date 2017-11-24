@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "",
+	"super" : "WAComponent",
+	"category" : "Tidbit-MaterialDesignLite",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"appBar",
+		"contentArea",
+		"sideNav",
+		"rightNav",
+		"bottomBar"
+	],
+	"name" : "TBLayoutStructure",
+	"type" : "normal"
+}

@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "MDLApplication",
+	"category" : "Tidbit-MaterialDesignLite",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"view"
+	],
+	"name" : "TBToDoApplication",
+	"type" : "normal"
+}

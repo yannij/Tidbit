@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "MDLWidget",
+	"category" : "Tidbit-MaterialDesignLite",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TBToolNav",
+	"type" : "normal"
+}
