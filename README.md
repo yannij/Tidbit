@@ -1,2 +1,2 @@
 # Tidbit
-Web framework using Teapot, Mustache, and LMDB
+Web framework using Seaside, MDL, Magritte and LMDB
