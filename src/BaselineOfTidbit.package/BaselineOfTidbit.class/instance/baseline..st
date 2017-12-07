@@ -10,7 +10,7 @@ baseline: spec
 
 		spec
 			baseline: 'MaterialDesignLite'
-			with: [ spec repository: 'github://DuneSt/RMaterialDesignLite:v1.1.0' ].
+			with: [ spec repository: 'github://DuneSt/MaterialDesignLite:v1.1.0' ].
 
 		spec
          project: 'MagritteSeaside'
