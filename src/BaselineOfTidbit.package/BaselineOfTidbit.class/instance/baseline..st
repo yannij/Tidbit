@@ -4,13 +4,13 @@ baseline: spec
 
 	spec for: #common do: [
 		spec 
-			package: 'Tidbit-MaterialDesignLite';
+			package: 'Tidbit-MaterialDesignLite' with: [ spec requires: #('MaterialDesignLite') ];
 			package: 'Tidbit-Core' with: [ spec requires: #('Tidbit-MaterialDesignLite' 'MagritteSeaside') ];
 			package: 'Tidbit-Core-Tests' with: [ spec requires: #('Tidbit-Core') ].
 
 		spec
 			baseline: 'MaterialDesignLite'
-			with: [ spec repository: 'github://DuneSt/MaterialDesignLite:v1.1.0' ].
+			with: [ spec repository: 'github://DuneSt/MaterialDesignLite:v1.1.0/src' ].
 
 		spec
          project: 'MagritteSeaside'
