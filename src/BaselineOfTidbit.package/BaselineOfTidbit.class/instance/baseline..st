@@ -17,7 +17,7 @@ baseline: spec
          with: [ 
             spec
                className: 'ConfigurationOfMagritteSeaside';
-               version: 'stable';
+               version: 'release3.5';
                repository:
                   'http://smalltalkhub.com/mc/Magritte/Magritte3/main' ].
 
