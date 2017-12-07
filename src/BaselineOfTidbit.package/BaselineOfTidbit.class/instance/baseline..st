@@ -2,11 +2,16 @@ baselines
 baseline: spec
 	<baseline>
 
-	spec for: #'common' do: [
+	spec for: #common do: [
 		spec 
-			package: #'Tidbit-Core';
-			package: #'Tidbit-Core-Tests'.
-		
+			package: 'Tidbit-MaterialDesignLite';
+			package: 'Tidbit-Core' with: [ spec requires: #('Tidbit-MaterialDesignLite') ];
+			package: 'Tidbit-Core-Tests' with: [ spec requires: #('Tidbit-Core') ].
+
+		"spec
+			baseline: 'MaterialDesignLite'
+			with: [ spec repository: 'github://DuneSt/RMaterialDesignLite:v1.1.0' ]."
+
 		spec 
 			group: 'default' with: #('core' 'tests');
 			group: 'core' with: #('Tidbit-Core');
