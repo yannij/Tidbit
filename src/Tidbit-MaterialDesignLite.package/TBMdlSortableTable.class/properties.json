@@ -1,0 +1,14 @@
+{
+	"commentStamp" : "",
+	"super" : "MDLSortableTable",
+	"category" : "Tidbit-MaterialDesignLite",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"parent",
+		"attributeDescriptions"
+	],
+	"name" : "TBMdlSortableTable",
+	"type" : "normal"
+}

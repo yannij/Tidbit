@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "TBModel",
+	"category" : "Tidbit-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TBRootObject",
+	"type" : "normal"
+}

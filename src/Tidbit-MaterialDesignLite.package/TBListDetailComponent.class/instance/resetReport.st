@@ -1,0 +1,4 @@
+actions
+resetReport
+
+	report := nil

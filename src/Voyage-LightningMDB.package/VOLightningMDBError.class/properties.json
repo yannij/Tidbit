@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "YanniChiu 12/21/2017 16:29",
+	"super" : "Object",
+	"category" : "Voyage-LightningMDB",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "VOLightningMDBError",
+	"type" : "normal"
+}

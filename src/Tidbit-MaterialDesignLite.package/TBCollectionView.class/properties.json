@@ -1,0 +1,17 @@
+{
+	"commentStamp" : "",
+	"super" : "MAReport",
+	"category" : "Tidbit-MaterialDesignLite",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"parent",
+		"editBlock",
+		"removeBlock",
+		"flushTop",
+		"showAddButton"
+	],
+	"name" : "TBCollectionView",
+	"type" : "normal"
+}

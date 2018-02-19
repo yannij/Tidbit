@@ -1,0 +1,19 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Voyage-LightningMDB",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"databaseReference",
+		"database",
+		"descriptionBuilder",
+		"collections",
+		"cacheByCollection",
+		"versionGenerator",
+		"ongoingTransaction"
+	],
+	"name" : "VOLightningMDBRepository",
+	"type" : "normal"
+}

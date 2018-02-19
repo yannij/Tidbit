@@ -1,4 +1,4 @@
 actions
 switchToRecent
 
-	self setViewOn: 'Recent'
+	"self setViewOn: 'Recent'"

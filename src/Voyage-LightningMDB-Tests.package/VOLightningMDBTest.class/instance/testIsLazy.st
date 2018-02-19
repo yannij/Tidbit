@@ -1,0 +1,3 @@
+tests
+testIsLazy
+	super testIsLazy

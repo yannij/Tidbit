@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Tidbit-Core",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [
+		"Repository"
+	],
+	"instvars" : [ ],
+	"name" : "TBExampleDatabase",
+	"type" : "normal"
+}

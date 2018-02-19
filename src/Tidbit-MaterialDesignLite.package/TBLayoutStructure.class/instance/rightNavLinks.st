@@ -3,8 +3,10 @@ rightNavLinks
 	| quickLinks |
 
 	quickLinks := (OrderedCollection new
-				add: 'Recent' -> [ self session presenter switchToRecent ];
-				add: 'Favs' -> [ self session presenter switchToFavs ];
+				add: 'RightNav1' -> [ self session presenter switchToHome ];
+				add: 'RightNav2' -> [ self session presenter switchToHome ];
+				add: 'RightNav3' -> [ self session presenter switchToHome ];
+				add: 'RightNav4' -> [ self session presenter switchToHome ];
 				yourself).
 
 	^quickLinks

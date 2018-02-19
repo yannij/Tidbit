@@ -1,13 +1,15 @@
 {
 	"commentStamp" : "",
-	"super" : "TBModel",
+	"super" : "TBRootObject",
 	"category" : "Tidbit-Core",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
 		"description",
-		"done"
+		"done",
+		"completeByDate",
+		"priority"
 	],
 	"name" : "TBToDoItem",
 	"type" : "normal"

@@ -2,6 +2,7 @@ rendering
 actions
 
 	^{
-		'Recent' -> [ self session presenter switchToRecent ].
-		'Favs' -> [ self session presenter switchToFavs ].
+		'ToolNav1' -> [ self session presenter switchToHome ].
+		'ToolNav2' -> [ self session presenter switchToHome ].
+		'ToolNav3' -> [ self session presenter switchToHome ].
 	}

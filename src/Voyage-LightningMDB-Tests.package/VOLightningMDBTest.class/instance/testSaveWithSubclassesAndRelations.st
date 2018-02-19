@@ -1,0 +1,4 @@
+tests
+testSaveWithSubclassesAndRelations
+	super testSaveWithSubclassesAndRelations
+	"self skip"

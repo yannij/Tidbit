@@ -1,4 +1,4 @@
 actions
 switchToFavs
 
-	self setViewOn: 'Favs'
+	"self setViewOn: 'Favs'"

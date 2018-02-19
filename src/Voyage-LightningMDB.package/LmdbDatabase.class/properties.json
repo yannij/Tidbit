@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "Voyage-LightningMDB",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"environment",
+		"database",
+		"transaction"
+	],
+	"name" : "LmdbDatabase",
+	"type" : "normal"
+}
