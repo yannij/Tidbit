@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "",
-	"super" : "Object",
+	"super" : "VOJSONSerializer",
 	"category" : "Voyage-LightningMDB",
 	"classinstvars" : [ ],
 	"pools" : [ ],

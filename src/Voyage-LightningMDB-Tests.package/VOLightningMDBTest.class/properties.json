@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "",
-	"super" : "Object",
+	"super" : "VORepositoryTest",
 	"category" : "Voyage-LightningMDB-Tests",
 	"classinstvars" : [ ],
 	"pools" : [ ],

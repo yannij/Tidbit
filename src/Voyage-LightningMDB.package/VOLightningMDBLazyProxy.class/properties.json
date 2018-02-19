@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "",
-	"super" : "Object",
+	"super" : "VOLazyProxy",
 	"category" : "Voyage-LightningMDB",
 	"classinstvars" : [ ],
 	"pools" : [ ],

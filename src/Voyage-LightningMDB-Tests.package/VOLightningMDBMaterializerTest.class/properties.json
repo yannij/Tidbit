@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "",
-	"super" : "Object",
+	"super" : "VOJSONMaterializerTest",
 	"category" : "Voyage-LightningMDB-Tests",
 	"classinstvars" : [ ],
 	"pools" : [ ],
