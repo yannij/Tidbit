@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "MAMultiselectListComponent",
+	"category" : "Tidbit-MDL",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MDLMultiselectListComponent",
+	"type" : "normal"
+}

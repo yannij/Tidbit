@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "MATextAreaComponent",
+	"category" : "Tidbit-MDL",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MDLTextAreaComponent",
+	"type" : "normal"
+}

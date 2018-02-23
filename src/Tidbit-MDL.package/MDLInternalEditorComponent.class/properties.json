@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "MAInternalEditorComponent",
+	"category" : "Tidbit-MDL",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MDLInternalEditorComponent",
+	"type" : "normal"
+}

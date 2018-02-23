@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "MAFileUploadComponent",
+	"category" : "Tidbit-MDL",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MDLFileUploadComponent",
+	"type" : "normal"
+}

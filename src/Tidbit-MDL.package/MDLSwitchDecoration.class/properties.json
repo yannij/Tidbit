@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "MASwitchDecoration",
+	"category" : "Tidbit-MDL",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MDLSwitchDecoration",
+	"type" : "normal"
+}

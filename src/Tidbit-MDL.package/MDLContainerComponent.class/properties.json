@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "MAContainerComponent",
+	"category" : "Tidbit-MDL",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MDLContainerComponent",
+	"type" : "normal"
+}

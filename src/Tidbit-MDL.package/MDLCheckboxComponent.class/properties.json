@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "MACheckboxComponent",
+	"category" : "Tidbit-MDL",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MDLCheckboxComponent",
+	"type" : "normal"
+}

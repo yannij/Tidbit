@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "MAPriorityContainer",
+	"category" : "Tidbit-MDL",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MDLPriorityContainer",
+	"type" : "normal"
+}

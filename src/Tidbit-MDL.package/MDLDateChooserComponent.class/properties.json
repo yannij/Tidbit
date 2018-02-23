@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "MADateInputComponent",
+	"category" : "Tidbit-MDL",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MDLDateChooserComponent",
+	"type" : "normal"
+}

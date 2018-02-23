@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "MDLTextInputComponent",
+	"category" : "Tidbit-MDL",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MDLDateInputComponent",
+	"type" : "normal"
+}
