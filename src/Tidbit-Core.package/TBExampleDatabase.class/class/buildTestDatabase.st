@@ -16,6 +16,7 @@ buildTestDatabase
 			TBToDoItem new description: 'todo-1'; priority: 1; yourself.
 			TBToDoItem new description: 'todo-2'; priority: 2; yourself.
 			TBToDoItem new description: 'todo-3'; priority: 3; yourself.
+			TBToDoItem new description: 'todo-4'; priority: 4; yourself.
 			}.
 
 	self repository save: userModel.
