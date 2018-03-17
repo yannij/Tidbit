@@ -1,14 +1,14 @@
 {
 	"commentStamp" : "",
-	"super" : "WAComponent",
+	"super" : "MCWComponent",
 	"category" : "Material-Components-Web-Core",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"id",
-		"subComponents"
+		"rippledFab",
+		"miniFab"
 	],
-	"name" : "MCWComponent",
+	"name" : "MCWFloatingActionButton",
 	"type" : "normal"
 }

@@ -1,0 +1,4 @@
+accessing
+bePermanentAboveToolbarDrawer
+
+	self drawerType: #permanentAboveToolbar

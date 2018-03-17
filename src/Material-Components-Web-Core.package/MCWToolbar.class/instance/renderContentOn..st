@@ -1,9 +1,9 @@
 rendering
 renderContentOn: html
 
-	html header
+	html div
 		class: 'mdc-toolbar'; class: 'mdc-elevation--z4';
-		attributeAt: 'dir' put: 'ltr';
+		"attributeAt: 'dir' put: 'ltr';"
 		with: [
 			html div class: 'mdc-toolbar__row'; with: [
 				html section

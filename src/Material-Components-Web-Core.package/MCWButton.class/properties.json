@@ -1,14 +1,14 @@
 {
 	"commentStamp" : "",
-	"super" : "WAComponent",
+	"super" : "MCWComponent",
 	"category" : "Material-Components-Web-Core",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"id",
-		"subComponents"
+		"buttonLabel",
+		"callback"
 	],
-	"name" : "MCWComponent",
+	"name" : "MCWButton",
 	"type" : "normal"
 }

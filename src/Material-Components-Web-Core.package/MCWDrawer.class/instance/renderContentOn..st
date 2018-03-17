@@ -1,11 +1,12 @@
 rendering
 renderContentOn: html
-	| drawerType |
 
-	drawerType := 'mdc-drawer--permanent'.
-
-	html aside class: 'mdc-drawer'; class: drawerType; class: 'demo-drawer'; with: [
-		html navigation class: 'mdc-drawer__drawer';
+	html aside
+		id: self id;
+		class: 'mdc-drawer'; class: self mdcDrawerType; class: 'demo-drawer'; with: [
+		html navigation
+			attributeAt: 'dir' put: self dir;
+			class: 'mdc-drawer__drawer';
 			onClick: (JSScript new add: (JSStream new
 				nextPutAll: '
 var activatedClass = ''mdc-list-item--selected'';

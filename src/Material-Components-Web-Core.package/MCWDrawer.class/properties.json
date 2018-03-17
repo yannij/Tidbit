@@ -6,7 +6,9 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"list"
+		"drawerType",
+		"list",
+		"dir"
 	],
 	"name" : "MCWDrawer",
 	"type" : "normal"
