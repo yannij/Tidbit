@@ -1,4 +1,4 @@
-accessing
+actions
 beLayoutStructureDesktop
 
 	self layoutStructure: #desktop.

@@ -8,7 +8,9 @@ renderAnchor: anchorValues on: html
 		ifTrue: [
 			html button
 				class: 'demo-menu'; class: 'material-icons'; class: 'mdc-toolbar__menu-icon';
-				onClick: (JSScript new add: 'drawer.open = !drawer.open;');
+				"onClick: (JSScript new add: 'drawer.open = !drawer.open;');"
+				onClick: 'element = document.getElementById(''', 'sideNavDrawer', ''');
+element.mdcDrawer.open = !element.mdcDrawer.open';
 				with: anchorValues second.
 			html space; space.
 			^self].
@@ -17,7 +19,9 @@ renderAnchor: anchorValues on: html
 		ifTrue: [
 			html button
 				class: 'demo-menu'; class: 'material-icons'; class: 'mdc-toolbar__menu-icon';
-				onClick: (JSScript new add: 'drawerRight.open = !drawerRight.open;');
+				"onClick: (JSScript new add: 'drawerRight.open = !drawerRight.open;');"
+				onClick: 'element = document.getElementById(''', 'rightNavDrawer', ''');
+element.mdcDrawer.open = !element.mdcDrawer.open';
 				with: anchorValues second.
 			html space; space.
 			^self].

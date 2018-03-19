@@ -6,7 +6,16 @@ html {
   height: 60%;
 }
 
-/* Place drawer and content side by side. */
+.body-mobile {
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  min-height: 100%;
+  width: 100%;
+}
+
 .body-tablet {
   display: flex;
   flex-direction: row;
@@ -16,7 +25,7 @@ html {
   min-height: 100%;
   width: 100%;
 }
-/* Place drawer and content side by side. */
+
 .body-desktop {
   display: flex;
   flex-flow: row nowrap;

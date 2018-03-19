@@ -1,4 +1,4 @@
-accessing
+testing
 isPermanentBelowToolbarDrawer
 
 	^self drawerType = #permanentBelowToolbar

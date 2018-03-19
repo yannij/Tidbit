@@ -3,7 +3,8 @@ renderContentCanvasOn: html
 
 	(html tag: 'main')
 		style: 'padding-left: 16px; padding-right: 16px';
-		style: 'float: left';
+		style: 'width: 100%';
+		class: #'mdc-toolbar-fixed-adjust' if: self isLayoutStructureDesktop not;
 		with: [
 			html paragraph
 				class: 'mdc-typography--body1';
@@ -13,5 +14,6 @@ renderContentCanvasOn: html
 			html div
 				class: 'mdc-elevation--z2';
 				style: 'height: 50vh';
-				with: [html space].
+				with: [html text: self layoutStructure asString].
+			html render: self mainFab.
 		]

@@ -1,4 +1,4 @@
-accessing
+testing
 isPersistentDrawer
 
 	^self drawerType = #persistent

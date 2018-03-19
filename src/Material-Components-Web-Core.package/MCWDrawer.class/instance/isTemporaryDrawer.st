@@ -1,4 +1,4 @@
-accessing
+testing
 isTemporaryDrawer
 
 	^self drawerType = #temporary

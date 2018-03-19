@@ -1,4 +1,4 @@
-accessing
+actions
 bePersistentDrawer
 
 	self drawerType: #persistent

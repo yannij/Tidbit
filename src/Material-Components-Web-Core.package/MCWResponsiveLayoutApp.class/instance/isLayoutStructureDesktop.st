@@ -1,4 +1,4 @@
-accessing
+testing
 isLayoutStructureDesktop
 
 	^self layoutStructure = #desktop

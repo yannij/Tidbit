@@ -3,9 +3,15 @@ renderContentOn: html
 
 	html aside
 		id: self id;
-		class: 'mdc-drawer'; class: self mdcDrawerType; class: 'demo-drawer'; with: [
+		class: 'mdc-drawer'; class: self mdcDrawerClass; class: 'demo-drawer';
+		script: (JSScript new add: (JSStream new
+				nextPutAll: 'var ', self id, '=document.getElementById(''', self id, ''');';
+				nextPutAll: self id, '.mdcDrawer = new ', self jsDrawerType, '(', self id, ')';
+				yourself));
+		with: [
 		html navigation
 			attributeAt: 'dir' put: self dir;
+			"attributeAt: 'data-mdc-auto-init' put: self jsDrawerType;"
 			class: 'mdc-drawer__drawer';
 			onClick: (JSScript new add: (JSStream new
 				nextPutAll: '

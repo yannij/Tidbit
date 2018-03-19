@@ -1,7 +1,7 @@
-accessing
+actions
 beLayoutStructureMobile
 
 	self layoutStructure: #mobile.
-	self sideNav bePersistentDrawer.
+	self sideNav beTemporaryDrawer.
 	self rightNav beTemporaryDrawer.
 	self rightNav beDirectionToRightToLeft
