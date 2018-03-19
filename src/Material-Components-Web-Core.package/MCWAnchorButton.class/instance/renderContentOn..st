@@ -1,11 +1,11 @@
 rendering
 renderContentOn: html
 
-	html button
+	html anchor
 		id: self id;
 		class: 'mdc-button';
 		class: 'mdc-button--raised' if: true;
 		style: 'margin: 16px';
-		onClick: self onClickScript if: self hasOnClickScript;
+		callback: self callback;
 		with: [
 			html text: self buttonLabel].

@@ -12,4 +12,6 @@ initialize
 	self rightNav: self buildRightNav.
 	self mainFab: self buildMainFab.
 
+	self extraWideShown: false.
+	self extraTallShown: false.
 	self beLayoutStructureTablet.

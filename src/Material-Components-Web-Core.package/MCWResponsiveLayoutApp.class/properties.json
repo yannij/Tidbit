@@ -13,7 +13,9 @@
 		"header",
 		"footer",
 		"mainFab",
-		"layoutStructure"
+		"layoutStructure",
+		"extraWideShown",
+		"extraTallShown"
 	],
 	"name" : "MCWResponsiveLayoutApp",
 	"type" : "normal"
