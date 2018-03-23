@@ -3,6 +3,7 @@ renderContentOn: html
 
 	html aside
 		id: self id;
+		"style: 'background-color: #EC4E8C';"
 		class: 'mdc-drawer'; class: self mdcDrawerClass; class: 'demo-drawer';
 		script: (JSScript new add: (JSStream new
 				nextPutAll: 'var ', self id, '=document.getElementById(''', self id, ''');';
@@ -13,6 +14,7 @@ renderContentOn: html
 			attributeAt: 'dir' put: self dir;
 			"attributeAt: 'data-mdc-auto-init' put: self jsDrawerType;"
 			class: 'mdc-drawer__drawer';
+			style: 'background-color: #EC4E8C';
 			onClick: (JSScript new add: (JSStream new
 				nextPutAll: '
 var activatedClass = ''mdc-list-item--selected'';
@@ -28,6 +30,7 @@ if (el) {
 	event.target.classList.add(activatedClass);
 }'));
 			with: [
+			html render: self toolbar.
 			"html div class: 'mdc-drawer__toolbar-spacer'."
 			html div class: 'mdc-list-group'; with: [
 				self renderList: self list selectedIndex: 1 on: html]]].

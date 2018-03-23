@@ -1,34 +1,13 @@
 rendering
-renderAnchor: anchorValues on: html
-	| anchor |
+renderAnchor: buttonValues on: html
 
-	anchor := html anchor.
-
-	anchorValues first = 'Menu'
-		ifTrue: [
-			html button
-				class: 'demo-menu'; class: 'material-icons'; class: 'mdc-toolbar__menu-icon';
-				"onClick: (JSScript new add: 'drawer.open = !drawer.open;');"
-				onClick: 'element = document.getElementById(''', 'sideNavDrawer', ''');
-element.mdcDrawer.open = !element.mdcDrawer.open';
-				with: anchorValues second.
-			html space; space.
-			^self].
-
-	anchorValues first = 'Right Nav'
-		ifTrue: [
-			html button
-				class: 'demo-menu'; class: 'material-icons'; class: 'mdc-toolbar__menu-icon';
-				"onClick: (JSScript new add: 'drawerRight.open = !drawerRight.open;');"
-				onClick: 'element = document.getElementById(''', 'rightNavDrawer', ''');
-element.mdcDrawer.open = !element.mdcDrawer.open';
-				with: anchorValues second.
-			html space; space.
-			^self].
-
-	anchor
+	html anchor
 		class: 'material-icons'; class: 'mdc-toolbar__menu-icon';
-		attributeAt: 'aria-label' put: anchorValues first;
-		attributeAt: 'alt' put: anchorValues first;
+		attributeAt: 'aria-label' put: buttonValues first;
+		attributeAt: 'alt' put: buttonValues first;
 		url: '#';
-		with: anchorValues second.
+		onClick: buttonValues third;
+		with: buttonValues second.
+
+	buttonValues first = 'More'
+		ifTrue: [html render: MCWMenu new]

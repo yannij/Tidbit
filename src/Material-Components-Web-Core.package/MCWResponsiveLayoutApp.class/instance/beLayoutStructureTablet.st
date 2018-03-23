@@ -2,6 +2,14 @@ actions
 beLayoutStructureTablet
 
 	self layoutStructure: #tablet.
-	self sideNav bePersistentDrawer.
-	self rightNav beTemporaryDrawer.
-	self rightNav beDirectionToRightToLeft
+
+	self secondaryToolbar beHidden.
+
+	self sideNav toolbarHide; bePersistentDrawer.
+
+	self rightNav
+		toolbarHide;
+		beTemporaryDrawer;
+		beDirectionToRightToLeft.
+
+	self rebuildHeader.

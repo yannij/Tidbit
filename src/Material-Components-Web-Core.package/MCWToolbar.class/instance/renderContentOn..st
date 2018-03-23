@@ -1,9 +1,12 @@
 rendering
 renderContentOn: html
 
+	self isHidden ifTrue: [^self].
+
 	html div
 		class: 'mdc-toolbar'; class: 'mdc-elevation--z4';
 		"attributeAt: 'dir' put: 'ltr';"
+		style: self mcwStyle;
 		with: [
 			html div class: 'mdc-toolbar__row'; with: [
 				html section

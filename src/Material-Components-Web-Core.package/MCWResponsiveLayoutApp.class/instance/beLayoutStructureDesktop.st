@@ -2,6 +2,16 @@ actions
 beLayoutStructureDesktop
 
 	self layoutStructure: #desktop.
-	self sideNav bePermanentBelowToolbarDrawer.
-	self rightNav bePermanentBelowToolbarDrawer.
-	self rightNav beDirectionLeftToRight.
+
+	self secondaryToolbar beUnHidden.
+
+	self sideNav
+		toolbarUnHide;
+		bePermanentBelowToolbarDrawer.
+
+	self rightNav
+		toolbarUnHide;
+		bePermanentBelowToolbarDrawer;
+		beDirectionLeftToRight.
+
+	self rebuildHeader.

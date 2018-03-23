@@ -2,11 +2,13 @@ rendering
 renderContentCanvasOn: html
 
 	(html tag: 'main')
-		style: 'padding-left: 16px; padding-right: 16px';
+		"style: 'padding-left: 16px; padding-right: 16px';"
 		"style: 'width: 100%';"
+		style: 'background-color: #FAFAFA';
 		style: 'overflow-x: auto';
 		class: #'mdc-toolbar-fixed-adjust' if: self isLayoutStructureDesktop not;
 		with: [
+			html render: self secondaryToolbar.
 			html paragraph
 				class: 'mdc-typography--body1';
 				with: 'Content canvas - ', self layoutStructure asString.

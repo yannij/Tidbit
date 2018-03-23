@@ -8,7 +8,8 @@
 	"instvars" : [
 		"drawerType",
 		"list",
-		"dir"
+		"dir",
+		"toolbar"
 	],
 	"name" : "MCWDrawer",
 	"type" : "normal"
