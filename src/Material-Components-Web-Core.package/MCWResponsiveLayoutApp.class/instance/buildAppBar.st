@@ -20,6 +20,7 @@ buildAppBar
 				endSection: {
 					{'Download'. 'file_download'. nil}.
 					{'Print this page'. 'print'. nil}.
+					{'More'. 'more_vert'. self openAppBarItemMoreScript}.
 				}]
 		ifFalse: [
 			toolbar

@@ -14,4 +14,6 @@ beLayoutStructureDesktop
 		bePermanentBelowToolbarDrawer;
 		beDirectionLeftToRight.
 
+	self footer toolbar beHidden.
+
 	self rebuildHeader.

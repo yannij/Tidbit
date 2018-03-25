@@ -12,4 +12,6 @@ beLayoutStructureTablet
 		beTemporaryDrawer;
 		beDirectionToRightToLeft.
 
+	self footer toolbar beUnHidden.
+
 	self rebuildHeader.

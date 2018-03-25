@@ -2,5 +2,5 @@ initialization
 buildFooter
 
 	^MCWFooter new
-		addSubComponent: self bottomBar;
+		"addSubComponent: self bottomBar;"
 		yourself

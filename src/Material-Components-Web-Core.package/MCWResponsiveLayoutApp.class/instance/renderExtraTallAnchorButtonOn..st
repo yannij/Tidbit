@@ -1,4 +1,4 @@
-rendering
+rendering - tall and wide
 renderExtraTallAnchorButtonOn: html
 
 	html render: (MCWAnchorButton new

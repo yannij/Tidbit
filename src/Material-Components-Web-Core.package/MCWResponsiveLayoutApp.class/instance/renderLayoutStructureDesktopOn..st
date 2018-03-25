@@ -1,4 +1,4 @@
-rendering
+rendering - layouts
 renderLayoutStructureDesktopOn: html
 
 	html div
@@ -7,11 +7,11 @@ renderLayoutStructureDesktopOn: html
 			html render: self header].
 
 	html div
-		class: #'mdc-toolbar-fixed-adjust';
+		class: 'mdc-toolbar-fixed-adjust';
 		style: 'width: 100%';
 		style: 'display: inline-flex; flex-direction: row; flex-grow: 1; height: 100%; box-sizing: border-box;';
 		with: [
 			html render: self sideNav.
-			self renderContentCanvasOn: html.
+			self renderCurrentCanvasOn: html.
 			html render: self rightNav.
 		].

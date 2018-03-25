@@ -1,4 +1,4 @@
-rendering
+rendering - tall and wide
 renderExtraWideOn: html
 
 	html div

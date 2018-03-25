@@ -12,4 +12,5 @@ text-align: center;
 color: white;
 background-color: rgba(0, 0, 0, 0.7)';
 		with: [
-			self renderSubComponentsOn: html].
+			"self renderSubComponentsOn: html"
+			html render: self toolbar].

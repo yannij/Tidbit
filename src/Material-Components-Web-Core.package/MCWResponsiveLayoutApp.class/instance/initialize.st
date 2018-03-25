@@ -5,8 +5,12 @@ initialize
 
 	self layoutStructure: #tablet.
 	self rebuildHeader.
-	self bottomBar: self buildBottomBar.
+
 	self footer: self buildFooter.
+	self footer toolbar
+		title: 'Bottom bar';
+		mcwStyle: 'background-color: #2988D1';
+		yourself.
 
 	self sideNav: self buildSideNav.
 	self sideNav toolbar

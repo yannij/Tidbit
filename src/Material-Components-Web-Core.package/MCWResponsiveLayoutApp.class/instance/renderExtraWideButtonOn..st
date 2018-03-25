@@ -1,4 +1,4 @@
-rendering
+rendering - tall and wide
 renderExtraWideButtonOn: html
 	| divId |
 
