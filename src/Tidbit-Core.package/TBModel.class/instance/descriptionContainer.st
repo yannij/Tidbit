@@ -2,6 +2,7 @@ accessing
 descriptionContainer
 	"Return the default description container."
 	<magritteContainer>
-	^ MDLPriorityContainer new
+
+	^self class descriptionContainerClass new
 		label: self class label;
 		yourself
