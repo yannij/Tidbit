@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "MCWResponsiveApplication",
+	"category" : "Tidbit-MaterialComponentsWeb",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"view"
+	],
+	"name" : "TBToDo2Application",
+	"type" : "normal"
+}

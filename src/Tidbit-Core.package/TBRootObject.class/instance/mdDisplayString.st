@@ -1,0 +1,4 @@
+printing
+mdDisplayString
+
+	^self mdPrimaryString

@@ -1,0 +1,2 @@
+actions
+removeFromRecentlyViewed: anObject

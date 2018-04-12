@@ -5,4 +5,5 @@ descriptionContainer
 
 	^self class descriptionContainerClass new
 		label: self class label;
+		propertyAt: #cardWidth ifAbsentPut: [600];
 		yourself

@@ -1,0 +1,4 @@
+initalize
+appBarTitle
+
+	^self applicationTitle 

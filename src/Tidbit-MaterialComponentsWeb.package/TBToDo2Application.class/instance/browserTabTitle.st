@@ -1,0 +1,4 @@
+accessing
+browserTabTitle
+
+	^self headerTitle
