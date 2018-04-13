@@ -9,4 +9,6 @@ renderElement: aDescription
 		stretch;
 		with: [ super renderElement: aDescription ]."
 
+	"html div class: 'mdc-form-field'; with: [
+		super renderElement: aDescription]"
 	super renderElement: aDescription

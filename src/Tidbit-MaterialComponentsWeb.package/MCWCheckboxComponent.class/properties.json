@@ -1,13 +1,11 @@
 {
 	"commentStamp" : "",
-	"super" : "MAOneToManyComponent",
+	"super" : "MACheckboxComponent",
 	"category" : "Tidbit-MaterialComponentsWeb",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [
-		"expanded"
-	],
-	"name" : "MCWOneToManyComponent",
+	"instvars" : [ ],
+	"name" : "MCWCheckboxComponent",
 	"type" : "normal"
 }

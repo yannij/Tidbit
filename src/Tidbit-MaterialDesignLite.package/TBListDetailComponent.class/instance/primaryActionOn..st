@@ -1,7 +1,8 @@
 actions
 primaryActionOn: aModel
 
-	self session presenter addToRecent: aModel
+	"self session presenter addToRecent: aModel"
+	self root show: (aModel asComponent addValidatedForm; yourself)
 
 	"| component modelDescription |
 

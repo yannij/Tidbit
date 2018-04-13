@@ -1,24 +1,26 @@
 rendering
 renderViewerOn: html
+	| switchId listId |
 
-	html unorderedList
-		class: 'mdc-list';
-		class: 'mdc-list--two-line';
-		style: 'border: 1px solid rgba(0, 0, 0, 0.1);';
+	switchId := html nextId.
+	listId := html nextId.
+
+	html div style: 'display: inline-block; padding-left: 16px'; with: [
+	html div
+		mdcSwitch;
 		with: [
-			html heading level3
-				mdcListGroup__subheader;
-				with: self magritteDescription label.
-			self value do: [:eachItem |
-				html listItem
-					mdcListItem;
-					with: [
-						html span
-							mdcListItem__text;
-							with: [
-								html text: eachItem mdPrimaryString.
-								html span
-									mdcListItem__secondaryText;
-									with: [html text: eachItem mdDisplaySecondaryString]].
-						html html: '<span class="mdc-list-item__meta">
-<i class="material-icons" aria-hidden="true">more_vert</i></span>']]]
+			html checkbox
+				mdcSwitch__nativeControl;
+				id: switchId;
+				value: false;
+				onChange: (html jQuery ajax
+					callback: [ :value | self expanded: value = 'true' ] value: (JSStream on: 'event.target.checked');
+					onComplete: ((html jQuery id: listId) load html: [:renderer | self renderListAjaxOn: renderer]));
+				yourself.
+			html div mdcSwitch__background; with: [html div mdcSwitch__knob]].
+			html space; space; space.
+			html label for: switchId; mdcSwitchLabel; with: self magritteDescription label.
+			self renderAddButtonOn: html.
+	].
+
+	html div id: listId; with: [self renderListAjaxOn: html]
