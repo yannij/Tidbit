@@ -1,0 +1,4 @@
+*Tidbit-MDL
+mcwComponentClass
+
+	^MCWTimeComponent

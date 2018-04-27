@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "MCWTextInputComponent",
+	"category" : "Tidbit-MaterialComponentsWeb",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MCWDateComponent",
+	"type" : "normal"
+}

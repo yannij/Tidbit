@@ -1,4 +1,4 @@
 rendering
 inputAspect
 
-	^ #dateISO
+	^ #dateISOString

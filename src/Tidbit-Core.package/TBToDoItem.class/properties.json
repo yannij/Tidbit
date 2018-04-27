@@ -9,7 +9,11 @@
 		"description",
 		"done",
 		"completeByDate",
-		"priority"
+		"priority",
+		"bestTimeOfDayToStart",
+		"actualDateStarted",
+		"estimatedDuration",
+		"importance"
 	],
 	"name" : "TBToDoItem",
 	"type" : "normal"
