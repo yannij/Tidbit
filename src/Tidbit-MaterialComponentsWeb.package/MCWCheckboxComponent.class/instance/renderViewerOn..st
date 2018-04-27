@@ -2,21 +2,22 @@ rendering
 renderViewerOn: html
 	| checkboxId |
 
-"true ifTrue: [ ^self ]."
-
 	checkboxId := html nextId.
 
-	html div class: 'mdc-form-field'; with: [
+	html div mdcFormField; with: [
 		html div mdcCheckbox; with: [
 		html checkbox
 			id: checkboxId;
 			mdcCheckbox__nativeControl;
 			on: #value of: self;
 			with: [
-html html: '<div class="mdc-checkbox__background">
-<svg class="mdc-checkbox__checkmark" viewBox="0 0 24 24">
-<path class="mdc-checkbox__checkmark-path" fill="none" stroke="white" d="M1.73,12.91 8.1,19.28 22.79,4.59"></path>
-</svg>
-<div class="mdc-checkbox__mixedmark"></div></div>'.
-					]].
+				html div mdcCheckbox__background with: [
+					html svg mdcCheckbox__checkmark; attributeAt: 'viewBox' put: '0 0 24 24'; with: [
+					html path
+						mdcCheckbox__checkmarkPath;
+						attributeAt: 'fill' put: 'none';
+						attributeAt: 'stroke' put: 'white';
+						attributeAt: 'd' put: 'M1.73,12.91 8.1,19.28 22.79,4.59';
+						yourself.
+					html div mdcCheckbox__mixedmark]]]].
 		html label for: checkboxId; with: self magritteDescription checkboxLabel].

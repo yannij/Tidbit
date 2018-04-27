@@ -1,0 +1,4 @@
+*Tidbit-MDL
+mdlComponentClass
+
+	^MDLTextAreaComponent

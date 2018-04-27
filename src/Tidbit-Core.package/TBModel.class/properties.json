@@ -4,7 +4,9 @@
 	"category" : "Tidbit-Core",
 	"classinstvars" : [ ],
 	"pools" : [ ],
-	"classvars" : [ ],
+	"classvars" : [
+		"DescriptionContainerClass"
+	],
 	"instvars" : [ ],
 	"name" : "TBModel",
 	"type" : "normal"

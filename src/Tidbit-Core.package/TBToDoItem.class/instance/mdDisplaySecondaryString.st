@@ -1,5 +1,5 @@
 printing
 mdDisplaySecondaryString
 
-	^(self done ifTrue: ['DONE'] ifFalse: ['To Do']),
+	^(self done ifTrue: ['DONE'] ifFalse: ['NOT-DONE']),
 		', ', 'Priority: ', self priority printString

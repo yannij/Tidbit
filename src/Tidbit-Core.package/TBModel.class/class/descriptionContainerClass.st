@@ -1,4 +1,10 @@
 accessing
 descriptionContainerClass
+	"
+	self descriptionContainerClass: MCWPriorityContainer.
+	self descriptionContainerClass: MDLPriorityContainer.
+	"
 
-	^true ifTrue: [MCWPriorityContainer] ifFalse: [MDLPriorityContainer]
+	DescriptionContainerClass isNil
+		ifTrue: [DescriptionContainerClass := MCWPriorityContainer].
+	^DescriptionContainerClass
