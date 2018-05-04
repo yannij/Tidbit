@@ -1,7 +1,8 @@
 accessing-magritte
 descriptionPasswordHash
 	<magritteDescription>
-	^ MAPasswordDescription new
+
+	^MAPasswordDescription new
 		accessor: #passwordHash;
 		default: '';
 		label: 'Password';

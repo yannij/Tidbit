@@ -1,7 +1,8 @@
 accessing-magritte
 importanceDescription
 	<magritteDescription>
-	^ MASingleOptionDescription new
+
+	^MASingleOptionDescription new
 		accessor: #importance;
 		label: 'Importance';
 		options: {'High'. 'Medium'. 'Low'};

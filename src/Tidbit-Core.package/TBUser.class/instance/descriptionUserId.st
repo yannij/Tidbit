@@ -1,7 +1,8 @@
 accessing-magritte
 descriptionUserId
 	<magritteDescription>
-	^ MAStringDescription new
+
+	^MAStringDescription new
 		accessor: #userId;
 		default: '';
 		label: 'User ID';

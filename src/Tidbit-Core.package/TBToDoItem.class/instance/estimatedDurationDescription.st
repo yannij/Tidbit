@@ -1,8 +1,9 @@
 accessing-magritte
 estimatedDurationDescription
 	<magritteDescription>
-	^ MADurationDescription new
+
+	^MADurationDescription new
 		accessor: #estimatedDuration;
-		label: 'Actual Date Started';
+		label: 'Estimated Duration';
 		priority: 90;
 		yourself

@@ -1,7 +1,8 @@
 accessing-magritte
 descriptionLastName
 	<magritteDescription>
-	^ MAStringDescription new
+
+	^MAStringDescription new
 		accessor: #lastName;
 		default: '';
 		label: 'Last Name';

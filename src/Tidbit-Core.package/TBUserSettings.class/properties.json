@@ -6,14 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"userId",
-		"dateCreated",
-		"passwordHash",
-		"firstName",
-		"lastName",
-		"userSettings",
-		"toDoItems"
+		"layoutDensity"
 	],
-	"name" : "TBUser",
+	"name" : "TBUserSettings",
 	"type" : "normal"
 }

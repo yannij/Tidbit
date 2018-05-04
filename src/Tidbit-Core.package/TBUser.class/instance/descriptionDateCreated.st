@@ -1,7 +1,8 @@
 accessing-magritte
 descriptionDateCreated
 	<magritteDescription>
-	^ MADateAndTimeDescription new
+
+	^MADateAndTimeDescription new
 		accessor: #dateCreated;
 		default: DateAndTime now;
 		label: 'Date Created';

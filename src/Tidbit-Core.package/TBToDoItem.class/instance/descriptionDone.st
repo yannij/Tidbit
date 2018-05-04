@@ -1,7 +1,8 @@
 accessing-magritte
 descriptionDone
 	<magritteDescription>
-	^ MABooleanDescription new
+
+	^MABooleanDescription new
 		accessor: #done;
 		label: 'Done';
 		priority: 10;

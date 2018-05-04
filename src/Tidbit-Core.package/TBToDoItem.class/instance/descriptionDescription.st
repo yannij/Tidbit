@@ -1,7 +1,8 @@
 accessing-magritte
 descriptionDescription
 	<magritteDescription>
-	^ MAMemoDescription new
+
+	^MAMemoDescription new
 		accessor: #description;
 		default: '';
 		label: 'Description';

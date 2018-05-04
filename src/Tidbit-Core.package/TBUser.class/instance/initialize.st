@@ -8,4 +8,6 @@ initialize
 	self dateCreated: DateAndTime now.
 	self firstName: String new.
 	self lastName: String new.
+
+	self userSettings: TBUserSettings new.
 	self toDoItems: OrderedCollection new.

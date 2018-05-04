@@ -5,6 +5,13 @@ renderViewerOn: html
 	switchId := html nextId.
 	listId := html nextId.
 
+	html div
+		mdcListGroup;
+		style: 'border: 1px solid rgba(0, 0, 0, 0.1);';
+		with: [
+"			html heading level3; mdcListGroup__subheader; with: [
+				html text: self magritteDescription label].
+"
 	html div style: 'display: inline-block; padding-left: 16px'; with: [
 	html div
 		mdcSwitch;
@@ -24,3 +31,4 @@ renderViewerOn: html
 	].
 
 	html div id: listId; with: [self renderListAjaxOn: html]
+	]

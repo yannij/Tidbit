@@ -1,7 +1,8 @@
 accessing-magritte
 descriptionToDoItems
 	<magritteDescription>
-	^ MAToManyRelationDescription new
+
+	^MAToManyRelationDescription new
 		accessor: #toDoItems;
 		classes: {TBToDoItem};
 		default: OrderedCollection new;
