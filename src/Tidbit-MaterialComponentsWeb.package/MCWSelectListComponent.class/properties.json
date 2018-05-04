@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "MASelectListComponent",
+	"category" : "Tidbit-MaterialComponentsWeb",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "MCWSelectListComponent",
+	"type" : "normal"
+}

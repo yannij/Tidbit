@@ -24,5 +24,6 @@ renderListAjaxOn: html
 								html span
 									mdcListItem__secondaryText;
 									with: [html text: eachItem mdDisplaySecondaryString]].
-						html span mdcListItem__meta; with: [
-						html html: '<i class="material-icons" aria-hidden="true">more_vert</i>']]]]
+						"html span mdcListItem__meta; with: [
+							html span mdcMaterialIcons; mdcAriaHidden: 'true'; with: 'more_vert']"
+						]]]
