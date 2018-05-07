@@ -6,9 +6,9 @@ setViewOn: aModel
 		ifTrue: [ ^self ].
 
 	newView := aModel asComponent
-					"addValidatedForm;
-					addMessage: 'hello';"
+					addValidatedForm;
+					"addMessage: 'hello';"
 					yourself.
 
 	"self view: newView."
-	self canvas: newView.
+	self canvas contents: (OrderedCollection with: newView).

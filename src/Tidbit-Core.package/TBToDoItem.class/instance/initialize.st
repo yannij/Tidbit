@@ -11,3 +11,4 @@ initialize
 	self actualDateStarted: Date today.
 	self estimatedDuration: 1 hour.
 	self importance: 'Medium'.
+	self calendars: OrderedCollection new.

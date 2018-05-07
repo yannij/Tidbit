@@ -1,5 +1,5 @@
 rendering
-renderButtonsOn: html
+renderSaveCancelOn: html
 
 '
 mdc-ripple-surface mdc-ripple-upgraded--unbounded mdc-ripple-upgraded" tabindex="0" 
@@ -16,7 +16,7 @@ style="--mdc-ripple-fg-size:28.8px; --mdc-ripple-fg-scale:1.66667; --mdc-ripple-
 				mdcMaterialIcons;
 				mdcCard__action;
 				mdcCard__actionIcon;
-				callback: [self execute: #save];
+				callback: [self save];
 				with: 'done'.
 			html button
 				mdcMaterialIcons;
@@ -25,6 +25,6 @@ style="--mdc-ripple-fg-size:28.8px; --mdc-ripple-fg-scale:1.66667; --mdc-ripple-
 				"onClick: ((html jQuery ajax)
 					callback: [self cancel];
 					onComplete: html javascript refresh);"
-				callback: [self execute: #cancel];
+				callback: [self cancel];
 				with: 'cancel'.
 			]

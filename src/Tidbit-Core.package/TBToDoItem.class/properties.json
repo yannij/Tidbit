@@ -13,7 +13,8 @@
 		"bestTimeOfDayToStart",
 		"actualDateStarted",
 		"estimatedDuration",
-		"importance"
+		"importance",
+		"calendars"
 	],
 	"name" : "TBToDoItem",
 	"type" : "normal"
