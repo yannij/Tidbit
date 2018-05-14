@@ -1,5 +1,5 @@
 actions
-setViewOn: aModel
+setCanvasContent2: aModel
 	| newView |
 
 	aModel isNil
@@ -11,4 +11,4 @@ setViewOn: aModel
 					yourself.
 
 	"self view: newView."
-	self canvas content1: newView.
+	self canvas content2: newView.

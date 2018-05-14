@@ -17,7 +17,7 @@ renderListAjaxOn: html
 						html span
 							mdcListItem__text;
 							onClick: ((html jQuery ajax)
-								callback: [self root show: (eachItem asComponent addValidatedForm; yourself)];
+								callback: [self showObnject: eachItem];
 								onComplete: html javascript refresh);
 							with: [
 								html text: eachItem mdPrimaryString.
