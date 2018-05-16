@@ -1,8 +1,5 @@
 rendering
 renderContentOn: html
-	| formId |
-
-	formId := html nextId.
 
 	html form
 		class: 'magritte';
@@ -10,5 +7,5 @@ renderContentOn: html
 		defaultAction: [self execute: self default];
 		with: [
 			html div mdcCard; style: 'padding: 8px'; with: [
-				self renderButtonsOn: html withFormId: formId.
+				self renderButtonsOn: html.
 				self renderNextOn: html]]

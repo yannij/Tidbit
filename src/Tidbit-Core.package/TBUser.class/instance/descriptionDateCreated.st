@@ -1,6 +1,6 @@
 accessing-magritte
 descriptionDateCreated
-	"<magritteDescription>"
+	<magritteDescription>
 
 	^MADateAndTimeDescription new
 		"accessor: #dateCreated;"
