@@ -2,6 +2,7 @@ rendering
 renderButtonsOn: html
 
 	html div mdcCard__actions; with: [
+		html span mdcTypography__subtitle2; with: [html text: self decoratedComponent model mdPrimaryString].
 		"html div mdcCard__actionButtons; with: [
 			html button
 				mdcButton;
