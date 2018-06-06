@@ -1,4 +1,0 @@
-*Tidbit-MaterialComponentsWeb
-mcwComponentClass
-
-	^MCWTextAreaComponent
