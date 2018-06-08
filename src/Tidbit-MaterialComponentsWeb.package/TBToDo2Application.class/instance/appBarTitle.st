@@ -1,4 +1,4 @@
-initalize
+initialization
 appBarTitle
 
 	^self applicationTitle 
