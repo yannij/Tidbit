@@ -1,6 +1,6 @@
 {
 	"commentStamp" : "YanniChiu 12/1/2017 11:47",
-	"super" : "Object",
+	"super" : "MCWModel",
 	"category" : "Tidbit-Core",
 	"classinstvars" : [ ],
 	"pools" : [ ],
