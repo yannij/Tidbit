@@ -1,0 +1,3 @@
+visiting
+visitDateAndTimeDescription: anObject
+	self visitMagnitudeDescription: anObject

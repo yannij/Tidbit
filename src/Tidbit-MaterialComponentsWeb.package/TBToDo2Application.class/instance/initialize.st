@@ -1,11 +1,9 @@
-initalize
+initialization
 initialize
 
 	super initialize.
 
-	"self primaryColor: user primaryColor secondaryColor: user secondaryColor."
-	"self primaryColor: MDLColor randomColorAndTint secondaryColor: MDLColor randomColorAndTint."
-
+	self settings setFont: MCWGoogleFont allAvailable atRandom.
 	self canvas: MCWCanvasGridComponent new.
 
 	self setSessionUser: self retrieveTestModel.
