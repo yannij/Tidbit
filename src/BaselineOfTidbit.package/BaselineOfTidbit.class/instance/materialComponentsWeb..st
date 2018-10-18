@@ -3,4 +3,4 @@ materialComponentsWeb: spec
 
 	spec
 		baseline: 'MaterialComponentsWeb'
-		with: [ spec repository: 'github://yannij/MaterialComponentsWeb' ].
+		with: [ spec repository: 'github://yannij/MaterialComponentsWeb:master/src' ].
