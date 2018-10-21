@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "",
-	"super" : "MDLApplication",
-	"category" : "Tidbit-MaterialDesignLite",
+	"super" : "MCWResponsiveApplication",
+	"category" : "Tidbit-MaterialComponentsWeb",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
