@@ -5,11 +5,10 @@ baseline: spec
 	spec for: #common do: [
 
 		self neoJSON: spec.
-		self voyage: spec.
-		self materialDesignLite: spec.
-		self magritteSeaside: spec.
 		self lightningMDB: spec.
+		self voyage: spec.
 		self materialComponentsWeb: spec.
+		self materialDesignLite: spec.
 
 		spec 
 			package: 'Voyage-LightningMDB' with: [
