@@ -1,7 +1,7 @@
 class initialization
 initialize
 	"Register path with Seaside.
-	WAAdmin unregister: 'tidbit/todo-mdl'.
+	WAAdmin unregister: self applicationPath.
 	"
 
-	^ self registerToDevelopment: 'tidbit/todo-mdl'
+	^ self registerToDevelopment: self applicationPath
