@@ -1,11 +1,14 @@
 {
 	"commentStamp" : "",
-	"super" : "MCWResponsiveApplication",
+	"super" : "MCWWebComponent",
 	"category" : "Tidbit-MaterialComponentsWeb",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
-	"instvars" : [ ],
-	"name" : "TBToDoApplication",
+	"instvars" : [
+		"contents",
+		"view"
+	],
+	"name" : "TBContentGrid",
 	"type" : "normal"
 }

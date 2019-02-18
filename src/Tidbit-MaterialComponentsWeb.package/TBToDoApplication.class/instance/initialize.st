@@ -4,7 +4,7 @@ initialize
 	super initialize.
 
 	self settings setFont: MCWGoogleFont allAvailable atRandom.
-	self canvas: MCWCanvasGridComponent new.
+	self layout contentArea component: TBContentGrid new.
 
 	self setSessionUser: self retrieveTestModel.
 	self setViewOn: self getSessionUser.

@@ -1,4 +1,4 @@
-actions
+initialization
 setCanvasContent2: aModel
 	| newView |
 
@@ -10,5 +10,4 @@ setCanvasContent2: aModel
 					"addMessage: 'hello';"
 					yourself.
 
-	"self view: newView."
 	self canvas content2: newView.

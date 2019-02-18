@@ -1,4 +1,4 @@
-actions
+initialization
 setViewOn: aModel
 	| newView |
 
@@ -10,5 +10,4 @@ setViewOn: aModel
 					"addMessage: 'hello';"
 					yourself.
 
-	"self view: newView."
-	self canvas content1: newView.
+	self layout contentArea component content1: newView.
