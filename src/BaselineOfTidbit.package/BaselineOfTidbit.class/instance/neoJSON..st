@@ -2,8 +2,5 @@ dependencies
 neoJSON: spec
 
 	spec
-		project: 'NeoJSON'
-		with: [ 
-			spec
-				className: 'ConfigurationOfNeoJSON';
-				repository: 'http://mc.stfx.eu/Neo' ].
+		baseline: 'NeoJSON'
+		with: [ spec repository: 'github://svenvc/NeoJSON:17/repository' ].
