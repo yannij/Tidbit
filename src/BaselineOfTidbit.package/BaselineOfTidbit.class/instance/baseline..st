@@ -15,9 +15,9 @@ baseline: spec
 				spec requires: #('NeoJSON' 'LightningMDB-Core' 'LightningMDB-Dictionary' 'Voyage') ];
 			package: 'Voyage-LightningMDB-Tests' with: [
 				spec requires: #('Voyage-LightningMDB' 'LightningMDB-Tests-Core' 'LightningMDB-Tests-Dictionary') ];"
-			package: 'Tidbit-Core' with: [ spec requires: #('MaterialDesignLite' 'Voyage') ];
+			package: 'Tidbit-Core' with: [ spec requires: #('Voyage') ];
 			package: 'Tidbit-Core-Tests' with: [ spec requires: #('Tidbit-Core') ];
-			package: 'Tidbit-MaterialComponentsWeb' with: [ spec requires: #('Tidbit-Core' 'Voyage-LightningMDB' 'MaterialComponentsWeb') ].
+			package: 'Tidbit-MaterialComponentsWeb' with: [ spec requires: #('Tidbit-Core' 'MaterialComponentsWeb') ].
 			"package: 'Tidbit-MDL' with: [ spec requires: #('MaterialDesignLite') ];
 			package: 'Tidbit-MaterialDesignLite' with: [ spec requires: #('Tidbit-Core' 'Tidbit-MDL') ]."
 
