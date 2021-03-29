@@ -1,5 +1,5 @@
 initalize
 repository
 
-	Repository ifNil: [Repository := VOLightningMDBRepository on: self repositoryName].
+	Repository ifNil: [Repository := VOMemoryRepository new].
 	^Repository

@@ -5,5 +5,5 @@ repositoryClear
 	"
 
 	Repository ifNotNil: [
-		Repository database close.
+		"Repository database close."
 		Repository := nil ]
