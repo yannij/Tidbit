@@ -1,4 +1,4 @@
 initalize
 shutDown: quitting
 	
-	self repositoryClear.
+	"self repositoryClear."
