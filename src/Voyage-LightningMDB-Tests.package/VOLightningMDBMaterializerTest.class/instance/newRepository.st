@@ -1,3 +1,0 @@
-private
-newRepository
-	^ VOLightningMDBRepository new

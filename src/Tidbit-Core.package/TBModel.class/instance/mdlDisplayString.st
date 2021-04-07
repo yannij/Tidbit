@@ -1,4 +1,0 @@
-displaying
-mdlDisplayString
-
-	^self printString

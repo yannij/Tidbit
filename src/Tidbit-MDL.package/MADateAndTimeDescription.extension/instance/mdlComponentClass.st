@@ -1,4 +1,0 @@
-*Tidbit-MDL
-mdlComponentClass
-
-	^MDLTimeStampInputComponent

@@ -1,4 +1,0 @@
-initialization
-appBarTitle
-
-	^self applicationTitle 

@@ -1,3 +1,0 @@
-accessing-magritte
-isVoyageRoot
-	^true

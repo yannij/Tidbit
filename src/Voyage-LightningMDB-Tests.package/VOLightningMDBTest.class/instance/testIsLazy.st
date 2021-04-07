@@ -1,3 +1,0 @@
-tests
-testIsLazy
-	super testIsLazy

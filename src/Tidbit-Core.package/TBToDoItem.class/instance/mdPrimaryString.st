@@ -1,4 +1,0 @@
-printing
-mdPrimaryString
-
-	^self description

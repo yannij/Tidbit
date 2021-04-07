@@ -1,4 +1,0 @@
-initalize
-repositoryName
-
-	^'TidbitExample'
