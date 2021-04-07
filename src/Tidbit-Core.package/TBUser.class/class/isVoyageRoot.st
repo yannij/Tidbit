@@ -1,3 +1,4 @@
 voyage
 isVoyageRoot
-	^true
+
+	^ true

@@ -1,7 +1,8 @@
 initalize
 buildTestDatabase
 	"
-	self buildTestDatabase
+	self repositoryClear.
+	self buildTestDatabase.
 	"
 	| userModel |
 
