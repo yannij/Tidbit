@@ -1,7 +1,7 @@
 Class {
 	#name : #BaselineOfTidbit,
 	#superclass : #BaselineOf,
-	#category : 'BaselineOfTidbit'
+	#category : #BaselineOfTidbit
 }
 
 { #category : #baselines }
@@ -21,7 +21,8 @@ BaselineOfTidbit >> baseline: spec [
 				spec requires: #('NeoJSON' 'LightningMDB-Core' 'LightningMDB-Dictionary' 'Voyage') ];
 			package: 'Voyage-LightningMDB-Tests' with: [
 				spec requires: #('Voyage-LightningMDB' 'LightningMDB-Tests-Core' 'LightningMDB-Tests-Dictionary') ];"
-			package: 'Tidbit-Core' with: [ spec requires: #('Voyage') ];
+			package: 'Tidbit-CoreExtra' with: [ spec requires: #('Voyage') ];
+			package: 'Tidbit-Core' with: [ spec requires: #('Tidbit-CoreExtra' 'Voyage') ];
 			package: 'Tidbit-Core-Tests' with: [ spec requires: #('Tidbit-Core') ];
 			package: 'Tidbit-MaterialComponentsWeb' with: [ spec requires: #('Tidbit-Core' 'MaterialComponentsWeb') ].
 			"package: 'Tidbit-MDL' with: [ spec requires: #('MaterialDesignLite') ];

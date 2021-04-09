@@ -10,7 +10,7 @@ Class {
 		'userSettings',
 		'toDoItems'
 	],
-	#category : 'Tidbit-Core'
+	#category : #'Tidbit-Core'
 }
 
 { #category : #voyage }
@@ -157,6 +157,12 @@ TBUser >> lastName [
 { #category : #accessing }
 TBUser >> lastName: anObject [
 	lastName := anObject
+]
+
+{ #category : #printing }
+TBUser >> mdPrimaryString [
+
+	^self userId
 ]
 
 { #category : #accessing }
