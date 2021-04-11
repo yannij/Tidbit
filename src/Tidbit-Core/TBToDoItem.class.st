@@ -5,6 +5,7 @@ Class {
 		'description',
 		'done',
 		'completeByDate',
+		'completeByTime',
 		'priority',
 		'colorCode',
 		'bestTimeOfDayToStart',
@@ -13,55 +14,13 @@ Class {
 		'importance',
 		'calendars'
 	],
-	#category : 'Tidbit-Core'
+	#category : #'Tidbit-Core'
 }
 
 { #category : #voyage }
 TBToDoItem class >> isVoyageRoot [
 
 	^ true
-]
-
-{ #category : #accessing }
-TBToDoItem >> actualDateStarted [
-	^ actualDateStarted
-]
-
-{ #category : #accessing }
-TBToDoItem >> actualDateStarted: anObject [
-	actualDateStarted := anObject
-]
-
-{ #category : #'accessing-magritte' }
-TBToDoItem >> actualDateStartedDescription [
-	<magritteDescription>
-
-	^MADateDescription new
-		accessor: #actualDateStarted;
-		label: 'Actual Date Started';
-		priority: 70;
-		yourself
-]
-
-{ #category : #accessing }
-TBToDoItem >> bestTimeOfDayToStart [
-	^ bestTimeOfDayToStart
-]
-
-{ #category : #accessing }
-TBToDoItem >> bestTimeOfDayToStart: anObject [
-	bestTimeOfDayToStart := anObject
-]
-
-{ #category : #'accessing-magritte' }
-TBToDoItem >> bestTimeOfDayToStartDescription [
-	<magritteDescription>
-
-	^MATimeDescription new
-		accessor: #bestTimeOfDayToStart;
-		label: 'Best Time Of Day To Start';
-		priority: 60;
-		yourself
 ]
 
 { #category : #accessing }
@@ -105,8 +64,14 @@ TBToDoItem >> colorCodeDescription [
 		accessor: #colorCode;
 		default: Color white;
 		label: 'Color Code';
-		priority: 110;
+		priority: 90;
 		yourself
+]
+
+{ #category : #accessing }
+TBToDoItem >> completeBy [
+
+	^ completeByDate yyyymmdd, ' ', completeByTime print24
 ]
 
 { #category : #accessing }
@@ -123,20 +88,47 @@ TBToDoItem >> completeByDate: anObject [
 TBToDoItem >> completeByDateDescription [
 	<magritteDescription>
 
-	^MADateAndTimeDescription new
-		"accessor: #completeByDate;"
-		accessor: (MAPluggableAccessor 
-			read: [ :item | item completeByDate "yyyymmdd" ]
-			write: [ :item :value |
-				value ifNotNil: [ 
-					item 
-						instVarNamed: 'completeByDate' 
-						put: "(Date fromString: value)" value ] ]);
-		default: DateAndTime now printString;
+	^ MADateDescription new
+		accessor: #completeByDate;
+		default: Date today;
 		label: 'Complete By Date';
 		priority: 30;
 		yourself
 
+]
+
+{ #category : #'accessing-magritte' }
+TBToDoItem >> completeByDescription [
+	<magritteDescription>
+
+	^ MAStringDescription new
+		accessor: #completeBy;
+		label: 'Complete By';
+		priority: 200;
+		beReadonly;
+		yourself
+
+]
+
+{ #category : #accessing }
+TBToDoItem >> completeByTime [
+	^ completeByTime
+]
+
+{ #category : #accessing }
+TBToDoItem >> completeByTime: anObject [
+	completeByTime := anObject
+]
+
+{ #category : #'accessing-magritte' }
+TBToDoItem >> completeByTimeDescription [
+	<magritteDescription>
+
+	^MATimeDescription new
+		accessor: #completeByTime;
+		label: 'Complete By Time';
+		priority: 40;
+		yourself
 ]
 
 { #category : #accessing }
@@ -200,7 +192,7 @@ TBToDoItem >> estimatedDurationDescription [
 	^MADurationDescription new
 		accessor: #estimatedDuration;
 		label: 'Estimated Duration';
-		priority: 90;
+		priority: 50;
 		yourself
 ]
 
@@ -222,7 +214,7 @@ TBToDoItem >> importanceDescription [
 		accessor: #importance;
 		label: 'Importance';
 		options: {'High'. 'Medium'. 'Low'};
-		priority: 100;
+		priority: 80;
 		yourself
 ]
 
@@ -233,11 +225,10 @@ TBToDoItem >> initialize [
 
 	self done: false.
 	self description: String new.
-	self completeByDate: DateAndTime now.
-	self priority: 0.
-	self bestTimeOfDayToStart: Time now.
-	self actualDateStarted: Date today.
+	self completeByDate: Date today.
+	self completeByTime: Time now.
 	self estimatedDuration: 1 hour.
+	self priority: 0.
 	self importance: 'Medium'.
 	self calendars: OrderedCollection new.
 
@@ -286,7 +277,7 @@ TBToDoItem >> priorityDescription [
 		accessor: #priority;
 		default: 0;
 		label: 'Priority';
-		priority: 40;
+		priority: 60;
 		beInteger;
 		yourself
 ]

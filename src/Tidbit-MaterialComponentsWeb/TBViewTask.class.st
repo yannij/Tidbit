@@ -1,29 +1,23 @@
 Class {
 	#name : #TBViewTask,
 	#superclass : #MCWWebComponent,
-	#instVars : [
-		'user'
-	],
 	#category : #'Tidbit-MaterialComponentsWeb'
 }
 
 { #category : #rendering }
 TBViewTask >> renderContentOn: html [
-	| tasksFilterDone tasks dataHeadings dataRows |
+	| tasks dataHeadings dataRows |
 
-	tasksFilterDone := self applicationRootGet viewTaskFilter filterDone.
-	tasks := self sessionUserGet
-			ifNotNil: [:value | value toDoItems select: [ :eachItem | eachItem done = tasksFilterDone ] ]
-			ifNil: [ #() ].
+	tasks := self tasksFiltered.
 
 	html heading level6; mdcTypography_headline6; with: self sessionUserGet mdPrimaryString.
 
-	dataHeadings := { 'Done'->false. 'Complete By Date'->false. 'Description'->false. 'Importance'->false. }.
+	dataHeadings := { 'Done'->false. 'Complete By'->false. 'Description'->false. 'Importance'->false. }.
 	dataRows :=  OrderedCollection new.
 	tasks do: [ :eachTask | | dataRow |
 		dataRow := OrderedCollection new.
 		dataRow add: eachTask done printString.
-		dataRow add: eachTask completeByDate printString.
+		dataRow add: eachTask completeBy.
 		dataRow add: eachTask description asString.
 		dataRow add: eachTask importance asString.
 		dataRows add: dataRow ].
@@ -49,4 +43,23 @@ TBViewTask >> renderContentOn: html [
 TBViewTask >> sessionUserGet [
 
 	^self session properties at: #user ifAbsent: [ nil ]
+]
+
+{ #category : #rendering }
+TBViewTask >> tasksFiltered [
+	| user tasksFilterDone tasksAll |
+
+	user := self sessionUserGet.	
+	user ifNil: [ ^ #() ].
+
+	tasksAll := user toDoItems.
+	tasksFilterDone := self applicationRootGet viewTaskFilter filterDone.
+
+	tasksFilterDone = 'doneOnly'
+		ifTrue: [ ^ tasksAll select: [ :eachTask | eachTask done ] ].
+
+	tasksFilterDone = 'notDoneOnly'
+		ifTrue: [ ^ tasksAll reject: [ :eachTask | eachTask done ] ].
+
+	^ tasksAll
 ]
