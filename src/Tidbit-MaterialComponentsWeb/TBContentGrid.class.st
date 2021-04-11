@@ -5,7 +5,7 @@ Class {
 		'contents',
 		'view'
 	],
-	#category : 'Tidbit-MaterialComponentsWeb'
+	#category : #'Tidbit-MaterialComponentsWeb'
 }
 
 { #category : #accessing }
@@ -18,12 +18,6 @@ TBContentGrid >> content1: aComponent [
 TBContentGrid >> content2: aComponent [
 
 	self contents at: 2 put: aComponent
-]
-
-{ #category : #accessing }
-TBContentGrid >> content3: aComponent [
-
-	self contents at: 3 put: aComponent
 ]
 
 { #category : #accessing }
@@ -41,7 +35,7 @@ TBContentGrid >> initialize [
 
 	super initialize.
 
-	self contents: (OrderedCollection with: nil with: nil with: nil)
+	self contents: (OrderedCollection with: nil with: nil)
 ]
 
 { #category : #rendering }
@@ -56,7 +50,7 @@ TBContentGrid >> renderContentOn: html [
 		with: [
 		html div mdcLayoutGrid__inner; with: [
 			self contents do: [:each |
-				html div mdcLayoutGrid__cell_span4; with: [
+				html div mdcLayoutGrid__cell_span6; with: [
 					html render: each]]]]
 
 ]

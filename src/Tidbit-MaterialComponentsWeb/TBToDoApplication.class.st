@@ -3,7 +3,8 @@ Class {
 	#superclass : #MCWResponsiveApplication,
 	#instVars : [
 		'viewUser',
-		'viewTask'
+		'viewTask',
+		'viewTaskFilter'
 	],
 	#category : #'Tidbit-MaterialComponentsWeb'
 }
@@ -21,14 +22,14 @@ TBToDoApplication class >> initialize [
 	WAAdmin unregister: self applicationPath.
 	"
 
-	^ self registerToDevelopment: self applicationPath
+	^ self registerMaterialWebDevelopment: self applicationPath
 
 ]
 
 { #category : #initialization }
 TBToDoApplication >> appBarTitle [
 
-	^self applicationTitle 
+	^ self applicationTitle 
 
 ]
 
@@ -54,11 +55,16 @@ TBToDoApplication >> buildMainFab [
 { #category : #initialization }
 TBToDoApplication >> buildSideNavList [
 
-	^MCWListBasic new
-		addListItem: (MCWListItemIcon  itemText: 'Home' iconName: 'home' callback: [self setView: self viewUser]);
-		addListItem: (MCWListItemIcon  itemText: 'Tasks' iconName: 'history' callback: [self setView: self viewTask]);
-		yourself.
+	^ MCWListBasic new
+		addListItem: (MCWListItemIcon  itemText: 'Home' iconName: 'home' callback: [self viewUserGo]);
+		addListItem: (MCWListItemIcon  itemText: 'Tasks' iconName: 'history' callback: [self viewTaskGo]);
+		yourself
+]
 
+{ #category : #initialization }
+TBToDoApplication >> buildSideSheet [
+
+	^ MCWSideSheet new
 ]
 
 { #category : #accessing }
@@ -70,16 +76,20 @@ TBToDoApplication >> headerTitle [
 { #category : #initialization }
 TBToDoApplication >> initialize [
 
+	self applicationRootSet: self.
 	self sessionUserSet: self retrieveTestModel.
 	self viewUser: TBContentGrid new.
 	self viewTask: TBViewTask new.
+	self viewTaskFilter: TBViewTaskFilter new.
 
 	super initialize.
+	self layout sideSheet beHidden.
 
 	"self settings setFont: MCWGoogleFont allAvailable atRandom."
 	self layout contentArea component: self viewUser.
+	self layout sideSheet component: self viewTaskFilter.
 
-	self setViewOn: self sessionUserGet.
+	self viewUserSetTo: self sessionUserGet.
 
 	self applicationPostInitialize: self
 
@@ -111,7 +121,7 @@ TBToDoApplication >> sessionUserSet: aUser [
 	self session properties at: #user put: aUser
 ]
 
-{ #category : #initialization }
+{ #category : #navigation }
 TBToDoApplication >> setCanvasContent2: aModel [
 	| newView |
 
@@ -127,28 +137,6 @@ TBToDoApplication >> setCanvasContent2: aModel [
 
 ]
 
-{ #category : #initialization }
-TBToDoApplication >> setView: aView [
-
-	self layout contentArea component: aView
-]
-
-{ #category : #initialization }
-TBToDoApplication >> setViewOn: aModel [
-	| newView |
-
-	aModel isNil
-		ifTrue: [ ^self ].
-
-	newView := aModel asComponent
-					addValidatedForm;
-					"addMessage: 'hello';"
-					yourself.
-
-	self viewUser content1: newView.
-
-]
-
 { #category : #accessing }
 TBToDoApplication >> viewTask [
 	^ viewTask
@@ -160,6 +148,23 @@ TBToDoApplication >> viewTask: anObject [
 ]
 
 { #category : #accessing }
+TBToDoApplication >> viewTaskFilter [
+	^ viewTaskFilter
+]
+
+{ #category : #accessing }
+TBToDoApplication >> viewTaskFilter: anObject [
+	viewTaskFilter := anObject
+]
+
+{ #category : #navigation }
+TBToDoApplication >> viewTaskGo [
+
+	self layout contentArea component: self viewTask.
+	self layout sideSheet beUnHidden
+]
+
+{ #category : #accessing }
 TBToDoApplication >> viewUser [
 	^ viewUser
 ]
@@ -167,4 +172,20 @@ TBToDoApplication >> viewUser [
 { #category : #accessing }
 TBToDoApplication >> viewUser: anObject [
 	viewUser := anObject
+]
+
+{ #category : #navigation }
+TBToDoApplication >> viewUserGo [
+
+	self layout contentArea component: self viewUser.
+	self layout sideSheet beHidden
+]
+
+{ #category : #navigation }
+TBToDoApplication >> viewUserSetTo: aModel [
+	| newView |
+
+	aModel isNil ifTrue: [ ^self ].
+	newView := aModel asComponent addValidatedForm; yourself.
+	self viewUser content1: newView
 ]

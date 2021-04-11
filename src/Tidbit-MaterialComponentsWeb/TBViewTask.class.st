@@ -9,9 +9,12 @@ Class {
 
 { #category : #rendering }
 TBViewTask >> renderContentOn: html [
-	| tasks dataHeadings dataRows |
+	| tasksFilterDone tasks dataHeadings dataRows |
 
-	tasks := self sessionUserGet ifNotNil: [:value | value toDoItems ] ifNil: [ #() ].
+	tasksFilterDone := self applicationRootGet viewTaskFilter filterDone.
+	tasks := self sessionUserGet
+			ifNotNil: [:value | value toDoItems select: [ :eachItem | eachItem done = tasksFilterDone ] ]
+			ifNil: [ #() ].
 
 	html heading level6; mdcTypography_headline6; with: self sessionUserGet mdPrimaryString.
 
@@ -21,8 +24,8 @@ TBViewTask >> renderContentOn: html [
 		dataRow := OrderedCollection new.
 		dataRow add: eachTask done printString.
 		dataRow add: eachTask completeByDate printString.
-		dataRow add: eachTask description printString.
-		dataRow add: eachTask importance printString.
+		dataRow add: eachTask description asString.
+		dataRow add: eachTask importance asString.
 		dataRows add: dataRow ].
 
 	html div mdcDataTable with: [
