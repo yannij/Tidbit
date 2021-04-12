@@ -4,7 +4,7 @@ Class {
 	#classVars : [
 		'Repository'
 	],
-	#category : 'Tidbit-Core'
+	#category : #'Tidbit-Core'
 }
 
 { #category : #initalize }
@@ -23,10 +23,10 @@ TBExampleDatabase class >> buildTestDatabase [
 
 	userModel toDoItems
 		addAll: {
-			TBToDoItem new description: 'todo-1'; priority: 1; yourself.
-			TBToDoItem new description: 'todo-2'; priority: 2; yourself.
-			TBToDoItem new description: 'todo-3'; priority: 3; yourself.
-			TBToDoItem new description: 'todo-4'; priority: 4; yourself.
+			TBToDoItem new summary: 'todo-1'; priority: 1; colorCode: (Color indexedColors at: 4); yourself.
+			TBToDoItem new summary: 'todo-2'; priority: 2; colorCode: (Color indexedColors at: 5); description: self loremText; yourself.
+			TBToDoItem new summary: 'todo-3'; priority: 3; colorCode: (Color indexedColors at: 6); yourself.
+			TBToDoItem new summary: 'todo-4'; priority: 4; colorCode: (Color indexedColors at: 7); yourself.
 			}.
 
 	self repository save: userModel.
@@ -39,6 +39,12 @@ TBExampleDatabase class >> buildTestDatabase [
 TBExampleDatabase class >> initialize [
 	self repositoryClear.
 	Smalltalk addToShutDownList: self
+]
+
+{ #category : #initalize }
+TBExampleDatabase class >> loremText [
+
+	^ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
 ]
 
 { #category : #initalize }

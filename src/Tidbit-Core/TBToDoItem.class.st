@@ -2,6 +2,7 @@ Class {
 	#name : #TBToDoItem,
 	#superclass : #TBRootObject,
 	#instVars : [
+		'summary',
 		'description',
 		'done',
 		'completeByDate',
@@ -153,18 +154,6 @@ TBToDoItem >> descriptionDescription [
 		yourself
 ]
 
-{ #category : #'accessing-magritte' }
-TBToDoItem >> descriptionDone [
-	<magritteDescription>
-
-	^MABooleanDescription new
-		accessor: #done;
-		label: 'Done';
-		priority: 10;
-		default: false;
-		yourself
-]
-
 { #category : #accessing }
 TBToDoItem >> done [
 	^ done
@@ -173,6 +162,18 @@ TBToDoItem >> done [
 { #category : #accessing }
 TBToDoItem >> done: anObject [
 	done := anObject
+]
+
+{ #category : #'accessing-magritte' }
+TBToDoItem >> doneDescription [
+	<magritteDescription>
+
+	^MABooleanDescription new
+		accessor: #done;
+		label: 'Done';
+		priority: 10;
+		default: false;
+		yourself
 ]
 
 { #category : #accessing }
@@ -224,12 +225,14 @@ TBToDoItem >> initialize [
 	super initialize.
 
 	self done: false.
+	self summary: String new.
 	self description: String new.
 	self completeByDate: Date today.
 	self completeByTime: Time now.
 	self estimatedDuration: 1 hour.
 	self priority: 0.
 	self importance: 'Medium'.
+	self colorCode: Color new.
 	self calendars: OrderedCollection new.
 
 ]
@@ -250,13 +253,13 @@ TBToDoItem >> mdDisplaySecondaryString [
 { #category : #printing }
 TBToDoItem >> mdPrimaryString [
 
-	^self description
+	^self summary
 ]
 
 { #category : #printing }
 TBToDoItem >> mdlDisplayString [
 
-	^self description
+	^self summary
 ]
 
 { #category : #accessing }
@@ -279,5 +282,28 @@ TBToDoItem >> priorityDescription [
 		label: 'Priority';
 		priority: 60;
 		beInteger;
+		yourself
+]
+
+{ #category : #accessing }
+TBToDoItem >> summary [
+	^ summary
+]
+
+{ #category : #accessing }
+TBToDoItem >> summary: anObject [
+	summary := anObject
+]
+
+{ #category : #'accessing-magritte' }
+TBToDoItem >> summaryDescription [
+	<magritteDescription>
+
+	^ MAStringDescription new
+		accessor: #summary;
+		default: '';
+		label: 'Summary';
+		priority: 15;
+		beRequired;
 		yourself
 ]

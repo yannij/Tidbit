@@ -57,7 +57,7 @@ TBToDoApplication >> buildSideNavList [
 
 	^ MCWListBasic new
 		addListItem: (MCWListItemIcon  itemText: 'Home' iconName: 'home' callback: [self viewUserGo]);
-		addListItem: (MCWListItemIcon  itemText: 'Tasks' iconName: 'history' callback: [self viewTaskGo]);
+		addListItem: (MCWListItemIcon  itemText: 'Tasks' iconName: 'checklist' callback: [self viewTaskGo]);
 		yourself
 ]
 

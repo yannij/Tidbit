@@ -5,38 +5,87 @@ Class {
 }
 
 { #category : #rendering }
-TBViewTask >> renderContentOn: html [
-	| tasks dataHeadings dataRows |
+TBViewTask >> dataRows [
+	| tasks dataRows |
 
 	tasks := self tasksFiltered.
-
-	html heading level6; mdcTypography_headline6; with: self sessionUserGet mdPrimaryString.
-
-	dataHeadings := { 'Done'->false. 'Complete By'->false. 'Description'->false. 'Importance'->false. }.
 	dataRows :=  OrderedCollection new.
 	tasks do: [ :eachTask | | dataRow |
 		dataRow := OrderedCollection new.
-		dataRow add: eachTask done printString.
+		dataRow add: (eachTask done ifTrue: [ [:html | html span mdcMaterialIcons; with: 'check'] ] ifFalse: [ '' ]).
+		dataRow add: (eachTask summary ifNotNil: [ :value | value ] ifNil: [ '' ]).
 		dataRow add: eachTask completeBy.
-		dataRow add: eachTask description asString.
+		dataRow add: eachTask estimatedDuration humanReadablePrintString.
 		dataRow add: eachTask importance asString.
+		dataRow add: eachTask priority asString.
+		"dataRow add: eachTask colorCode shortPrintString."
+		dataRow add: [ :html | html textInput type: 'color'; disabled; value: eachTask colorCode asHTMLColor ].
+		dataRow add: (eachTask description ifNotNil: [ :value | value truncateWithElipsisTo: 25] ifNil: [ '' ]).
 		dataRows add: dataRow ].
+	^ dataRows
+]
 
+{ #category : #rendering }
+TBViewTask >> renderContentOn: html [
+
+	self renderTableOn: html
+]
+
+{ #category : #rendering }
+TBViewTask >> renderTableHeadingsOn: html [
+	| dataHeadings |
+
+	dataHeadings := #( 'Done' 'Summary' 'Complete By' 'Duration' 'Importance' 'Priority' 'Color Code' 'Description' ).
+	html tableHead: [
+		html tableRow "mdcDataTable__headerRow" class: 'mdc-data-table__header-row'; with: [
+			dataHeadings do: [ :each |
+				html tableHeading mdcDataTable__headerCell; mdcRole: 'columnHeader'; scope: 'col'; with: each ] ]]
+
+]
+
+{ #category : #rendering }
+TBViewTask >> renderTableOn: html [
+
+	html heading level6; mdcTypography_headline6; with: self sessionUserGet mdPrimaryString.
 	html div mdcDataTable with: [
-		html div mdcDataTable__tableContainer; with: [ 
+		html div mdcDataTable__tableContainer; with: [
+			| dataRows |
+			dataRows := self dataRows.
 			html table mdcDataTable__table;  with: [
-				html tableHead with: [
-					html tableRow "mdcDataTable__headerRow" with: [
-						dataHeadings do: [ :each | | tag |
-							tag := html tableHeading mdcDataTable__headerCell; mdcRole: 'columnHeader'; scope: 'col'; with: each key.
-							each value ifTrue: [ tag  mdcDataTable__headerCell_numeric ] ] ]
-					].
-				html tableBody mdcDataTable__content; with: [
-					dataRows do: [ :eachRow |
-						html tableRow mdcDataTable__row; with: [
-							eachRow doWithIndex: [ :each :index | | tag |
-								tag := html tableData mdcDataTable__cell; scope: 'row'; with: each.
-								(dataHeadings at: index) value ifTrue: [ tag  mdcDataTable__headerCell_numeric ] ] ] ] ] ] ] ]
+				self renderTableHeadingsOn: html.
+				self renderTableRows: dataRows on: html ].
+		self renderTableRows: dataRows paginationOn: html ] ]
+]
+
+{ #category : #rendering }
+TBViewTask >> renderTableRows: dataRows on: html [
+
+	html tableBody mdcDataTable__content; with: [
+		dataRows do: [ :eachRow |
+			html tableRow mdcDataTable__row; with: [
+				eachRow doWithIndex: [ :each :index |
+					html tableData mdcDataTable__cell; scope: 'row'; with: each ] ] ] ]
+]
+
+{ #category : #rendering }
+TBViewTask >> renderTableRows: dataRows paginationOn: html [
+
+	html div mdcDataTable__pagination with: [
+		html div mdcDataTable__paginationTrailing; with: [
+			"html div mdcDataTable__paginationRowsPerPage; with: [
+				html div mdcDataTable__paginationRowsPerPageLabel; with: [
+					html text: 'Rows per page' ] ].
+				html div x; with: []".
+			html div mdcDataTable__paginationNavigation; with: [
+				html div mdcDataTable__paginationTotal; with: [ html text: '1-', dataRows size printString, ' of ', dataRows size printString].
+				html button mdcIconButton; mdcMaterialIcons; mdcDataTable__paginationButton; attributeAt: 'data-first-page' put: 'true'; disabled;
+					with: [ html div mdcButton__icon; with: 'first_page'].
+				html button mdcIconButton; mdcMaterialIcons; mdcDataTable__paginationButton; attributeAt: 'data-prev-page' put: 'true'; disabled;
+					with: [ html div mdcButton__icon; with: 'chevron_left'].
+				html button mdcIconButton; mdcMaterialIcons; mdcDataTable__paginationButton; attributeAt: 'data-next-page' put: 'true';
+					with: [ html div mdcButton__icon; with: 'chevron_right'].
+				html button mdcIconButton; mdcMaterialIcons; mdcDataTable__paginationButton; attributeAt: 'data-last-page' put: 'true';
+					with: [ html div mdcButton__icon; with: 'last_page' ] ] ] ]
 ]
 
 { #category : #accessing }
