@@ -12,6 +12,7 @@ BaselineOfTidbit >> baseline: spec [
 
 		self neoJSON: spec.
 		"self lightningMDB: spec."
+		self seaside: spec.
 		self voyage: spec.
 		self materialComponentsWeb: spec.
 		"self materialDesignLite: spec."
@@ -21,8 +22,7 @@ BaselineOfTidbit >> baseline: spec [
 				spec requires: #('NeoJSON' 'LightningMDB-Core' 'LightningMDB-Dictionary' 'Voyage') ];
 			package: 'Voyage-LightningMDB-Tests' with: [
 				spec requires: #('Voyage-LightningMDB' 'LightningMDB-Tests-Core' 'LightningMDB-Tests-Dictionary') ];"
-			package: 'Tidbit-CoreExtra' with: [ spec requires: #('Voyage') ];
-			package: 'Tidbit-Core' with: [ spec requires: #('Tidbit-CoreExtra' 'Voyage') ];
+			package: 'Tidbit-Core' with: [ spec requires: #('Voyage' 'Seaside3') ];
 			package: 'Tidbit-Core-Tests' with: [ spec requires: #('Tidbit-Core') ];
 			package: 'Tidbit-MaterialComponentsWeb' with: [ spec requires: #('Tidbit-Core' 'MaterialComponentsWeb') ].
 			"package: 'Tidbit-MDL' with: [ spec requires: #('MaterialDesignLite') ];
@@ -98,6 +98,16 @@ BaselineOfTidbit >> neoJSON: spec [
 	spec
 		baseline: 'NeoJSON'
 		with: [ spec repository: 'github://svenvc/NeoJSON:17/repository' ].
+
+]
+
+{ #category : #dependencies }
+BaselineOfTidbit >> seaside: spec [
+
+	spec
+		baseline: 'Seaside3'
+		with: [ spec repository: 'github://SeasideSt/Seaside:master/repository';
+			loads: #( 'default' ) ].
 
 ]
 
