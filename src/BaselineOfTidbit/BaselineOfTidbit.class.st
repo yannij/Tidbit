@@ -11,28 +11,16 @@ BaselineOfTidbit >> baseline: spec [
 	spec for: #common do: [
 
 		self neoJSON: spec.
-		"self lightningMDB: spec."
-		self seaside: spec.
-		self voyage: spec.
 		self materialComponentsWeb: spec.
-		"self materialDesignLite: spec."
+		self voyage: spec.
 
-		spec 
-			"package: 'Voyage-LightningMDB' with: [
-				spec requires: #('NeoJSON' 'LightningMDB-Core' 'LightningMDB-Dictionary' 'Voyage') ];
-			package: 'Voyage-LightningMDB-Tests' with: [
-				spec requires: #('Voyage-LightningMDB' 'LightningMDB-Tests-Core' 'LightningMDB-Tests-Dictionary') ];"
-			package: 'Tidbit-Core' with: [ spec requires: #('Voyage' 'Seaside3') ];
+		spec
+			package: 'Tidbit-Core' with: [ spec requires: #('Voyage' 'MaterialComponentsWeb') ];
 			package: 'Tidbit-Core-Tests' with: [ spec requires: #('Tidbit-Core') ];
-			package: 'Tidbit-MaterialComponentsWeb' with: [ spec requires: #('Tidbit-Core' 'MaterialComponentsWeb') ].
-			"package: 'Tidbit-MDL' with: [ spec requires: #('MaterialDesignLite') ];
-			package: 'Tidbit-MaterialDesignLite' with: [ spec requires: #('Tidbit-Core' 'Tidbit-MDL') ]."
+			package: 'Tidbit-MaterialComponentsWeb' with: [ spec requires: #('Tidbit-Core') ].
 
 		spec
 			group: 'default' with: #('Tidbit-MaterialComponentsWeb' 'Tidbit-Core-Tests') ]
-			"group: 'default' with: #('app' 'tests');
-			group: 'app' with: #('Tidbit-MaterialDesignLite' 'Tidbit-MaterialComponentsWeb');
-			group: 'tests' with: #('Tidbit-Core-Tests' 'Voyage-LightningMDB-Tests') ]"
 ]
 
 { #category : #dependencies }
@@ -66,15 +54,6 @@ BaselineOfTidbit >> lightningMDB: spec [
 ]
 
 { #category : #dependencies }
-BaselineOfTidbit >> magritte: spec [
-
-	spec
-		baseline: 'Magritte'
-		with: [ spec repository: 'github://magritte-metamodel/magritte:v3.7/source';
-			loads: #( 'Seaside' ) ]
-]
-
-{ #category : #dependencies }
 BaselineOfTidbit >> materialComponentsWeb: spec [
 
 	spec
@@ -98,16 +77,6 @@ BaselineOfTidbit >> neoJSON: spec [
 	spec
 		baseline: 'NeoJSON'
 		with: [ spec repository: 'github://svenvc/NeoJSON:17/repository' ].
-
-]
-
-{ #category : #dependencies }
-BaselineOfTidbit >> seaside: spec [
-
-	spec
-		baseline: 'Seaside3'
-		with: [ spec repository: 'github://SeasideSt/Seaside:master/repository';
-			loads: #( 'default' ) ].
 
 ]
 
