@@ -33,15 +33,11 @@ TBUser >> dateCreated: anObject [
 TBUser >> descriptionDateCreated [
 	<magritteDescription>
 
-	^MADateAndTimeDescription new
+	^ MADateAndTimeDescription new
 		"accessor: #dateCreated;"
 		accessor: (MAPluggableAccessor 
 			read: [ :item | item dateCreated ]
-			write: [ :item :value |
-				value ifNotNil: [ 
-					item 
-						instVarNamed: 'dateCreated' 
-						put: "(Date fromString: value)" value ] ]);
+			write: [ :item :value | value ifNotNil: [ :arg | item dateCreated: value ] ]);
 		default: DateAndTime now printString;
 		label: 'Date Created';
 		priority: 17;
@@ -52,7 +48,7 @@ TBUser >> descriptionDateCreated [
 TBUser >> descriptionFirstName [
 	<magritteDescription>
 
-	^MAStringDescription new
+	^ MAStringDescription new
 		accessor: #firstName;
 		default: '';
 		label: 'First Name';
@@ -64,7 +60,7 @@ TBUser >> descriptionFirstName [
 TBUser >> descriptionLastName [
 	<magritteDescription>
 
-	^MAStringDescription new
+	^ MAStringDescription new
 		accessor: #lastName;
 		default: '';
 		label: 'Last Name';
@@ -76,7 +72,7 @@ TBUser >> descriptionLastName [
 TBUser >> descriptionPasswordHash [
 	<magritteDescription>
 
-	^MAPasswordDescription new
+	^ MAPasswordDescription new
 		accessor: #passwordHash;
 		default: '';
 		label: 'Password';
@@ -88,7 +84,7 @@ TBUser >> descriptionPasswordHash [
 TBUser >> descriptionToDoItems [
 	<magritteDescription>
 
-	^MAToManyRelationDescription new
+	^ MAToManyRelationDescription new
 		accessor: #toDoItems;
 		classes: {TBToDoItem};
 		default: OrderedCollection new;
@@ -102,7 +98,7 @@ TBUser >> descriptionToDoItems [
 TBUser >> descriptionUserId [
 	<magritteDescription>
 
-	^MAStringDescription new
+	^ MAStringDescription new
 		accessor: #userId;
 		default: '';
 		label: 'User ID';
@@ -114,7 +110,7 @@ TBUser >> descriptionUserId [
 TBUser >> descriptionUserSettings [
 	<magritteDescription>
 
-	^MAToOneRelationDescription new
+	^ MAToOneRelationDescription new
 		accessor: #userSettings;
 		label: 'User Settings';
 		classes: {TBUserSettings};
@@ -133,7 +129,7 @@ TBUser >> firstName: anObject [
 	firstName := anObject
 ]
 
-{ #category : #initalize }
+{ #category : #initialization }
 TBUser >> initialize [
 
 	super initialize.
@@ -162,7 +158,7 @@ TBUser >> lastName: anObject [
 { #category : #printing }
 TBUser >> mdPrimaryString [
 
-	^self userId
+	^ self userId
 ]
 
 { #category : #accessing }
@@ -183,6 +179,12 @@ TBUser >> toDoItems [
 { #category : #accessing }
 TBUser >> toDoItems: anObject [
 	toDoItems := anObject
+]
+
+{ #category : #accessing }
+TBUser >> toDoItemsAdd: anItem [
+
+	self toDoItems add: anItem
 ]
 
 { #category : #accessing }

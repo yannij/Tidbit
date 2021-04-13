@@ -12,15 +12,15 @@ TBViewTask >> dataRows [
 	dataRows :=  OrderedCollection new.
 	tasks do: [ :eachTask | | dataRow |
 		dataRow := OrderedCollection new.
-		dataRow add: (eachTask done ifTrue: [ [:html | html span mdcMaterialIcons; with: 'check'] ] ifFalse: [ '' ]).
+		dataRow add: (eachTask done ifTrue: [ [ :html | html span mdcMaterialIcons; with: 'check' ] ] ifFalse: [ '' ]).
 		dataRow add: (eachTask summary ifNotNil: [ :value | value ] ifNil: [ '' ]).
 		dataRow add: eachTask completeBy.
 		dataRow add: eachTask estimatedDuration humanReadablePrintString.
-		dataRow add: eachTask importance asString.
-		dataRow add: eachTask priority asString.
+		dataRow add: eachTask importance greaseString.
+		dataRow add: eachTask priority greaseString.
 		"dataRow add: eachTask colorCode shortPrintString."
 		dataRow add: [ :html | html textInput type: 'color'; disabled; value: eachTask colorCode asHTMLColor ].
-		dataRow add: (eachTask description ifNotNil: [ :value | value truncateWithElipsisTo: 25] ifNil: [ '' ]).
+		dataRow add: (eachTask description ifNotNil: [ :value | value truncateWithElipsisTo: 25 ] ifNil: [ '' ]).
 		dataRows add: dataRow ].
 	^ dataRows
 ]
@@ -39,7 +39,7 @@ TBViewTask >> renderTableHeadingsOn: html [
 	html tableHead: [
 		html tableRow "mdcDataTable__headerRow" class: 'mdc-data-table__header-row'; with: [
 			dataHeadings do: [ :each |
-				html tableHeading mdcDataTable__headerCell; mdcRole: 'columnHeader'; scope: 'col'; with: each ] ]]
+				html tableHeading mdcDataTable__headerCell; mdcRole: 'columnHeader'; scope: 'col'; with: each ] ] ]
 
 ]
 
@@ -63,7 +63,7 @@ TBViewTask >> renderTableRows: dataRows on: html [
 	html tableBody mdcDataTable__content; with: [
 		dataRows do: [ :eachRow |
 			html tableRow mdcDataTable__row; with: [
-				eachRow doWithIndex: [ :each :index |
+				eachRow keysAndValuesDo: [ :index :each |
 					html tableData mdcDataTable__cell; scope: 'row'; with: each ] ] ] ]
 ]
 
@@ -77,13 +77,13 @@ TBViewTask >> renderTableRows: dataRows paginationOn: html [
 					html text: 'Rows per page' ] ].
 				html div x; with: []".
 			html div mdcDataTable__paginationNavigation; with: [
-				html div mdcDataTable__paginationTotal; with: [ html text: '1-', dataRows size printString, ' of ', dataRows size printString].
+				html div mdcDataTable__paginationTotal; with: [ html text: '1-', dataRows size printString, ' of ', dataRows size printString ].
 				html button mdcIconButton; mdcMaterialIcons; mdcDataTable__paginationButton; attributeAt: 'data-first-page' put: 'true'; disabled;
-					with: [ html div mdcButton__icon; with: 'first_page'].
+					with: [ html div mdcButton__icon; with: 'first_page' ].
 				html button mdcIconButton; mdcMaterialIcons; mdcDataTable__paginationButton; attributeAt: 'data-prev-page' put: 'true'; disabled;
-					with: [ html div mdcButton__icon; with: 'chevron_left'].
+					with: [ html div mdcButton__icon; with: 'chevron_left' ].
 				html button mdcIconButton; mdcMaterialIcons; mdcDataTable__paginationButton; attributeAt: 'data-next-page' put: 'true';
-					with: [ html div mdcButton__icon; with: 'chevron_right'].
+					with: [ html div mdcButton__icon; with: 'chevron_right' ].
 				html button mdcIconButton; mdcMaterialIcons; mdcDataTable__paginationButton; attributeAt: 'data-last-page' put: 'true';
 					with: [ html div mdcButton__icon; with: 'last_page' ] ] ] ]
 ]
@@ -91,7 +91,7 @@ TBViewTask >> renderTableRows: dataRows paginationOn: html [
 { #category : #accessing }
 TBViewTask >> sessionUserGet [
 
-	^self session properties at: #user ifAbsent: [ nil ]
+	^ self session properties at: #user ifAbsent: [ nil ]
 ]
 
 { #category : #rendering }

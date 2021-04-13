@@ -12,7 +12,7 @@ Class {
 { #category : #'class initialization' }
 TBToDoApplication class >> applicationPath [
 
-	^'tidbit/todo'
+	^ 'tidbit/todo'
 
 ]
 
@@ -36,28 +36,28 @@ TBToDoApplication >> appBarTitle [
 { #category : #accessing }
 TBToDoApplication >> applicationTitle [
 
-	^'Tidbit ToDo'
+	^ 'Tidbit ToDo'
 ]
 
 { #category : #accessing }
 TBToDoApplication >> browserTabTitle [
 
-	^self headerTitle
+	^ self headerTitle
 
 ]
 
 { #category : #initialization }
 TBToDoApplication >> buildMainFab [
 
-	^nil
+	^ nil
 ]
 
 { #category : #initialization }
 TBToDoApplication >> buildSideNavList [
 
 	^ MCWListBasic new
-		addListItem: (MCWListItemIcon  itemText: 'Home' iconName: 'home' callback: [self viewUserGo]);
-		addListItem: (MCWListItemIcon  itemText: 'Tasks' iconName: 'checklist' callback: [self viewTaskGo]);
+		addListItem: (MCWListItemIcon  itemText: 'Home' iconName: 'home' callback: [ self viewUserGo ]);
+		addListItem: (MCWListItemIcon  itemText: 'Tasks' iconName: 'checklist' callback: [ self viewTaskGo ]);
 		yourself
 ]
 
@@ -70,7 +70,7 @@ TBToDoApplication >> buildSideSheet [
 { #category : #accessing }
 TBToDoApplication >> headerTitle [
 
-	^'(Tidbit-ToDo2)'
+	^ '(Tidbit-ToDo2)'
 ]
 
 { #category : #initialization }
@@ -98,9 +98,9 @@ TBToDoApplication >> initialize [
 { #category : #'accessing - model' }
 TBToDoApplication >> retrieveTestModel [
 
-	^(TBExampleDatabase repository selectAll: TBUser)
-		ifEmpty: [nil]
-		ifNotEmpty: [:value | value anyOne]
+	^ (TBExampleDatabase repository selectAll: TBUser)
+		ifEmpty: [ nil ]
+		ifNotEmpty: [ :value | value anyOne ]
 ]
 
 { #category : #'accessing - model' }
@@ -112,7 +112,7 @@ TBToDoApplication >> saveObject: anObject [
 { #category : #'accessing - model' }
 TBToDoApplication >> sessionUserGet [
 
-	^self session properties at: #user ifAbsent: [ nil ]
+	^ self session properties at: #user ifAbsent: [ nil ]
 ]
 
 { #category : #'accessing - model' }
@@ -126,7 +126,7 @@ TBToDoApplication >> setCanvasContent2: aModel [
 	| newView |
 
 	aModel isNil
-		ifTrue: [ ^self ].
+		ifTrue: [ ^ self ].
 
 	newView := aModel asComponent
 					addValidatedForm;
@@ -185,7 +185,10 @@ TBToDoApplication >> viewUserGo [
 TBToDoApplication >> viewUserSetTo: aModel [
 	| newView |
 
-	aModel isNil ifTrue: [ ^self ].
+	aModel ifNil: [
+		self viewUser content1: nil.
+		^ self ].
+
 	newView := aModel asComponent addValidatedForm; yourself.
 	self viewUser content1: newView
 ]

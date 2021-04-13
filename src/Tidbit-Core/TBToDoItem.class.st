@@ -9,8 +9,6 @@ Class {
 		'completeByTime',
 		'priority',
 		'colorCode',
-		'bestTimeOfDayToStart',
-		'actualDateStarted',
 		'estimatedDuration',
 		'importance',
 		'calendars'
@@ -61,7 +59,7 @@ TBToDoItem >> colorCode: anObject [
 TBToDoItem >> colorCodeDescription [
 	<magritteDescription>
 
-	^MAColorDescription new
+	^ MAColorDescription new
 		accessor: #colorCode;
 		default: Color white;
 		label: 'Color Code';
@@ -125,7 +123,7 @@ TBToDoItem >> completeByTime: anObject [
 TBToDoItem >> completeByTimeDescription [
 	<magritteDescription>
 
-	^MATimeDescription new
+	^ MATimeDescription new
 		accessor: #completeByTime;
 		label: 'Complete By Time';
 		priority: 40;
@@ -146,7 +144,7 @@ TBToDoItem >> description: anObject [
 TBToDoItem >> descriptionDescription [
 	<magritteDescription>
 
-	^MAMemoDescription new
+	^ MAMemoDescription new
 		accessor: #description;
 		default: '';
 		label: 'Description';
@@ -168,7 +166,7 @@ TBToDoItem >> done: anObject [
 TBToDoItem >> doneDescription [
 	<magritteDescription>
 
-	^MABooleanDescription new
+	^ MABooleanDescription new
 		accessor: #done;
 		label: 'Done';
 		priority: 10;
@@ -190,7 +188,7 @@ TBToDoItem >> estimatedDuration: anObject [
 TBToDoItem >> estimatedDurationDescription [
 	<magritteDescription>
 
-	^MADurationDescription new
+	^ MADurationDescription new
 		accessor: #estimatedDuration;
 		label: 'Estimated Duration';
 		priority: 50;
@@ -211,7 +209,7 @@ TBToDoItem >> importance: anObject [
 TBToDoItem >> importanceDescription [
 	<magritteDescription>
 
-	^MASingleOptionDescription new
+	^ MASingleOptionDescription new
 		accessor: #importance;
 		label: 'Importance';
 		options: {'High'. 'Medium'. 'Low'};
@@ -219,7 +217,7 @@ TBToDoItem >> importanceDescription [
 		yourself
 ]
 
-{ #category : #initalize }
+{ #category : #initialization }
 TBToDoItem >> initialize [
 
 	super initialize.
@@ -239,13 +237,13 @@ TBToDoItem >> initialize [
 
 { #category : #'accessing-magritte' }
 TBToDoItem >> isVoyageRoot [
-	^true
+	^ true
 ]
 
 { #category : #printing }
 TBToDoItem >> mdDisplaySecondaryString [
 
-	^(self done ifTrue: ['DONE'] ifFalse: ['NOT-DONE']),
+	^ (self done ifTrue: [ 'DONE' ] ifFalse: [ 'NOT-DONE' ]),
 		', ', 'Priority ', self priority printString,
 		', ', 'Complete by  ', self completeByDate printString
 ]
@@ -253,13 +251,13 @@ TBToDoItem >> mdDisplaySecondaryString [
 { #category : #printing }
 TBToDoItem >> mdPrimaryString [
 
-	^self summary
+	^ self summary
 ]
 
 { #category : #printing }
 TBToDoItem >> mdlDisplayString [
 
-	^self summary
+	^ self summary
 ]
 
 { #category : #accessing }
@@ -276,7 +274,7 @@ TBToDoItem >> priority: anObject [
 TBToDoItem >> priorityDescription [
 	<magritteDescription>
 
-	^MANumberDescription new
+	^ MANumberDescription new
 		accessor: #priority;
 		default: 0;
 		label: 'Priority';

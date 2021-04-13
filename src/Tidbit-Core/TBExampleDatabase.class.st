@@ -21,23 +21,23 @@ TBExampleDatabase class >> buildTestDatabase [
 		lastName: 'User';
 		yourself.
 
-	userModel toDoItems
-		addAll: {
-			TBToDoItem new summary: 'todo-1'; priority: 1; colorCode: (Color indexedColors at: 4); yourself.
-			TBToDoItem new summary: 'todo-2'; priority: 2; colorCode: (Color indexedColors at: 5); description: self loremText; yourself.
-			TBToDoItem new summary: 'todo-3'; priority: 3; colorCode: (Color indexedColors at: 6); yourself.
-			TBToDoItem new summary: 'todo-4'; priority: 4; colorCode: (Color indexedColors at: 7); yourself.
-			}.
+	userModel
+		toDoItemsAdd: (TBToDoItem new summary: 'todo-1'; priority: 1; colorCode: (Color indexedColors at: 4); yourself);
+		toDoItemsAdd: (TBToDoItem new summary: 'todo-2'; priority: 2; colorCode: (Color indexedColors at: 5); description: self loremText; yourself);
+		toDoItemsAdd: (TBToDoItem new summary: 'todo-3'; priority: 3; colorCode: (Color indexedColors at: 6); yourself);
+		toDoItemsAdd: (TBToDoItem new summary: 'todo-4'; priority: 4; colorCode: (Color indexedColors at: 7); yourself).
 
 	self repository save: userModel.
 
-	^userModel
+	^ userModel
 
 ]
 
-{ #category : #initalize }
+{ #category : #'class initialization' }
 TBExampleDatabase class >> initialize [
+
 	self repositoryClear.
+	self buildTestDatabase.
 	Smalltalk addToShutDownList: self
 ]
 
@@ -50,8 +50,8 @@ TBExampleDatabase class >> loremText [
 { #category : #initalize }
 TBExampleDatabase class >> repository [
 
-	Repository ifNil: [Repository := VOMemoryRepository new].
-	^Repository
+	Repository ifNil: [ Repository := VOMemoryRepository new ].
+	^ Repository
 
 ]
 
@@ -61,7 +61,7 @@ TBExampleDatabase class >> repositoryClear [
 	self repositoryClear
 	"
 
-	Repository ifNotNil: [
+	Repository ifNotNil: [ :arg |
 		"Repository database close."
 		Repository := nil ]
 
@@ -70,11 +70,11 @@ TBExampleDatabase class >> repositoryClear [
 { #category : #initalize }
 TBExampleDatabase class >> repositoryName [
 
-	^'TidbitExample'
+	^ 'TidbitExample'
 
 ]
 
-{ #category : #initalize }
+{ #category : #'system startup' }
 TBExampleDatabase class >> shutDown: quitting [
 	
 	"self repositoryClear."

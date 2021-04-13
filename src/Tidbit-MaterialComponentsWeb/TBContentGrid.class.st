@@ -42,16 +42,16 @@ TBContentGrid >> initialize [
 TBContentGrid >> renderContentOn: html [
 
 	self view notNil
-		ifTrue: [^self renderViewOn: html].
+		ifTrue: [ ^ self renderViewOn: html ].
 
 	html div mdcLayoutGrid;
 		style: '--mdc-layout-grid-margin-desktop: 16px';
 		style: '--mdc-layout-grid-gutter-desktop: 16px';
 		with: [
 		html div mdcLayoutGrid__inner; with: [
-			self contents do: [:each |
+			self contents do: [ :each |
 				html div mdcLayoutGrid__cell_span6; with: [
-					html render: each]]]]
+					html render: each ] ] ] ]
 
 ]
 
@@ -64,7 +64,7 @@ TBContentGrid >> renderViewOn: html [
 		with: [
 		html div mdcLayoutGrid__inner; with: [
 			html div mdcLayoutGrid__cell_span: self view layoutCellSpan; with: [
-				html render: self view]]]
+				html render: self view ] ] ]
 
 ]
 

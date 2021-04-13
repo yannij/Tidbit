@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'layoutDensity'
 	],
-	#category : 'Tidbit-Core'
+	#category : #'Tidbit-Core'
 }
 
 { #category : #voyage }
@@ -36,7 +36,7 @@ TBUserSettings >> layoutDensity: anObject [
 TBUserSettings >> layoutDensityDescription [
 	<magritteDescription>
 
-	^MASingleOptionDescription new
+	^ MASingleOptionDescription new
 		accessor: #layoutDensity;
 		label: 'Layout Density';
 		options: {'Auto'. 'Normal'. 'Dense'};
@@ -47,11 +47,11 @@ TBUserSettings >> layoutDensityDescription [
 { #category : #printing }
 TBUserSettings >> mdDisplaySecondaryString [
 
-	^'Layout Density: ', self layoutDensity asString
+	^ 'Layout Density: ', self layoutDensity greaseString
 ]
 
 { #category : #printing }
 TBUserSettings >> mdPrimaryString [
 
-	^'User Settings for: ???'
+	^ 'User Settings for: ???'
 ]

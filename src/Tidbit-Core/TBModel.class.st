@@ -11,7 +11,7 @@ Class {
 	#classVars : [
 		'DescriptionContainerClass'
 	],
-	#category : 'Tidbit-Core'
+	#category : #'Tidbit-Core'
 }
 
 { #category : #accessing }
@@ -21,9 +21,8 @@ TBModel class >> descriptionContainerClass [
 	self descriptionContainerClass: MDLPriorityContainer.
 	"
 
-	DescriptionContainerClass isNil
-		ifTrue: [DescriptionContainerClass := MCWPriorityContainer].
-	^DescriptionContainerClass
+	DescriptionContainerClass ifNil: [ DescriptionContainerClass := MCWPriorityContainer ].
+	^ DescriptionContainerClass
 
 ]
 
@@ -32,20 +31,20 @@ TBModel class >> descriptionContainerClass: anObject [
 	DescriptionContainerClass := anObject
 ]
 
-{ #category : #displaying }
+{ #category : #printing }
 TBModel >> chipIconName [
 
-	^#toys
+	^ #toys
 ]
 
-{ #category : #displaying }
+{ #category : #printing }
 TBModel >> dataBadgeValue [
 
 	^ ''
 
 ]
 
-{ #category : #displaying }
+{ #category : #printing }
 TBModel >> hasDataBadge [
 
 	^ false
@@ -55,28 +54,28 @@ TBModel >> hasDataBadge [
 { #category : #printing }
 TBModel >> mdDisplaySecondaryString [
 
-	^'<', self hash printString, '>'
+	^ '<Model:', self hash printString, '>'
 ]
 
 { #category : #printing }
 TBModel >> mdPrimaryString [
 
-	^self printString
+	^ self printString
 ]
 
-{ #category : #displaying }
+{ #category : #printing }
 TBModel >> mdlDisplayId [
 
-	^self printString
+	^ self printString
 ]
 
-{ #category : #displaying }
+{ #category : #printing }
 TBModel >> mdlDisplayString [
 
-	^self printString
+	^ self printString
 ]
 
-{ #category : #displaying }
+{ #category : #printing }
 TBModel >> mdlDisplaySummaryString [
 
 	^ self mdlDisplayString truncateWithElipsisTo: 65

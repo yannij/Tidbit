@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'repository'
 	],
-	#category : 'Tidbit-Core-Tests'
+	#category : #'Tidbit-Core-Tests'
 }
 
 { #category : #accessing }
@@ -19,7 +19,9 @@ TBToDoItemTest >> repository: anObject [
 
 { #category : #running }
 TBToDoItemTest >> setUp [
-	| env tx dbi |
+
+	super setUp
+	"| env tx dbi |
 
 	repository := VOLightningMDBRepository on: 'TidbitTest'.
 	env := self repository database environment.
@@ -27,8 +29,7 @@ TBToDoItemTest >> setUp [
 	tx := env beginTransaction.
 	dbi := tx openDatabase: nil.
 	tx empty: dbi.
-	tx commit.
-
+	tx commit."
 ]
 
 { #category : #tests }
