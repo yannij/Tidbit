@@ -88,6 +88,7 @@ TBToDoApplication >> initialize [
 	"self settings setFont: MCWGoogleFont allAvailable atRandom."
 	self layout contentArea component: self viewUser.
 	self layout sideSheet component: self viewTaskFilter.
+	self loginComponent: MCWLogin new.
 
 	self viewUserSetTo: self sessionUserGet.
 
@@ -125,8 +126,7 @@ TBToDoApplication >> sessionUserSet: aUser [
 TBToDoApplication >> setCanvasContent2: aModel [
 	| newView |
 
-	aModel isNil
-		ifTrue: [ ^ self ].
+	aModel ifNil: [ ^ self ].
 
 	newView := aModel asComponent
 					addValidatedForm;

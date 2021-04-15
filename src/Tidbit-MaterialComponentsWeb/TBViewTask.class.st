@@ -6,11 +6,9 @@ Class {
 
 { #category : #rendering }
 TBViewTask >> dataRows [
-	| tasks dataRows |
 
-	tasks := self tasksFiltered.
-	dataRows :=  OrderedCollection new.
-	tasks do: [ :eachTask | | dataRow |
+	^ self tasksFiltered asOrderedCollection collect: [ :eachTask |
+		| dataRow |
 		dataRow := OrderedCollection new.
 		dataRow add: (eachTask done ifTrue: [ [ :html | html span mdcMaterialIcons; with: 'check' ] ] ifFalse: [ '' ]).
 		dataRow add: (eachTask summary ifNotNil: [ :value | value ] ifNil: [ '' ]).
@@ -21,8 +19,7 @@ TBViewTask >> dataRows [
 		"dataRow add: eachTask colorCode shortPrintString."
 		dataRow add: [ :html | html textInput type: 'color'; disabled; value: eachTask colorCode asHTMLColor ].
 		dataRow add: (eachTask description ifNotNil: [ :value | value truncateWithElipsisTo: 25 ] ifNil: [ '' ]).
-		dataRows add: dataRow ].
-	^ dataRows
+		dataRow ]
 ]
 
 { #category : #rendering }

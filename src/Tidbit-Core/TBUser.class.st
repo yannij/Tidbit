@@ -40,6 +40,7 @@ TBUser >> descriptionDateCreated [
 			write: [ :item :value | value ifNotNil: [ :arg | item dateCreated: value ] ]);
 		default: DateAndTime now printString;
 		label: 'Date Created';
+		cssClass: 'mcw-textfield';
 		priority: 17;
 		yourself
 ]
@@ -52,6 +53,7 @@ TBUser >> descriptionFirstName [
 		accessor: #firstName;
 		default: '';
 		label: 'First Name';
+		cssClass: 'mcw-textfield';
 		priority: 20;
 		yourself
 ]
@@ -64,6 +66,7 @@ TBUser >> descriptionLastName [
 		accessor: #lastName;
 		default: '';
 		label: 'Last Name';
+		cssClass: 'mcw-textfield';
 		priority: 30;
 		yourself
 ]
@@ -76,6 +79,7 @@ TBUser >> descriptionPasswordHash [
 		accessor: #passwordHash;
 		default: '';
 		label: 'Password';
+		cssClass: 'mcw-textfield';
 		priority: 15;
 		yourself
 ]
@@ -89,6 +93,7 @@ TBUser >> descriptionToDoItems [
 		classes: {TBToDoItem};
 		default: OrderedCollection new;
 		label: 'ToDo Items';
+		cssClass: 'mcw-textfield';
 		priority: 40;
 		"beOrdered;"
 		yourself
@@ -102,6 +107,7 @@ TBUser >> descriptionUserId [
 		accessor: #userId;
 		default: '';
 		label: 'User ID';
+		cssClass: 'mcw-textfield';
 		priority: 10;
 		yourself
 ]
@@ -114,6 +120,7 @@ TBUser >> descriptionUserSettings [
 		accessor: #userSettings;
 		label: 'User Settings';
 		classes: {TBUserSettings};
+		cssClass: 'mcw-textfield';
 		priority: 35;
 		beRequired;
 		yourself

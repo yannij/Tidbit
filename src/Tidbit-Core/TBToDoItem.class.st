@@ -39,6 +39,7 @@ TBToDoItem >> calendarsDescription [
 	^ MAMultipleOptionDescription new
 		accessor: #calendars;
 		label: 'Calendars';
+		cssClass: 'mcw-textfield';
 		priority: 110;
 		options: #(Home Work Vacation Secret);
 		reference: MASymbolDescription new;
@@ -63,6 +64,7 @@ TBToDoItem >> colorCodeDescription [
 		accessor: #colorCode;
 		default: Color white;
 		label: 'Color Code';
+		cssClass: 'mcw-textfield';
 		priority: 90;
 		yourself
 ]
@@ -91,6 +93,7 @@ TBToDoItem >> completeByDateDescription [
 		accessor: #completeByDate;
 		default: Date today;
 		label: 'Complete By Date';
+		cssClass: 'mcw-textfield';
 		priority: 30;
 		yourself
 
@@ -103,6 +106,7 @@ TBToDoItem >> completeByDescription [
 	^ MAStringDescription new
 		accessor: #completeBy;
 		label: 'Complete By';
+		cssClass: 'mcw-textfield';
 		priority: 200;
 		beReadonly;
 		yourself
@@ -126,6 +130,7 @@ TBToDoItem >> completeByTimeDescription [
 	^ MATimeDescription new
 		accessor: #completeByTime;
 		label: 'Complete By Time';
+		cssClass: 'mcw-textfield';
 		priority: 40;
 		yourself
 ]
@@ -148,6 +153,7 @@ TBToDoItem >> descriptionDescription [
 		accessor: #description;
 		default: '';
 		label: 'Description';
+		cssClass: 'mcw-textfield';
 		priority: 20;
 		yourself
 ]
@@ -169,6 +175,7 @@ TBToDoItem >> doneDescription [
 	^ MABooleanDescription new
 		accessor: #done;
 		label: 'Done';
+		cssClass: 'mcw-textfield';
 		priority: 10;
 		default: false;
 		yourself
@@ -191,6 +198,7 @@ TBToDoItem >> estimatedDurationDescription [
 	^ MADurationDescription new
 		accessor: #estimatedDuration;
 		label: 'Estimated Duration';
+		cssClass: 'mcw-textfield';
 		priority: 50;
 		yourself
 ]
@@ -212,6 +220,7 @@ TBToDoItem >> importanceDescription [
 	^ MASingleOptionDescription new
 		accessor: #importance;
 		label: 'Importance';
+		cssClass: 'mcw-textfield';
 		options: {'High'. 'Medium'. 'Low'};
 		priority: 80;
 		yourself
@@ -278,6 +287,7 @@ TBToDoItem >> priorityDescription [
 		accessor: #priority;
 		default: 0;
 		label: 'Priority';
+		cssClass: 'mcw-textfield';
 		priority: 60;
 		beInteger;
 		yourself
@@ -301,6 +311,7 @@ TBToDoItem >> summaryDescription [
 		accessor: #summary;
 		default: '';
 		label: 'Summary';
+		cssClass: 'mcw-textfield';
 		priority: 15;
 		beRequired;
 		yourself
