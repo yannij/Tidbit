@@ -88,7 +88,7 @@ TBViewTask >> renderTableRows: dataRows paginationOn: html [
 { #category : #accessing }
 TBViewTask >> sessionUserGet [
 
-	^ self session properties at: #user ifAbsent: [ nil ]
+	^ self session properties at: #authenticatedUser ifAbsent: [ nil ]
 ]
 
 { #category : #rendering }

@@ -77,7 +77,6 @@ TBToDoApplication >> headerTitle [
 TBToDoApplication >> initialize [
 
 	self applicationRootSet: self.
-	self sessionUserSet: self retrieveTestModel.
 	self viewUser: TBContentGrid new.
 	self viewTask: TBViewTask new.
 	self viewTaskFilter: TBViewTaskFilter new.
@@ -88,7 +87,13 @@ TBToDoApplication >> initialize [
 	"self settings setFont: MCWGoogleFont allAvailable atRandom."
 	self layout contentArea component: self viewUser.
 	self layout sideSheet component: self viewTaskFilter.
-	self loginComponent: MCWLogin new.
+	self loginComponent: (MCWLogin new
+			loginTitle: self applicationTitle;
+			authenticationBlock: [ :loginId :password |
+				| result |
+				result := TBExampleDatabase authenticatedUser: loginId password: password.
+				result ifNotNil: [ :theUser | self sessionUserSet: theUser. self viewUserSetTo: theUser ] ];
+			yourself).
 
 	self viewUserSetTo: self sessionUserGet.
 
@@ -97,29 +102,9 @@ TBToDoApplication >> initialize [
 ]
 
 { #category : #'accessing - model' }
-TBToDoApplication >> retrieveTestModel [
-
-	^ (TBExampleDatabase repository selectAll: TBUser)
-		ifEmpty: [ nil ]
-		ifNotEmpty: [ :value | value anyOne ]
-]
-
-{ #category : #'accessing - model' }
 TBToDoApplication >> saveObject: anObject [
 
 	TBExampleDatabase repository save: anObject
-]
-
-{ #category : #'accessing - model' }
-TBToDoApplication >> sessionUserGet [
-
-	^ self session properties at: #user ifAbsent: [ nil ]
-]
-
-{ #category : #'accessing - model' }
-TBToDoApplication >> sessionUserSet: aUser [
-
-	self session properties at: #user put: aUser
 ]
 
 { #category : #navigation }
