@@ -1,11 +1,11 @@
 Class {
-	#name : #TBViewTask,
+	#name : #TidbitViewTask,
 	#superclass : #MCWWebComponent,
 	#category : #'Tidbit-MaterialComponentsWeb'
 }
 
 { #category : #rendering }
-TBViewTask >> dataRows [
+TidbitViewTask >> dataRows [
 
 	^ self tasksFiltered asOrderedCollection collect: [ :eachTask |
 		| dataRow |
@@ -23,13 +23,13 @@ TBViewTask >> dataRows [
 ]
 
 { #category : #rendering }
-TBViewTask >> renderContentOn: html [
+TidbitViewTask >> renderContentOn: html [
 
 	self renderTableOn: html
 ]
 
 { #category : #rendering }
-TBViewTask >> renderTableHeadingsOn: html [
+TidbitViewTask >> renderTableHeadingsOn: html [
 	| dataHeadings |
 
 	dataHeadings := #( 'Done' 'Summary' 'Complete By' 'Duration' 'Importance' 'Priority' 'Color Code' 'Description' ).
@@ -41,7 +41,7 @@ TBViewTask >> renderTableHeadingsOn: html [
 ]
 
 { #category : #rendering }
-TBViewTask >> renderTableOn: html [
+TidbitViewTask >> renderTableOn: html [
 
 	html heading level6; mdcTypography_headline6; with: self sessionUserGet mdPrimaryString.
 	html div mdcDataTable with: [
@@ -55,7 +55,7 @@ TBViewTask >> renderTableOn: html [
 ]
 
 { #category : #rendering }
-TBViewTask >> renderTableRows: dataRows on: html [
+TidbitViewTask >> renderTableRows: dataRows on: html [
 
 	html tableBody mdcDataTable__content; with: [
 		dataRows do: [ :eachRow |
@@ -65,7 +65,7 @@ TBViewTask >> renderTableRows: dataRows on: html [
 ]
 
 { #category : #rendering }
-TBViewTask >> renderTableRows: dataRows paginationOn: html [
+TidbitViewTask >> renderTableRows: dataRows paginationOn: html [
 
 	html div mdcDataTable__pagination with: [
 		html div mdcDataTable__paginationTrailing; with: [
@@ -86,13 +86,13 @@ TBViewTask >> renderTableRows: dataRows paginationOn: html [
 ]
 
 { #category : #accessing }
-TBViewTask >> sessionUserGet [
+TidbitViewTask >> sessionUserGet [
 
 	^ self session properties at: #authenticatedUser ifAbsent: [ nil ]
 ]
 
 { #category : #rendering }
-TBViewTask >> tasksFiltered [
+TidbitViewTask >> tasksFiltered [
 	| user tasksFilterDone tasksAll |
 
 	user := self sessionUserGet.	

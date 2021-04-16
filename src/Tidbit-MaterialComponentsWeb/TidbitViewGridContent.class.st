@@ -1,5 +1,5 @@
 Class {
-	#name : #TBContentGrid,
+	#name : #TidbitViewGridContent,
 	#superclass : #MCWWebComponent,
 	#instVars : [
 		'contents',
@@ -9,29 +9,29 @@ Class {
 }
 
 { #category : #accessing }
-TBContentGrid >> content1: aComponent [
+TidbitViewGridContent >> content1: aComponent [
 
 	self contents at: 1 put: aComponent
 ]
 
 { #category : #accessing }
-TBContentGrid >> content2: aComponent [
+TidbitViewGridContent >> content2: aComponent [
 
 	self contents at: 2 put: aComponent
 ]
 
 { #category : #accessing }
-TBContentGrid >> contents [
+TidbitViewGridContent >> contents [
 	^ contents
 ]
 
 { #category : #accessing }
-TBContentGrid >> contents: anObject [
+TidbitViewGridContent >> contents: anObject [
 	contents := anObject
 ]
 
 { #category : #initialization }
-TBContentGrid >> initialize [
+TidbitViewGridContent >> initialize [
 
 	super initialize.
 
@@ -39,7 +39,7 @@ TBContentGrid >> initialize [
 ]
 
 { #category : #rendering }
-TBContentGrid >> renderContentOn: html [
+TidbitViewGridContent >> renderContentOn: html [
 
 	self view notNil
 		ifTrue: [ ^ self renderViewOn: html ].
@@ -56,7 +56,7 @@ TBContentGrid >> renderContentOn: html [
 ]
 
 { #category : #rendering }
-TBContentGrid >> renderViewOn: html [ 
+TidbitViewGridContent >> renderViewOn: html [ 
 
 	html div mdcLayoutGrid;
 		style: '--mdc-layout-grid-margin-desktop: 16px';
@@ -69,11 +69,11 @@ TBContentGrid >> renderViewOn: html [
 ]
 
 { #category : #accessing }
-TBContentGrid >> view [
+TidbitViewGridContent >> view [
 	^ view
 ]
 
 { #category : #accessing }
-TBContentGrid >> view: anObject [
+TidbitViewGridContent >> view: anObject [
 	view := anObject
 ]

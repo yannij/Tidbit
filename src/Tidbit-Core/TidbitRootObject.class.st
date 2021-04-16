@@ -1,21 +1,14 @@
-"
-Abstract superclass of all Tidbit models, which are persisted using LMDB.
-
-Notes:
-https://github.com/LMDB
-http://macappstore.org/lmdb/
-"
 Class {
-	#name : #TBModel,
+	#name : #TidbitRootObject,
 	#superclass : #MCWModel,
-	#classVars : [
+	#classInstVars : [
 		'DescriptionContainerClass'
 	],
 	#category : #'Tidbit-Core'
 }
 
 { #category : #accessing }
-TBModel class >> descriptionContainerClass [
+TidbitRootObject class >> descriptionContainerClass [
 	"
 	self descriptionContainerClass: MCWPriorityContainer.
 	self descriptionContainerClass: MDLPriorityContainer.
@@ -27,62 +20,62 @@ TBModel class >> descriptionContainerClass [
 ]
 
 { #category : #accessing }
-TBModel class >> descriptionContainerClass: anObject [
+TidbitRootObject class >> descriptionContainerClass: anObject [
 	DescriptionContainerClass := anObject
 ]
 
 { #category : #printing }
-TBModel >> chipIconName [
+TidbitRootObject >> chipIconName [
 
 	^ #toys
 ]
 
 { #category : #printing }
-TBModel >> dataBadgeValue [
+TidbitRootObject >> dataBadgeValue [
 
 	^ ''
 
 ]
 
 { #category : #printing }
-TBModel >> hasDataBadge [
+TidbitRootObject >> hasDataBadge [
 
 	^ false
 
 ]
 
 { #category : #printing }
-TBModel >> mdDisplaySecondaryString [
+TidbitRootObject >> mdDisplaySecondaryString [
 
 	^ '<Model:', self hash printString, '>'
 ]
 
 { #category : #printing }
-TBModel >> mdPrimaryString [
+TidbitRootObject >> mdPrimaryString [
 
 	^ self printString
 ]
 
 { #category : #printing }
-TBModel >> mdlDisplayId [
+TidbitRootObject >> mdlDisplayId [
 
 	^ self printString
 ]
 
 { #category : #printing }
-TBModel >> mdlDisplayString [
+TidbitRootObject >> mdlDisplayString [
 
 	^ self printString
 ]
 
 { #category : #printing }
-TBModel >> mdlDisplaySummaryString [
+TidbitRootObject >> mdlDisplaySummaryString [
 
 	^ self mdlDisplayString truncateWithElipsisTo: 65
 ]
 
 { #category : #accessing }
-TBModel >> mementoClass [
+TidbitRootObject >> mementoClass [
 
 	^ MAStraightMemento
 ]

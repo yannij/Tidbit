@@ -1,5 +1,5 @@
 Class {
-	#name : #TBToDoApplication,
+	#name : #TidbitToDoApp,
 	#superclass : #MCWResponsiveApplication,
 	#instVars : [
 		'viewUser',
@@ -10,14 +10,14 @@ Class {
 }
 
 { #category : #'class initialization' }
-TBToDoApplication class >> applicationPath [
+TidbitToDoApp class >> applicationPath [
 
 	^ 'tidbit/todo'
 
 ]
 
 { #category : #'class initialization' }
-TBToDoApplication class >> initialize [
+TidbitToDoApp class >> initialize [
 	"Register path with Seaside.
 	WAAdmin unregister: self applicationPath.
 	"
@@ -27,33 +27,33 @@ TBToDoApplication class >> initialize [
 ]
 
 { #category : #initialization }
-TBToDoApplication >> appBarTitle [
+TidbitToDoApp >> appBarTitle [
 
 	^ self applicationTitle 
 
 ]
 
 { #category : #accessing }
-TBToDoApplication >> applicationTitle [
+TidbitToDoApp >> applicationTitle [
 
 	^ 'Tidbit ToDo'
 ]
 
 { #category : #accessing }
-TBToDoApplication >> browserTabTitle [
+TidbitToDoApp >> browserTabTitle [
 
 	^ self headerTitle
 
 ]
 
 { #category : #initialization }
-TBToDoApplication >> buildMainFab [
+TidbitToDoApp >> buildMainFab [
 
 	^ nil
 ]
 
 { #category : #initialization }
-TBToDoApplication >> buildSideNavList [
+TidbitToDoApp >> buildSideNavList [
 
 	^ MCWListBasic new
 		addListItem: (MCWListItemIcon  itemText: 'Home' iconName: 'home' callback: [ self viewUserGo ]);
@@ -62,24 +62,25 @@ TBToDoApplication >> buildSideNavList [
 ]
 
 { #category : #initialization }
-TBToDoApplication >> buildSideSheet [
+TidbitToDoApp >> buildSideSheet [
 
 	^ MCWSideSheet new
 ]
 
 { #category : #accessing }
-TBToDoApplication >> headerTitle [
+TidbitToDoApp >> headerTitle [
 
 	^ '(Tidbit-ToDo2)'
 ]
 
 { #category : #initialization }
-TBToDoApplication >> initialize [
+TidbitToDoApp >> initialize [
 
 	self applicationRootSet: self.
-	self viewUser: TBContentGrid new.
-	self viewTask: TBViewTask new.
-	self viewTaskFilter: TBViewTaskFilter new.
+	self viewUser: TidbitViewGridContent new.
+	self viewUser content1: nil.
+	self viewTask: TidbitViewTask new.
+	self viewTaskFilter: TidbitViewTaskFilter new.
 
 	super initialize.
 	self layout sideSheet beHidden.
@@ -90,25 +91,25 @@ TBToDoApplication >> initialize [
 	self loginComponent: (MCWLogin new
 			loginTitle: self applicationTitle;
 			authenticationBlock: [ :loginId :password |
-				| result |
-				result := TBExampleDatabase authenticatedUser: loginId password: password.
-				result ifNotNil: [ :theUser | self sessionUserSet: theUser. self viewUserSetTo: theUser ] ];
+				| userOrNil |
+				userOrNil := TidbitExampleDatabase authenticatedUser: loginId password: password.
+				"userOrNil := TidbitExampleDatabase findUser: 'demo'."
+				self sessionUserSet: userOrNil.
+				self viewUserSetTo: userOrNil ];
 			yourself).
-
-	self viewUserSetTo: self sessionUserGet.
 
 	self applicationPostInitialize: self
 
 ]
 
 { #category : #'accessing - model' }
-TBToDoApplication >> saveObject: anObject [
+TidbitToDoApp >> saveObject: anObject [
 
-	TBExampleDatabase repository save: anObject
+	TidbitExampleDatabase repository save: anObject
 ]
 
 { #category : #navigation }
-TBToDoApplication >> setCanvasContent2: aModel [
+TidbitToDoApp >> setCanvasContent2: aModel [
 	| newView |
 
 	aModel ifNil: [ ^ self ].
@@ -123,51 +124,51 @@ TBToDoApplication >> setCanvasContent2: aModel [
 ]
 
 { #category : #accessing }
-TBToDoApplication >> viewTask [
+TidbitToDoApp >> viewTask [
 	^ viewTask
 ]
 
 { #category : #accessing }
-TBToDoApplication >> viewTask: anObject [
+TidbitToDoApp >> viewTask: anObject [
 	viewTask := anObject
 ]
 
 { #category : #accessing }
-TBToDoApplication >> viewTaskFilter [
+TidbitToDoApp >> viewTaskFilter [
 	^ viewTaskFilter
 ]
 
 { #category : #accessing }
-TBToDoApplication >> viewTaskFilter: anObject [
+TidbitToDoApp >> viewTaskFilter: anObject [
 	viewTaskFilter := anObject
 ]
 
 { #category : #navigation }
-TBToDoApplication >> viewTaskGo [
+TidbitToDoApp >> viewTaskGo [
 
 	self layout contentArea component: self viewTask.
 	self layout sideSheet beUnHidden
 ]
 
 { #category : #accessing }
-TBToDoApplication >> viewUser [
+TidbitToDoApp >> viewUser [
 	^ viewUser
 ]
 
 { #category : #accessing }
-TBToDoApplication >> viewUser: anObject [
+TidbitToDoApp >> viewUser: anObject [
 	viewUser := anObject
 ]
 
 { #category : #navigation }
-TBToDoApplication >> viewUserGo [
+TidbitToDoApp >> viewUserGo [
 
 	self layout contentArea component: self viewUser.
 	self layout sideSheet beHidden
 ]
 
 { #category : #navigation }
-TBToDoApplication >> viewUserSetTo: aModel [
+TidbitToDoApp >> viewUserSetTo: aModel [
 	| newView |
 
 	aModel ifNil: [

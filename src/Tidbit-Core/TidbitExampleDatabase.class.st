@@ -1,5 +1,5 @@
 Class {
-	#name : #TBExampleDatabase,
+	#name : #TidbitExampleDatabase,
 	#superclass : #Object,
 	#classVars : [
 		'Repository'
@@ -8,7 +8,7 @@ Class {
 }
 
 { #category : #'utility - password' }
-TBExampleDatabase class >> authenticatedUser: aUserId password: aPassword [
+TidbitExampleDatabase class >> authenticatedUser: aUserId password: aPassword [
 	"Answer a user instance if hashed pssword matches saved passwrodHass,
 	or answer nil is does not match, or user not found"
 
@@ -21,7 +21,7 @@ TBExampleDatabase class >> authenticatedUser: aUserId password: aPassword [
 ]
 
 { #category : #initalize }
-TBExampleDatabase class >> buildTestDatabase [
+TidbitExampleDatabase class >> buildTestDatabase [
 	"
 	self repositoryClear.
 	self buildTestDatabase.
@@ -32,10 +32,10 @@ TBExampleDatabase class >> buildTestDatabase [
 ]
 
 { #category : #initalize }
-TBExampleDatabase class >> buildUserDemo [
+TidbitExampleDatabase class >> buildUserDemo [
 	| userModel |
 
-	userModel := TBUser new
+	userModel := TidbitUser new
 		userId: 'demo';
 		firstName: 'Demo';
 		lastName: 'User';
@@ -43,8 +43,8 @@ TBExampleDatabase class >> buildUserDemo [
 		yourself.
 
 	userModel
-		toDoItemsAdd: (TBToDoItem new summary: 'foobar-1'; priority: 1; colorCode: (Color indexedColors at: 8); done: true; yourself);
-		toDoItemsAdd: (TBToDoItem new summary: 'foobar-2'; priority: 2; colorCode: (Color indexedColors at: 9); description: self loremText; yourself).
+		toDoItemsAdd: (TidbitToDoItem new summary: 'foobar-1'; priority: 1; colorCode: (Color indexedColors at: 8); done: true; yourself);
+		toDoItemsAdd: (TidbitToDoItem new summary: 'foobar-2'; priority: 2; colorCode: (Color indexedColors at: 9); description: self loremText; yourself).
 
 	self repository save: userModel.
 
@@ -53,14 +53,14 @@ TBExampleDatabase class >> buildUserDemo [
 ]
 
 { #category : #initalize }
-TBExampleDatabase class >> buildUserGuest [
+TidbitExampleDatabase class >> buildUserGuest [
 	"
 	self repositoryClear.
 	self buildTestDatabase.
 	"
 	| userModel |
 
-	userModel := TBUser new
+	userModel := TidbitUser new
 		userId: 'guest';
 		firstName: 'Guest';
 		lastName: 'User';
@@ -68,10 +68,10 @@ TBExampleDatabase class >> buildUserGuest [
 		yourself.
 
 	userModel
-		toDoItemsAdd: (TBToDoItem new summary: 'todo-1'; priority: 1; colorCode: (Color indexedColors at: 4); yourself);
-		toDoItemsAdd: (TBToDoItem new summary: 'todo-2'; priority: 2; colorCode: (Color indexedColors at: 5); description: self loremText; yourself);
-		toDoItemsAdd: (TBToDoItem new summary: 'todo-3'; priority: 3; colorCode: (Color indexedColors at: 6); done: true; yourself);
-		toDoItemsAdd: (TBToDoItem new summary: 'todo-4'; priority: 4; colorCode: (Color indexedColors at: 7); yourself).
+		toDoItemsAdd: (TidbitToDoItem new summary: 'todo-1'; priority: 1; colorCode: (Color indexedColors at: 4); yourself);
+		toDoItemsAdd: (TidbitToDoItem new summary: 'todo-2'; priority: 2; colorCode: (Color indexedColors at: 5); description: self loremText; yourself);
+		toDoItemsAdd: (TidbitToDoItem new summary: 'todo-3'; priority: 3; colorCode: (Color indexedColors at: 6); done: true; yourself);
+		toDoItemsAdd: (TidbitToDoItem new summary: 'todo-4'; priority: 4; colorCode: (Color indexedColors at: 7); yourself).
 
 	self repository save: userModel.
 
@@ -80,16 +80,16 @@ TBExampleDatabase class >> buildUserGuest [
 ]
 
 { #category : #'utility - password' }
-TBExampleDatabase class >> findUser: aUserId [
+TidbitExampleDatabase class >> findUser: aUserId [
 	"Answer the user having userId matching aUserId, or nil if not found"
 
-	^ (TBExampleDatabase repository selectAll: TBUser)
+	^ (TidbitExampleDatabase repository selectAll: TidbitUser)
 		ifEmpty: [ nil ]
 		ifNotEmpty: [ :value | value detect: [ :eachUser | eachUser userId = aUserId ] ifNone: [ nil ] ]
 ]
 
 { #category : #'class initialization' }
-TBExampleDatabase class >> initialize [
+TidbitExampleDatabase class >> initialize [
 
 	self repositoryClear.
 	self buildTestDatabase.
@@ -97,13 +97,13 @@ TBExampleDatabase class >> initialize [
 ]
 
 { #category : #initalize }
-TBExampleDatabase class >> loremText [
+TidbitExampleDatabase class >> loremText [
 
 	^ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
 ]
 
 { #category : #initalize }
-TBExampleDatabase class >> repository [
+TidbitExampleDatabase class >> repository [
 
 	Repository ifNil: [ Repository := VOMemoryRepository new ].
 	^ Repository
@@ -111,7 +111,7 @@ TBExampleDatabase class >> repository [
 ]
 
 { #category : #initalize }
-TBExampleDatabase class >> repositoryClear [
+TidbitExampleDatabase class >> repositoryClear [
 	"
 	self repositoryClear
 	"
@@ -123,14 +123,14 @@ TBExampleDatabase class >> repositoryClear [
 ]
 
 { #category : #initalize }
-TBExampleDatabase class >> repositoryName [
+TidbitExampleDatabase class >> repositoryName [
 
 	^ 'TidbitExample'
 
 ]
 
 { #category : #'system startup' }
-TBExampleDatabase class >> shutDown: quitting [
+TidbitExampleDatabase class >> shutDown: quitting [
 	
 	"self repositoryClear."
 

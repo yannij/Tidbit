@@ -1,6 +1,6 @@
 Class {
-	#name : #TBUser,
-	#superclass : #TBRootObject,
+	#name : #TidbitUser,
+	#superclass : #TidbitRootObject,
 	#instVars : [
 		'userId',
 		'dateCreated',
@@ -14,23 +14,23 @@ Class {
 }
 
 { #category : #voyage }
-TBUser class >> isVoyageRoot [
+TidbitUser class >> isVoyageRoot [
 
 	^ true
 ]
 
 { #category : #accessing }
-TBUser >> dateCreated [
+TidbitUser >> dateCreated [
 	^ dateCreated
 ]
 
 { #category : #accessing }
-TBUser >> dateCreated: anObject [
+TidbitUser >> dateCreated: anObject [
 	dateCreated := anObject
 ]
 
 { #category : #'accessing-magritte' }
-TBUser >> descriptionDateCreated [
+TidbitUser >> descriptionDateCreated [
 	<magritteDescription>
 
 	^ MADateAndTimeDescription new
@@ -46,7 +46,7 @@ TBUser >> descriptionDateCreated [
 ]
 
 { #category : #'accessing-magritte' }
-TBUser >> descriptionFirstName [
+TidbitUser >> descriptionFirstName [
 	<magritteDescription>
 
 	^ MAStringDescription new
@@ -59,7 +59,7 @@ TBUser >> descriptionFirstName [
 ]
 
 { #category : #'accessing-magritte' }
-TBUser >> descriptionLastName [
+TidbitUser >> descriptionLastName [
 	<magritteDescription>
 
 	^ MAStringDescription new
@@ -72,7 +72,7 @@ TBUser >> descriptionLastName [
 ]
 
 { #category : #'accessing-magritte' }
-TBUser >> descriptionPasswordHash [
+TidbitUser >> descriptionPasswordHash [
 	<magritteDescription>
 
 	^ MAPasswordDescription new
@@ -85,12 +85,12 @@ TBUser >> descriptionPasswordHash [
 ]
 
 { #category : #'accessing-magritte' }
-TBUser >> descriptionToDoItems [
+TidbitUser >> descriptionToDoItems [
 	<magritteDescription>
 
 	^ MAToManyRelationDescription new
 		accessor: #toDoItems;
-		classes: {TBToDoItem};
+		classes: {TidbitToDoItem};
 		default: OrderedCollection new;
 		label: 'ToDo Items';
 		cssClass: 'mcw-textfield';
@@ -100,7 +100,7 @@ TBUser >> descriptionToDoItems [
 ]
 
 { #category : #'accessing-magritte' }
-TBUser >> descriptionUserId [
+TidbitUser >> descriptionUserId [
 	<magritteDescription>
 
 	^ MAStringDescription new
@@ -113,13 +113,13 @@ TBUser >> descriptionUserId [
 ]
 
 { #category : #'accessing-magritte' }
-TBUser >> descriptionUserSettings [
+TidbitUser >> descriptionUserSettings [
 	<magritteDescription>
 
 	^ MAToOneRelationDescription new
 		accessor: #userSettings;
 		label: 'User Settings';
-		classes: {TBUserSettings};
+		classes: {TidbitUserSettings};
 		cssClass: 'mcw-textfield';
 		priority: 35;
 		beRequired;
@@ -127,17 +127,17 @@ TBUser >> descriptionUserSettings [
 ]
 
 { #category : #accessing }
-TBUser >> firstName [
+TidbitUser >> firstName [
 	^ firstName
 ]
 
 { #category : #accessing }
-TBUser >> firstName: anObject [
+TidbitUser >> firstName: anObject [
 	firstName := anObject
 ]
 
 { #category : #initialization }
-TBUser >> initialize [
+TidbitUser >> initialize [
 
 	super initialize.
 
@@ -147,69 +147,69 @@ TBUser >> initialize [
 	self firstName: String new.
 	self lastName: String new.
 
-	self userSettings: TBUserSettings new.
+	self userSettings: TidbitUserSettings new.
 	self toDoItems: OrderedCollection new.
 
 ]
 
 { #category : #accessing }
-TBUser >> lastName [
+TidbitUser >> lastName [
 	^ lastName
 ]
 
 { #category : #accessing }
-TBUser >> lastName: anObject [
+TidbitUser >> lastName: anObject [
 	lastName := anObject
 ]
 
 { #category : #printing }
-TBUser >> mdPrimaryString [
+TidbitUser >> mdPrimaryString [
 
 	^ self userId
 ]
 
 { #category : #accessing }
-TBUser >> passwordHash [
+TidbitUser >> passwordHash [
 	^ passwordHash
 ]
 
 { #category : #accessing }
-TBUser >> passwordHash: anObject [
+TidbitUser >> passwordHash: anObject [
 	passwordHash := anObject
 ]
 
 { #category : #accessing }
-TBUser >> toDoItems [
+TidbitUser >> toDoItems [
 	^ toDoItems
 ]
 
 { #category : #accessing }
-TBUser >> toDoItems: anObject [
+TidbitUser >> toDoItems: anObject [
 	toDoItems := anObject
 ]
 
 { #category : #accessing }
-TBUser >> toDoItemsAdd: anItem [
+TidbitUser >> toDoItemsAdd: anItem [
 
 	self toDoItems add: anItem
 ]
 
 { #category : #accessing }
-TBUser >> userId [
+TidbitUser >> userId [
 	^ userId
 ]
 
 { #category : #accessing }
-TBUser >> userId: anObject [
+TidbitUser >> userId: anObject [
 	userId := anObject
 ]
 
 { #category : #accessing }
-TBUser >> userSettings [
+TidbitUser >> userSettings [
 	^ userSettings
 ]
 
 { #category : #accessing }
-TBUser >> userSettings: anObject [
+TidbitUser >> userSettings: anObject [
 	userSettings := anObject
 ]

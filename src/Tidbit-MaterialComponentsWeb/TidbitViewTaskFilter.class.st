@@ -1,5 +1,5 @@
 Class {
-	#name : #TBViewTaskFilter,
+	#name : #TidbitViewTaskFilter,
 	#superclass : #MCWWebComponent,
 	#instVars : [
 		'user',
@@ -9,17 +9,17 @@ Class {
 }
 
 { #category : #accessing }
-TBViewTaskFilter >> filterDone [
+TidbitViewTaskFilter >> filterDone [
 	^ filterDone
 ]
 
 { #category : #accessing }
-TBViewTaskFilter >> filterDone: anObject [
+TidbitViewTaskFilter >> filterDone: anObject [
 	filterDone := anObject
 ]
 
 { #category : #initialization }
-TBViewTaskFilter >> initialize [
+TidbitViewTaskFilter >> initialize [
 
 	super initialize.
 
@@ -27,14 +27,14 @@ TBViewTaskFilter >> initialize [
 ]
 
 { #category : #rendering }
-TBViewTaskFilter >> renderContentOn: html [
+TidbitViewTaskFilter >> renderContentOn: html [
 
 	html form: [
 		self renderFilterFormOn: html ]
 ]
 
 { #category : #rendering }
-TBViewTaskFilter >> renderFilterCheckboxOn: html [
+TidbitViewTaskFilter >> renderFilterCheckboxOn: html [
 	| checkboxId |
 
 	checkboxId := html nextId.
@@ -61,7 +61,7 @@ TBViewTaskFilter >> renderFilterCheckboxOn: html [
 ]
 
 { #category : #rendering }
-TBViewTaskFilter >> renderFilterDoneOn: html [
+TidbitViewTaskFilter >> renderFilterDoneOn: html [
 	| group |
 
 	group := html radioGroup.
@@ -82,7 +82,7 @@ TBViewTaskFilter >> renderFilterDoneOn: html [
 ]
 
 { #category : #rendering }
-TBViewTaskFilter >> renderFilterFormOn: html [
+TidbitViewTaskFilter >> renderFilterFormOn: html [
 
 	html form: [
 		html submitButton mdcButton; mdcButton_raised; value: 'Filter'.
@@ -91,11 +91,11 @@ TBViewTaskFilter >> renderFilterFormOn: html [
 ]
 
 { #category : #accessing }
-TBViewTaskFilter >> user [
+TidbitViewTaskFilter >> user [
 	^ user
 ]
 
 { #category : #accessing }
-TBViewTaskFilter >> user: anObject [
+TidbitViewTaskFilter >> user: anObject [
 	user := anObject
 ]

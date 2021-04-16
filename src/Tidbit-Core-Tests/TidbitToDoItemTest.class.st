@@ -1,5 +1,5 @@
 Class {
-	#name : #TBToDoItemTest,
+	#name : #TidbitToDoItemTest,
 	#superclass : #TestCase,
 	#instVars : [
 		'repository'
@@ -8,17 +8,17 @@ Class {
 }
 
 { #category : #accessing }
-TBToDoItemTest >> repository [
+TidbitToDoItemTest >> repository [
 	^ repository
 ]
 
 { #category : #accessing }
-TBToDoItemTest >> repository: anObject [
+TidbitToDoItemTest >> repository: anObject [
 	repository := anObject
 ]
 
 { #category : #running }
-TBToDoItemTest >> setUp [
+TidbitToDoItemTest >> setUp [
 
 	super setUp
 	"| env tx dbi |
@@ -33,10 +33,10 @@ TBToDoItemTest >> setUp [
 ]
 
 { #category : #tests }
-TBToDoItemTest >> testToDoItem [
+TidbitToDoItemTest >> testToDoItem [
 	| item |
 
-	item := TBToDoItem new
+	item := TidbitToDoItem new
 		description: 'abcd';
 		yourself.
 

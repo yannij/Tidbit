@@ -1,6 +1,6 @@
 Class {
-	#name : #TBToDoItem,
-	#superclass : #TBRootObject,
+	#name : #TidbitToDoItem,
+	#superclass : #TidbitRootObject,
 	#instVars : [
 		'summary',
 		'description',
@@ -17,23 +17,23 @@ Class {
 }
 
 { #category : #voyage }
-TBToDoItem class >> isVoyageRoot [
+TidbitToDoItem class >> isVoyageRoot [
 
 	^ true
 ]
 
 { #category : #accessing }
-TBToDoItem >> calendars [
+TidbitToDoItem >> calendars [
 	^ calendars
 ]
 
 { #category : #accessing }
-TBToDoItem >> calendars: anObject [
+TidbitToDoItem >> calendars: anObject [
 	calendars := anObject
 ]
 
 { #category : #'accessing-magritte' }
-TBToDoItem >> calendarsDescription [
+TidbitToDoItem >> calendarsDescription [
 
 	<magritteDescription>
 	^ MAMultipleOptionDescription new
@@ -47,17 +47,17 @@ TBToDoItem >> calendarsDescription [
 ]
 
 { #category : #accessing }
-TBToDoItem >> colorCode [
+TidbitToDoItem >> colorCode [
 	^ colorCode
 ]
 
 { #category : #accessing }
-TBToDoItem >> colorCode: anObject [
+TidbitToDoItem >> colorCode: anObject [
 	colorCode := anObject
 ]
 
 { #category : #'accessing-magritte' }
-TBToDoItem >> colorCodeDescription [
+TidbitToDoItem >> colorCodeDescription [
 	<magritteDescription>
 
 	^ MAColorDescription new
@@ -70,23 +70,23 @@ TBToDoItem >> colorCodeDescription [
 ]
 
 { #category : #accessing }
-TBToDoItem >> completeBy [
+TidbitToDoItem >> completeBy [
 
 	^ completeByDate yyyymmdd, ' ', completeByTime print24
 ]
 
 { #category : #accessing }
-TBToDoItem >> completeByDate [
+TidbitToDoItem >> completeByDate [
 	^ completeByDate
 ]
 
 { #category : #accessing }
-TBToDoItem >> completeByDate: anObject [
+TidbitToDoItem >> completeByDate: anObject [
 	completeByDate := anObject
 ]
 
 { #category : #'accessing-magritte' }
-TBToDoItem >> completeByDateDescription [
+TidbitToDoItem >> completeByDateDescription [
 	<magritteDescription>
 
 	^ MADateDescription new
@@ -100,7 +100,7 @@ TBToDoItem >> completeByDateDescription [
 ]
 
 { #category : #'accessing-magritte' }
-TBToDoItem >> completeByDescription [
+TidbitToDoItem >> completeByDescription [
 	<magritteDescription>
 
 	^ MAStringDescription new
@@ -114,17 +114,17 @@ TBToDoItem >> completeByDescription [
 ]
 
 { #category : #accessing }
-TBToDoItem >> completeByTime [
+TidbitToDoItem >> completeByTime [
 	^ completeByTime
 ]
 
 { #category : #accessing }
-TBToDoItem >> completeByTime: anObject [
+TidbitToDoItem >> completeByTime: anObject [
 	completeByTime := anObject
 ]
 
 { #category : #'accessing-magritte' }
-TBToDoItem >> completeByTimeDescription [
+TidbitToDoItem >> completeByTimeDescription [
 	<magritteDescription>
 
 	^ MATimeDescription new
@@ -136,17 +136,17 @@ TBToDoItem >> completeByTimeDescription [
 ]
 
 { #category : #accessing }
-TBToDoItem >> description [
+TidbitToDoItem >> description [
 	^ description
 ]
 
 { #category : #accessing }
-TBToDoItem >> description: anObject [
+TidbitToDoItem >> description: anObject [
 	description := anObject
 ]
 
 { #category : #'accessing-magritte' }
-TBToDoItem >> descriptionDescription [
+TidbitToDoItem >> descriptionDescription [
 	<magritteDescription>
 
 	^ MAMemoDescription new
@@ -159,17 +159,17 @@ TBToDoItem >> descriptionDescription [
 ]
 
 { #category : #accessing }
-TBToDoItem >> done [
+TidbitToDoItem >> done [
 	^ done
 ]
 
 { #category : #accessing }
-TBToDoItem >> done: anObject [
+TidbitToDoItem >> done: anObject [
 	done := anObject
 ]
 
 { #category : #'accessing-magritte' }
-TBToDoItem >> doneDescription [
+TidbitToDoItem >> doneDescription [
 	<magritteDescription>
 
 	^ MABooleanDescription new
@@ -182,17 +182,17 @@ TBToDoItem >> doneDescription [
 ]
 
 { #category : #accessing }
-TBToDoItem >> estimatedDuration [
+TidbitToDoItem >> estimatedDuration [
 	^ estimatedDuration
 ]
 
 { #category : #accessing }
-TBToDoItem >> estimatedDuration: anObject [
+TidbitToDoItem >> estimatedDuration: anObject [
 	estimatedDuration := anObject
 ]
 
 { #category : #'accessing-magritte' }
-TBToDoItem >> estimatedDurationDescription [
+TidbitToDoItem >> estimatedDurationDescription [
 	<magritteDescription>
 
 	^ MADurationDescription new
@@ -204,17 +204,17 @@ TBToDoItem >> estimatedDurationDescription [
 ]
 
 { #category : #accessing }
-TBToDoItem >> importance [
+TidbitToDoItem >> importance [
 	^ importance
 ]
 
 { #category : #accessing }
-TBToDoItem >> importance: anObject [
+TidbitToDoItem >> importance: anObject [
 	importance := anObject
 ]
 
 { #category : #'accessing-magritte' }
-TBToDoItem >> importanceDescription [
+TidbitToDoItem >> importanceDescription [
 	<magritteDescription>
 
 	^ MASingleOptionDescription new
@@ -227,7 +227,7 @@ TBToDoItem >> importanceDescription [
 ]
 
 { #category : #initialization }
-TBToDoItem >> initialize [
+TidbitToDoItem >> initialize [
 
 	super initialize.
 
@@ -245,12 +245,12 @@ TBToDoItem >> initialize [
 ]
 
 { #category : #'accessing-magritte' }
-TBToDoItem >> isVoyageRoot [
+TidbitToDoItem >> isVoyageRoot [
 	^ true
 ]
 
 { #category : #printing }
-TBToDoItem >> mdDisplaySecondaryString [
+TidbitToDoItem >> mdDisplaySecondaryString [
 
 	^ (self done ifTrue: [ 'DONE' ] ifFalse: [ 'NOT-DONE' ]),
 		', ', 'Priority ', self priority printString,
@@ -258,29 +258,29 @@ TBToDoItem >> mdDisplaySecondaryString [
 ]
 
 { #category : #printing }
-TBToDoItem >> mdPrimaryString [
+TidbitToDoItem >> mdPrimaryString [
 
 	^ self summary
 ]
 
 { #category : #printing }
-TBToDoItem >> mdlDisplayString [
+TidbitToDoItem >> mdlDisplayString [
 
 	^ self summary
 ]
 
 { #category : #accessing }
-TBToDoItem >> priority [
+TidbitToDoItem >> priority [
 	^ priority
 ]
 
 { #category : #accessing }
-TBToDoItem >> priority: anObject [
+TidbitToDoItem >> priority: anObject [
 	priority := anObject
 ]
 
 { #category : #'accessing-magritte' }
-TBToDoItem >> priorityDescription [
+TidbitToDoItem >> priorityDescription [
 	<magritteDescription>
 
 	^ MANumberDescription new
@@ -294,17 +294,17 @@ TBToDoItem >> priorityDescription [
 ]
 
 { #category : #accessing }
-TBToDoItem >> summary [
+TidbitToDoItem >> summary [
 	^ summary
 ]
 
 { #category : #accessing }
-TBToDoItem >> summary: anObject [
+TidbitToDoItem >> summary: anObject [
 	summary := anObject
 ]
 
 { #category : #'accessing-magritte' }
-TBToDoItem >> summaryDescription [
+TidbitToDoItem >> summaryDescription [
 	<magritteDescription>
 
 	^ MAStringDescription new

@@ -1,6 +1,6 @@
 Class {
-	#name : #TBUserSettings,
-	#superclass : #TBRootObject,
+	#name : #TidbitUserSettings,
+	#superclass : #TidbitRootObject,
 	#instVars : [
 		'layoutDensity'
 	],
@@ -8,13 +8,13 @@ Class {
 }
 
 { #category : #voyage }
-TBUserSettings class >> isVoyageRoot [
+TidbitUserSettings class >> isVoyageRoot [
 
 	^ false
 ]
 
 { #category : #initialization }
-TBUserSettings >> initialize [
+TidbitUserSettings >> initialize [
 
 	super initialize.
 
@@ -23,17 +23,17 @@ TBUserSettings >> initialize [
 ]
 
 { #category : #accessing }
-TBUserSettings >> layoutDensity [
+TidbitUserSettings >> layoutDensity [
 	^ layoutDensity
 ]
 
 { #category : #accessing }
-TBUserSettings >> layoutDensity: anObject [
+TidbitUserSettings >> layoutDensity: anObject [
 	layoutDensity := anObject
 ]
 
 { #category : #'accessing-magritte' }
-TBUserSettings >> layoutDensityDescription [
+TidbitUserSettings >> layoutDensityDescription [
 	<magritteDescription>
 
 	^ MASingleOptionDescription new
@@ -45,13 +45,13 @@ TBUserSettings >> layoutDensityDescription [
 ]
 
 { #category : #printing }
-TBUserSettings >> mdDisplaySecondaryString [
+TidbitUserSettings >> mdDisplaySecondaryString [
 
 	^ 'Layout Density: ', self layoutDensity greaseString
 ]
 
 { #category : #printing }
-TBUserSettings >> mdPrimaryString [
+TidbitUserSettings >> mdPrimaryString [
 
 	^ 'User Settings for: ???'
 ]
