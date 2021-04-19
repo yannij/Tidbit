@@ -103,6 +103,33 @@ TidbitExampleDatabase class >> loremText [
 ]
 
 { #category : #initalize }
+TidbitExampleDatabase class >> newUserId: aUserId password: aPassword [
+	| userModel |
+
+	userModel := TidbitUser new
+		userId: aUserId;
+		"firstName: 'Guest';
+		lastName: 'User';"
+		passwordHash: (MCWLogin passwordHashFor: aUserId);
+		yourself.
+
+	self repository save: userModel.
+
+	^ userModel
+
+]
+
+{ #category : #'utility - password' }
+TidbitExampleDatabase class >> registerUser: aUserId password: aPassword [
+	"Answer a new user instance built from the userId/password,
+	or answer nil user already exists"
+
+	^ (self findUser: aUserId)
+		ifNil: [ self newUserId: aUserId password: aPassword ]
+		ifNotNil: [ :value | "User already exists" nil ]
+]
+
+{ #category : #initalize }
 TidbitExampleDatabase class >> repository [
 
 	Repository ifNil: [ Repository := VOMemoryRepository new ].

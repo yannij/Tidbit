@@ -9,9 +9,21 @@ Class {
 }
 
 { #category : #accessing }
+TidbitViewGridContent >> content1 [
+
+	^ self contents at: 1 ifAbsent: [ nil ]
+]
+
+{ #category : #accessing }
 TidbitViewGridContent >> content1: aComponent [
 
 	self contents at: 1 put: aComponent
+]
+
+{ #category : #accessing }
+TidbitViewGridContent >> content2 [
+
+	^ self contents at: 2 ifAbsent: [ nil ]
 ]
 
 { #category : #accessing }

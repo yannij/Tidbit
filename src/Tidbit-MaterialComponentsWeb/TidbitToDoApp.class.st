@@ -47,6 +47,31 @@ TidbitToDoApp >> browserTabTitle [
 ]
 
 { #category : #initialization }
+TidbitToDoApp >> buildLoginComponent [
+
+	^ MCWLogin new
+		loginTitle: self applicationTitle;
+		authenticationBlock: [ :loginId :password |
+			| userOrNil |
+			userOrNil := TidbitExampleDatabase authenticatedUser: loginId password: password.
+			self viewUserSetTo: userOrNil.
+			userOrNil ];
+		recoverBlock: [ :loginId :tokenEntered :recoveryToken |
+			| userOrNil |
+			userOrNil := nil.
+			tokenEntered = recoveryToken ifTrue: [
+				userOrNil := TidbitExampleDatabase findUser: loginId ].
+			self viewUserSetTo: userOrNil.
+			userOrNil ];
+		registerBlock: [ :loginId :password |
+			| userOrNil |
+			userOrNil := TidbitExampleDatabase registerUser: loginId password: password.
+			self viewUserSetTo: userOrNil.
+			userOrNil ];
+		yourself
+]
+
+{ #category : #initialization }
 TidbitToDoApp >> buildMainFab [
 
 	^ nil
@@ -76,7 +101,6 @@ TidbitToDoApp >> headerTitle [
 { #category : #initialization }
 TidbitToDoApp >> initialize [
 
-	self applicationRootSet: self.
 	self viewUser: TidbitViewGridContent new.
 	self viewUser content1: nil.
 	self viewTask: TidbitViewTask new.
@@ -88,15 +112,7 @@ TidbitToDoApp >> initialize [
 	"self settings setFont: MCWGoogleFont allAvailable atRandom."
 	self layout contentArea component: self viewUser.
 	self layout sideSheet component: self viewTaskFilter.
-	self loginComponent: (MCWLogin new
-			loginTitle: self applicationTitle;
-			authenticationBlock: [ :loginId :password |
-				| userOrNil |
-				userOrNil := TidbitExampleDatabase authenticatedUser: loginId password: password.
-				"userOrNil := TidbitExampleDatabase findUser: 'demo'."
-				self sessionUserSet: userOrNil.
-				self viewUserSetTo: userOrNil ];
-			yourself).
+	self loginComponent: self buildLoginComponent.
 
 	self applicationPostInitialize: self
 
@@ -165,6 +181,14 @@ TidbitToDoApp >> viewUserGo [
 
 	self layout contentArea component: self viewUser.
 	self layout sideSheet beHidden
+]
+
+{ #category : #navigation }
+TidbitToDoApp >> viewUserModel [
+
+	^ self viewUser content1
+		ifNil: [ nil ]
+		ifNotNil: [ :value | value model ]
 ]
 
 { #category : #navigation }

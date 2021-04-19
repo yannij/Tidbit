@@ -42,8 +42,12 @@ TidbitViewTask >> renderTableHeadingsOn: html [
 
 { #category : #rendering }
 TidbitViewTask >> renderTableOn: html [
+	| user |
 
-	html heading level6; mdcTypography_headline6; with: self sessionUserGet mdPrimaryString.
+	user := self mcwApplicationGet viewUserModel.	
+	user ifNil: [ ^ self ].
+
+	html heading level6; mdcTypography_headline6; with: user mdPrimaryString.
 	html div mdcDataTable with: [
 		html div mdcDataTable__tableContainer; with: [
 			| dataRows |
@@ -85,21 +89,15 @@ TidbitViewTask >> renderTableRows: dataRows paginationOn: html [
 					with: [ html div mdcButton__icon; with: 'last_page' ] ] ] ]
 ]
 
-{ #category : #accessing }
-TidbitViewTask >> sessionUserGet [
-
-	^ self session properties at: #authenticatedUser ifAbsent: [ nil ]
-]
-
 { #category : #rendering }
 TidbitViewTask >> tasksFiltered [
 	| user tasksFilterDone tasksAll |
 
-	user := self sessionUserGet.	
+	user := self mcwApplicationGet viewUserModel.	
 	user ifNil: [ ^ #() ].
 
 	tasksAll := user toDoItems.
-	tasksFilterDone := self applicationRootGet viewTaskFilter filterDone.
+	tasksFilterDone := self mcwApplicationGet viewTaskFilter filterDone.
 
 	tasksFilterDone = 'doneOnly'
 		ifTrue: [ ^ tasksAll select: [ :eachTask | eachTask done ] ].
