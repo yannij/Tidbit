@@ -56,18 +56,23 @@ TidbitToDoApp >> buildLoginComponent [
 			userOrNil := TidbitExampleDatabase authenticatedUser: loginId password: password.
 			self viewUserSetTo: userOrNil.
 			userOrNil ];
-		recoverBlock: [ :loginId :tokenEntered :recoveryToken |
+		recoverBlock: [ :loginId :tokenTyped :tokenSent |
 			| userOrNil |
+			self logFormat: 'Recovering: tokenTyped="{1}", tokenSent="{2}"' with: tokenTyped with: tokenSent.
 			userOrNil := nil.
-			tokenEntered = recoveryToken ifTrue: [
+			tokenTyped = tokenSent ifTrue: [
 				userOrNil := TidbitExampleDatabase findUser: loginId ].
 			self viewUserSetTo: userOrNil.
 			userOrNil ];
 		registerBlock: [ :loginId :password |
 			| userOrNil |
+			self logFormat: 'Registering loginId="{1}"' with: loginId.
 			userOrNil := TidbitExampleDatabase registerUser: loginId password: password.
 			self viewUserSetTo: userOrNil.
 			userOrNil ];
+		sendTokenBlock: [ :loginId |
+			self logFormat: 'Sending token to loginId="{1}"' with: loginId.
+			'1234' ];
 		yourself
 ]
 

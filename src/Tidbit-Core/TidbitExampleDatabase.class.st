@@ -110,7 +110,7 @@ TidbitExampleDatabase class >> newUserId: aUserId password: aPassword [
 		userId: aUserId;
 		"firstName: 'Guest';
 		lastName: 'User';"
-		passwordHash: (MCWLogin passwordHashFor: aUserId);
+		passwordHash: (MCWLogin passwordHashFor: aPassword);
 		yourself.
 
 	self repository save: userModel.
