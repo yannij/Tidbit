@@ -3,6 +3,7 @@ Class {
 	#superclass : #MCWResponsiveApplication,
 	#instVars : [
 		'viewUser',
+		'viewUsers',
 		'viewTask',
 		'viewTaskFilter'
 	],
@@ -13,29 +14,6 @@ Class {
 TidbitToDoApp class >> applicationPath [
 
 	^ 'tidbit/todo'
-
-]
-
-{ #category : #'utility - login' }
-TidbitToDoApp class >> authenticatedUser: aUserId password: aPassword [
-	"Answer a user instance if hashed pssword matches saved passwrodHass,
-	or answer nil is does not match, or user not found"
-
-	^ (self findUser: aUserId)
-		ifNil: [ nil ]
-		ifNotNil: [ :value |
-			value passwordHash = (MCWLogin passwordHashFor: (aPassword ifNil: [ '' ] ifNotNil: [ :arg | arg ]))
-				ifTrue: [ value ]
-				ifFalse: [ nil ] ]
-]
-
-{ #category : #'utility - login' }
-TidbitToDoApp class >> findUser: aUsername [
-	"Answer the user having userId matching aUsername, or nil if not found"
-
-	^ (VORepository current selectAll: TidbitUser)
-		ifEmpty: [ nil ]
-		ifNotEmpty: [ :value | value detect: [ :eachUser | eachUser username = aUsername ] ifNone: [ nil ] ]
 ]
 
 { #category : #'class initialization' }
@@ -44,34 +22,7 @@ TidbitToDoApp class >> initialize [
 	WAAdmin unregister: self applicationPath.
 	"
 
-	^ self registerMaterialWebDeployment: self applicationPath
-
-]
-
-{ #category : #'utility - login' }
-TidbitToDoApp class >> newUserId: aUsername password: aPassword [
-	| userModel |
-
-	userModel := TidbitUser new
-		username: aUsername;
-		fullName: aUsername;
-		passwordHash: (MCWLogin passwordHashFor: aPassword);
-		yourself.
-
-	VORepository current save: userModel.
-
-	^ userModel
-
-]
-
-{ #category : #'utility - login' }
-TidbitToDoApp class >> registerUser: aUserId password: aPassword [
-	"Answer a new user instance built from the userId/password,
-	or answer nil user already exists"
-
-	^ (self findUser: aUserId)
-		ifNil: [ self newUserId: aUserId password: aPassword ]
-		ifNotNil: [ :value | "User already exists" nil ]
+	^ self mcwRegisterDeployment: self applicationPath
 ]
 
 { #category : #initialization }
@@ -87,6 +38,19 @@ TidbitToDoApp >> applicationTitle [
 	^ 'Tidbit ToDo'
 ]
 
+{ #category : #'utility - login' }
+TidbitToDoApp >> authenticatedUsername: aUsername password: aPassword [
+	"Answer a user instance if hashed pssword matches saved passwrodHass,
+	or answer nil is does not match, or user not found"
+
+	^ (self findUser: aUsername)
+		ifNil: [ nil ]
+		ifNotNil: [ :value |
+			value passwordHash = (MCWLogin passwordHashFor: (aPassword ifNil: [ '' ] ifNotNil: [ :arg | arg ]))
+				ifTrue: [ value ]
+				ifFalse: [ nil ] ]
+]
+
 { #category : #accessing }
 TidbitToDoApp >> browserTabTitle [
 
@@ -99,27 +63,27 @@ TidbitToDoApp >> buildLoginComponent [
 
 	^ MCWLogin new
 		loginTitle: self applicationTitle;
-		authenticationBlock: [ :loginId :password |
+		authenticationBlock: [ :username :password |
 			| userOrNil |
-			userOrNil := self class authenticatedUser: loginId password: password.
+			userOrNil := self authenticatedUsername: username password: password.
 			self viewUserSetTo: userOrNil.
 			userOrNil ];
-		recoverBlock: [ :loginId :tokenTyped :tokenSent |
+		recoverBlock: [ :username :tokenTyped :tokenSent |
 			| userOrNil |
 			self logFormat: 'Recovering: tokenTyped="{1}", tokenSent="{2}"' with: tokenTyped with: tokenSent.
 			userOrNil := nil.
 			tokenTyped = tokenSent ifTrue: [
-				userOrNil := self class findUser: loginId ].
+				userOrNil := self findUser: username ].
 			self viewUserSetTo: userOrNil.
 			userOrNil ];
-		registerBlock: [ :loginId :password |
+		registerBlock: [ :username :password |
 			| userOrNil |
-			self logFormat: 'Registering loginId="{1}"' with: loginId.
-			userOrNil := self class registerUser: loginId password: password.
+			self logFormat: 'Registering username="{1}"' with: username.
+			userOrNil := self registerUsername: username password: password.
 			self viewUserSetTo: userOrNil.
 			userOrNil ];
-		sendTokenBlock: [ :loginId |
-			self logFormat: 'Sending token to loginId="{1}"' with: loginId.
+		sendTokenBlock: [ :username |
+			self logFormat: 'Sending token to username="{1}"' with: username.
 			'1234' ];
 		yourself
 ]
@@ -136,6 +100,7 @@ TidbitToDoApp >> buildSideNavList [
 	^ MCWListBasic new
 		addListItem: (MCWListItemIcon  itemText: 'Home' iconName: 'home' callback: [ self viewUserGo ]);
 		addListItem: (MCWListItemIcon  itemText: 'Tasks' iconName: 'checklist' callback: [ self viewTaskGo ]);
+		addListItem: (MCWListItemIcon  itemText: 'Users' iconName: 'view_list' callback: [ self viewUsersGo ]);
 		yourself
 ]
 
@@ -143,6 +108,15 @@ TidbitToDoApp >> buildSideNavList [
 TidbitToDoApp >> buildSideSheet [
 
 	^ MCWSideSheet new
+]
+
+{ #category : #'utility - login' }
+TidbitToDoApp >> findUser: aUsername [
+	"Answer the user having username matching aUsername, or nil if not found"
+
+	^ (self repository selectAll: TidbitUser)
+		ifEmpty: [ nil ]
+		ifNotEmpty: [ :value | value detect: [ :eachUser | eachUser username = aUsername ] ifNone: [ nil ] ]
 ]
 
 { #category : #accessing }
@@ -156,6 +130,7 @@ TidbitToDoApp >> initialize [
 
 	self viewUser: TidbitViewGridContent new.
 	self viewUser content1: nil.
+	self viewUsers: TidbitViewUsers new.
 	self viewTask: TidbitViewTask new.
 	self viewTaskFilter: TidbitViewTaskFilter new.
 
@@ -171,10 +146,44 @@ TidbitToDoApp >> initialize [
 
 ]
 
+{ #category : #'utility - login' }
+TidbitToDoApp >> newUsername: aUsername password: aPassword [
+	| userModel |
+
+	userModel := TidbitUser new
+		username: aUsername;
+		fullName: aUsername;
+		passwordHash: (MCWLogin passwordHashFor: aPassword);
+		yourself.
+
+	self repository save: userModel.
+
+	^ userModel
+
+]
+
+{ #category : #'utility - login' }
+TidbitToDoApp >> registerUsername: aUsername password: aPassword [
+	"Answer a new user instance built from the userId/password,
+	or answer nil user already exists"
+
+	^ (self findUser: aUsername)
+		ifNil: [ self newUsername: aUsername password: aPassword ]
+		ifNotNil: [ :value | "User already exists" nil ]
+]
+
+{ #category : #'utility - repository' }
+TidbitToDoApp >> repository [
+
+	"^ TidbitExampleDatabase memory1"
+	"^ TidbitExampleDatabase memory2"
+	^ VORepository current
+]
+
 { #category : #'accessing - model' }
 TidbitToDoApp >> saveObject: anObject [
 
-	VORepository current save: anObject
+	self mcwApplicationGet repository save: anObject
 ]
 
 { #category : #navigation }
@@ -254,4 +263,21 @@ TidbitToDoApp >> viewUserSetTo: aModel [
 
 	newView := aModel asComponent addValidatedForm; yourself.
 	self viewUser content1: newView
+]
+
+{ #category : #accessing }
+TidbitToDoApp >> viewUsers [
+	^ viewUsers
+]
+
+{ #category : #accessing }
+TidbitToDoApp >> viewUsers: anObject [
+	viewUsers := anObject
+]
+
+{ #category : #navigation }
+TidbitToDoApp >> viewUsersGo [
+
+	self layout contentArea component: self viewUsers.
+	self layout sideSheet beHidden
 ]

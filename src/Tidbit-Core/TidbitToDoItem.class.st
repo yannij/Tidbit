@@ -311,6 +311,7 @@ TidbitToDoItem >> priorityDescription [
 		cssClass: 'mcw-textfield';
 		priority: 60;
 		beInteger;
+		mcwSliderStep: 5;
 		yourself
 ]
 

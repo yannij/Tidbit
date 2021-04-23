@@ -8,7 +8,8 @@ Class {
 		'fullName',
 		'email',
 		'userSettings',
-		'toDoItems'
+		'toDoItems',
+		'website'
 	],
 	#category : #'Tidbit-Core'
 }
@@ -148,6 +149,19 @@ TidbitUser >> descriptionUsername [
 		yourself
 ]
 
+{ #category : #'accessing-magritte' }
+TidbitUser >> descriptionWebSite [
+	<magritteDescription>
+
+	^ MAUrlDescription new
+		accessor: #website;
+		default: '';
+		label: 'Website';
+		cssClass: 'mcw-textfield';
+		priority: 35;
+		yourself
+]
+
 { #category : #accessing }
 TidbitUser >> email [
 	^ email
@@ -178,6 +192,7 @@ TidbitUser >> initialize [
 	self dateCreated: DateAndTime now.
 	self fullName: String new.
 	self email: String new.
+	self website: String new.
 
 	self userSettings: (TidbitUserSettings on: self).
 	self toDoItems: OrderedCollection new.
@@ -234,4 +249,14 @@ TidbitUser >> username [
 { #category : #accessing }
 TidbitUser >> username: anObject [
 	username := anObject
+]
+
+{ #category : #accessing }
+TidbitUser >> website [
+	^ website
+]
+
+{ #category : #accessing }
+TidbitUser >> website: anObject [
+	website := anObject
 ]

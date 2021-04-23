@@ -2,18 +2,27 @@ Class {
 	#name : #TidbitExampleDatabase,
 	#superclass : #Object,
 	#classVars : [
-		'Repository'
+		'Memory1',
+		'Memory2'
 	],
 	#category : #'Tidbit-Core'
 }
 
 { #category : #initalize }
 TidbitExampleDatabase class >> buildUser: aUsername [
+
+	self buildUser: aUsername repository: VORepository current
+]
+
+{ #category : #initalize }
+TidbitExampleDatabase class >> buildUser: aUsername repository: aRepository [
 	| userModel itemCount today |
 
 	userModel := TidbitUser new
 		username: aUsername;
 		fullName: aUsername capitalized, ' Test';
+		email: aUsername, '@foo.com';
+		website: 'foo.com/', aUsername;
 		passwordHash: (MCWLogin passwordHashFor: 'secret');
 		yourself.
 
@@ -34,7 +43,7 @@ TidbitExampleDatabase class >> buildUser: aUsername [
 		todoItem save.
 		userModel toDoItemsAdd: todoItem ].
 
-	VORepository current save: userModel.
+	aRepository save: userModel.
 
 	^ userModel
 
@@ -85,7 +94,7 @@ TidbitExampleDatabase class >> buildUserGuest [
 { #category : #'class initialization' }
 TidbitExampleDatabase class >> initialize [
 
-	self repositorySetUpMemory
+	self repositorySetUpMemorySingleton
 ]
 
 { #category : #initalize }
@@ -94,25 +103,70 @@ TidbitExampleDatabase class >> loremText [
 	^ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
 ]
 
-{ #category : #initalize }
-TidbitExampleDatabase class >> repositoryClear [
-	"
-	self repositoryClear
-	"
+{ #category : #accessing }
+TidbitExampleDatabase class >> memory1 [
+	^ Memory1
+]
 
-	VORepository current ifNotNil: [ :value | value reset ].
-	VORepository setRepository: nil.
+{ #category : #accessing }
+TidbitExampleDatabase class >> memory1: anObject [
+	Memory1 := anObject
+]
 
+{ #category : #accessing }
+TidbitExampleDatabase class >> memory1Clear [
+
+	Memory1 := nil
+]
+
+{ #category : #accessing }
+TidbitExampleDatabase class >> memory2 [
+	^ Memory2
+]
+
+{ #category : #accessing }
+TidbitExampleDatabase class >> memory2: anObject [
+	Memory2 := anObject
+]
+
+{ #category : #accessing }
+TidbitExampleDatabase class >> memory2Clear [
+
+	Memory2 := nil
 ]
 
 { #category : #initalize }
-TidbitExampleDatabase class >> repositorySetUpMemory [
+TidbitExampleDatabase class >> repositorySetUpMemory1 [
 	"
-	self repositorySetUpMemory
+	self memory1Clear.
+	self repositorySetUpMemory1.
+	"
+
+	self memory1: VOMemoryRepository new.
+
+	1 to: 10 do: [ :index | self buildUser: 'a', index printString repository: self memory1 ]
+]
+
+{ #category : #initalize }
+TidbitExampleDatabase class >> repositorySetUpMemory2 [
+	"
+	self memory2Clear.
+	self repositorySetUpMemory2.
+	"
+
+	self memory2: VOMemoryRepository new.
+
+	1 to: 10 do: [ :index | self buildUser: 'b', index printString repository: self memory2 ]
+]
+
+{ #category : #initalize }
+TidbitExampleDatabase class >> repositorySetUpMemorySingleton [
+	"
+	self repositorySetUpMemorySingleton
 	"
 	| repository |
 
-	self repositoryClear.
+	VORepository current ifNotNil: [ :value | value reset ].
 	repository := VOMemoryRepository new.
 	repository enableSingleton.
 
@@ -129,7 +183,7 @@ TidbitExampleDatabase class >> repositorySetUpMongo [
 	"
 	| repository |
 
-	self repositoryClear.
+	VORepository current ifNotNil: [ :value | value reset ].
 	repository := VOMongoRepository database: 'Tidbit'.
 	repository enableSingleton.
 
