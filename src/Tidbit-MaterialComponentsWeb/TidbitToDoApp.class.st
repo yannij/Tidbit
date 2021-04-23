@@ -39,7 +39,7 @@ TidbitToDoApp >> applicationTitle [
 ]
 
 { #category : #'utility - login' }
-TidbitToDoApp >> authenticatedUsername: aUsername password: aPassword [
+TidbitToDoApp >> authenticateUsername: aUsername password: aPassword [
 	"Answer a user instance if hashed pssword matches saved passwrodHass,
 	or answer nil is does not match, or user not found"
 
@@ -65,7 +65,7 @@ TidbitToDoApp >> buildLoginComponent [
 		loginTitle: self applicationTitle;
 		authenticationBlock: [ :username :password |
 			| userOrNil |
-			userOrNil := self authenticatedUsername: username password: password.
+			userOrNil := self authenticateUsername: username password: password.
 			self viewUserSetTo: userOrNil.
 			userOrNil ];
 		recoverBlock: [ :username :tokenTyped :tokenSent |

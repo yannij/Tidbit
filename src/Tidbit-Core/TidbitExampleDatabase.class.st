@@ -3,7 +3,8 @@ Class {
 	#superclass : #Object,
 	#classVars : [
 		'Memory1',
-		'Memory2'
+		'Memory2',
+		'Mongo1'
 	],
 	#category : #'Tidbit-Core'
 }
@@ -36,6 +37,7 @@ TidbitExampleDatabase class >> buildUser: aUsername repository: aRepository [
 			priority: priority;
 			completeByDate: (today addDays: priority - 30);
 			completeByTime: (Time fromSeconds: (17 + 16 atRandom) * 60 * 30);
+			estimatedDuration: (Duration minutes: ((12 atRandom) * 15));
 			colorCode: (Color indexedColors at: 256 atRandom);
 			yourself.
 		(priority \\ 3) isZero ifTrue: [ todoItem done: true ].
@@ -135,6 +137,22 @@ TidbitExampleDatabase class >> memory2Clear [
 	Memory2 := nil
 ]
 
+{ #category : #accessing }
+TidbitExampleDatabase class >> mongo1 [
+	^ Mongo1
+]
+
+{ #category : #accessing }
+TidbitExampleDatabase class >> mongo1: anObject [
+	Mongo1 := anObject
+]
+
+{ #category : #accessing }
+TidbitExampleDatabase class >> mongo1Clear [
+
+	Mongo1 := nil
+]
+
 { #category : #initalize }
 TidbitExampleDatabase class >> repositorySetUpMemory1 [
 	"
@@ -177,18 +195,23 @@ TidbitExampleDatabase class >> repositorySetUpMemorySingleton [
 ]
 
 { #category : #initalize }
-TidbitExampleDatabase class >> repositorySetUpMongo [
+TidbitExampleDatabase class >> repositorySetUpMongo1 [
 	"
-	self repositorySetUpMongo
+	self repositorySetUpMongo1.
 	"
-	| repository |
 
-	VORepository current ifNotNil: [ :value | value reset ].
-	repository := VOMongoRepository database: 'Tidbit'.
-	repository enableSingleton.
+	self repositorySetUpMongo1Host: VOMongoRepository defaultHost port: VOMongoRepository defaultPort
+]
 
-	self buildUserDemo.
-	self buildUserGuest.
-	1 to: 12 do: [ :index |
-		self buildUser: 'mongo', index printString ]
+{ #category : #initalize }
+TidbitExampleDatabase class >> repositorySetUpMongo1Host: aHostname port: aPortno [
+	"
+	self mongo1Clear.
+	self repositorySetUpMongo1Host: VOMongoRepository defaultHost port: VOMongoRepository defaultPort.
+	"
+	| mongo |
+
+	mongo := (VOMongoRepository host: aHostname port: aPortno database: 'Tidbit').
+
+	1 to: 10 do: [ :index | self buildUser: 'mongo', index printString repository: mongo ]
 ]

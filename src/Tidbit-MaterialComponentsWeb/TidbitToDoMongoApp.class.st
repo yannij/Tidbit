@@ -22,22 +22,21 @@ TidbitToDoMongoApp class >> initialize [
 { #category : #'utility - repository' }
 TidbitToDoMongoApp >> mongoHost [
 
-	^ OSEnvironment current at: 'MONGO_HOST' ifAbsentPut: [ VOMongoRepository defaultHost ]
+	^ OSEnvironment current at: 'MONGO_HOST' ifAbsent: [ VOMongoRepository defaultHost ]
 ]
 
 { #category : #'utility - repository' }
 TidbitToDoMongoApp >> mongoPort [
 
-	^ OSEnvironment current at: 'MONGO_PORT' ifAbsentPut: [ VOMongoRepository defaultPort ]
+	^ OSEnvironment current at: 'MONGO_PORT' ifAbsent: [ VOMongoRepository defaultPort ]
 ]
 
 { #category : #'utility - repository' }
 TidbitToDoMongoApp >> repository [
 
-	^ VORepository current
+	^ TidbitExampleDatabase mongo1
 		ifNotNil: [ :value | value ]
 		ifNil: [
-			(VOMongoRepository host: self mongoHost port: self mongoPort database: 'Tidbit')
-				enableSingleton;
-				yourself ]
+			TidbitExampleDatabase mongo1: (VOMongoRepository host: self mongoHost port: self mongoPort database: 'Tidbit').
+			TidbitExampleDatabase mongo1 ]
 ]
