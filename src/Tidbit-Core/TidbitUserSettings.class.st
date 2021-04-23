@@ -2,15 +2,49 @@ Class {
 	#name : #TidbitUserSettings,
 	#superclass : #TidbitRootObject,
 	#instVars : [
+		'user',
 		'layoutDensity'
 	],
 	#category : #'Tidbit-Core'
 }
 
 { #category : #voyage }
+TidbitUserSettings class >> descriptionUser [
+	"<voyageDescription>"
+
+	^ VOToOneDescription new
+		attributeName: 'user';
+		accessor: #user;
+		beLazy;
+		yourself
+]
+
+{ #category : #voyage }
 TidbitUserSettings class >> isVoyageRoot [
 
 	^ false
+]
+
+{ #category : #'instance creation' }
+TidbitUserSettings class >> on: aUser [
+
+	^ self new
+		user: aUser;
+		yourself
+]
+
+{ #category : #'accessing-magritte' }
+TidbitUserSettings >> descriptionUser [
+	<magritteDescription>
+
+	^ MAToOneRelationDescription new
+		accessor: #user;
+		label: 'User';
+		classes: {TidbitUser};
+		cssClass: 'mcw-textfield';
+		priority: 10;
+		beRequired;
+		yourself
 ]
 
 { #category : #initialization }
@@ -53,5 +87,15 @@ TidbitUserSettings >> mdDisplaySecondaryString [
 { #category : #printing }
 TidbitUserSettings >> mdPrimaryString [
 
-	^ 'User Settings for: ???'
+	^ 'User Settings for: ', self user mdPrimaryString
+]
+
+{ #category : #accessing }
+TidbitUserSettings >> user [
+	^ user
+]
+
+{ #category : #accessing }
+TidbitUserSettings >> user: anObject [
+	"user := anObject"
 ]

@@ -17,9 +17,30 @@ Class {
 }
 
 { #category : #voyage }
+TidbitToDoItem class >> descriptionContainer [
+	<voyageContainer>
+
+	^ VOContainer new
+		collectionName: 'TidbitToDoItem'
+		yourself
+]
+
+{ #category : #voyage }
 TidbitToDoItem class >> isVoyageRoot [
 
 	^ true
+]
+
+{ #category : #voyage }
+TidbitToDoItem class >> mongoCompleteByDate [
+	<voyageDescription>
+
+	^ VOToOneDescription new
+		attributeName: 'completeByDate';
+		accessor: (MAPluggableAccessor
+			read: [ :todoItem | todoItem completeByDate ]
+			write: [ :todoItem :value | todoItem completeByDate: value asDate ]);
+		yourself
 ]
 
 { #category : #accessing }
@@ -72,7 +93,7 @@ TidbitToDoItem >> colorCodeDescription [
 { #category : #accessing }
 TidbitToDoItem >> completeBy [
 
-	^ completeByDate yyyymmdd, ' ', completeByTime print24
+	^ completeByDate asDate yyyymmdd, ' ', completeByTime print24
 ]
 
 { #category : #accessing }

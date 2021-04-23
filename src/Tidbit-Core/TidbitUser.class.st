@@ -2,16 +2,38 @@ Class {
 	#name : #TidbitUser,
 	#superclass : #TidbitRootObject,
 	#instVars : [
-		'userId',
 		'dateCreated',
+		'username',
 		'passwordHash',
-		'firstName',
-		'lastName',
+		'fullName',
+		'email',
 		'userSettings',
 		'toDoItems'
 	],
 	#category : #'Tidbit-Core'
 }
+
+{ #category : #voyage }
+TidbitUser class >> descriptionToDoItems [
+	<voyageDescription>
+
+	^ VOToManyDescription new
+		attributeName: 'toDoItems';
+		accessor: #toDoItems;
+		beLazy;
+		yourself
+]
+
+{ #category : #voyage }
+TidbitUser class >> descriptionUserSettings [
+	"<voyageDescription>"
+
+	^ VOToOneDescription new
+		attributeName: 'userSettings';
+		accessor: #userSettings;
+		beLazy;
+		yourself
+]
 
 { #category : #voyage }
 TidbitUser class >> isVoyageRoot [
@@ -46,28 +68,28 @@ TidbitUser >> descriptionDateCreated [
 ]
 
 { #category : #'accessing-magritte' }
-TidbitUser >> descriptionFirstName [
+TidbitUser >> descriptionEmail [
 	<magritteDescription>
 
 	^ MAStringDescription new
-		accessor: #firstName;
+		accessor: #email;
 		default: '';
-		label: 'First Name';
+		label: 'Email';
 		cssClass: 'mcw-textfield';
-		priority: 20;
+		priority: 30;
 		yourself
 ]
 
 { #category : #'accessing-magritte' }
-TidbitUser >> descriptionLastName [
+TidbitUser >> descriptionFullName [
 	<magritteDescription>
 
 	^ MAStringDescription new
-		accessor: #lastName;
+		accessor: #fullName;
 		default: '';
-		label: 'Last Name';
+		label: 'Full Name';
 		cssClass: 'mcw-textfield';
-		priority: 30;
+		priority: 20;
 		yourself
 ]
 
@@ -100,19 +122,6 @@ TidbitUser >> descriptionToDoItems [
 ]
 
 { #category : #'accessing-magritte' }
-TidbitUser >> descriptionUserId [
-	<magritteDescription>
-
-	^ MAStringDescription new
-		accessor: #userId;
-		default: '';
-		label: 'User ID';
-		cssClass: 'mcw-textfield';
-		priority: 10;
-		yourself
-]
-
-{ #category : #'accessing-magritte' }
 TidbitUser >> descriptionUserSettings [
 	<magritteDescription>
 
@@ -126,14 +135,37 @@ TidbitUser >> descriptionUserSettings [
 		yourself
 ]
 
-{ #category : #accessing }
-TidbitUser >> firstName [
-	^ firstName
+{ #category : #'accessing-magritte' }
+TidbitUser >> descriptionUsername [
+	<magritteDescription>
+
+	^ MAStringDescription new
+		accessor: #username;
+		default: '';
+		label: 'Username';
+		cssClass: 'mcw-textfield';
+		priority: 10;
+		yourself
 ]
 
 { #category : #accessing }
-TidbitUser >> firstName: anObject [
-	firstName := anObject
+TidbitUser >> email [
+	^ email
+]
+
+{ #category : #accessing }
+TidbitUser >> email: anObject [
+	email := anObject
+]
+
+{ #category : #accessing }
+TidbitUser >> fullName [
+	^ fullName
+]
+
+{ #category : #accessing }
+TidbitUser >> fullName: anObject [
+	fullName := anObject
 ]
 
 { #category : #initialization }
@@ -141,31 +173,21 @@ TidbitUser >> initialize [
 
 	super initialize.
 
-	self userId: String new.
+	self username: String new.
 	self passwordHash: String new.
 	self dateCreated: DateAndTime now.
-	self firstName: String new.
-	self lastName: String new.
+	self fullName: String new.
+	self email: String new.
 
-	self userSettings: TidbitUserSettings new.
+	self userSettings: (TidbitUserSettings on: self).
 	self toDoItems: OrderedCollection new.
 
-]
-
-{ #category : #accessing }
-TidbitUser >> lastName [
-	^ lastName
-]
-
-{ #category : #accessing }
-TidbitUser >> lastName: anObject [
-	lastName := anObject
 ]
 
 { #category : #printing }
 TidbitUser >> mdPrimaryString [
 
-	^ self userId
+	^ self username
 ]
 
 { #category : #accessing }
@@ -195,16 +217,6 @@ TidbitUser >> toDoItemsAdd: anItem [
 ]
 
 { #category : #accessing }
-TidbitUser >> userId [
-	^ userId
-]
-
-{ #category : #accessing }
-TidbitUser >> userId: anObject [
-	userId := anObject
-]
-
-{ #category : #accessing }
 TidbitUser >> userSettings [
 	^ userSettings
 ]
@@ -212,4 +224,14 @@ TidbitUser >> userSettings [
 { #category : #accessing }
 TidbitUser >> userSettings: anObject [
 	userSettings := anObject
+]
+
+{ #category : #accessing }
+TidbitUser >> username [
+	^ username
+]
+
+{ #category : #accessing }
+TidbitUser >> username: anObject [
+	username := anObject
 ]
