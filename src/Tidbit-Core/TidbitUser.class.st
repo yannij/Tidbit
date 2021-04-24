@@ -117,8 +117,23 @@ TidbitUser >> descriptionToDoItems [
 		default: OrderedCollection new;
 		label: 'ToDo Items';
 		cssClass: 'mcw-textfield';
-		priority: 40;
+		priority: 45;
 		"beOrdered;"
+		yourself
+]
+
+{ #category : #'accessing-magritte' }
+TidbitUser >> descriptionToDoItemsCount [
+	<magritteDescription>
+
+	^ MANumberDescription new
+		accessor: #toDoItemsCount;
+		default: 0;
+		label: 'ToDo Count';
+		cssClass: 'mcw-textfield';
+		priority: 40;
+		beInteger;
+		beReadonly;
 		yourself
 ]
 
@@ -229,6 +244,12 @@ TidbitUser >> toDoItems: anObject [
 TidbitUser >> toDoItemsAdd: anItem [
 
 	self toDoItems add: anItem
+]
+
+{ #category : #accessing }
+TidbitUser >> toDoItemsCount [
+
+	^ toDoItems size
 ]
 
 { #category : #accessing }

@@ -13,6 +13,7 @@ TidbitViewUsers >> dataRows [
 	^ users asOrderedCollection collect: [ :eachUser |
 		| dataRow |
 		dataRow := OrderedCollection new.
+		dataRow add: eachUser toDoItemsCount.
 		dataRow add: eachUser username.
 		dataRow add: eachUser fullName.
 		dataRow add: eachUser email.
@@ -31,7 +32,7 @@ TidbitViewUsers >> renderContentOn: html [
 TidbitViewUsers >> renderTableHeadingsOn: html [
 	| dataHeadings |
 
-	dataHeadings := #( 'Username' 'Full Name' 'Email' 'Website' 'Date Created').
+	dataHeadings := #( 'ToDo Count' 'Username' 'Full Name' 'Email' 'Website' 'Date Created').
 	html tableHead: [
 		html tableRow "mdcDataTable__headerRow" class: 'mdc-data-table__header-row'; with: [
 			dataHeadings do: [ :each |

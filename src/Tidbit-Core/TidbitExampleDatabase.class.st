@@ -16,7 +16,9 @@ TidbitExampleDatabase class >> buildUser: aUsername [
 
 { #category : #initalize }
 TidbitExampleDatabase class >> buildUser: aUsername repository: aRepository [
-	| userModel itemCount today |
+	| userModel itemCount today importance |
+
+	importance := #('High' 'Medium' 'Low').
 
 	userModel := TidbitUser new
 		username: aUsername;
@@ -34,6 +36,7 @@ TidbitExampleDatabase class >> buildUser: aUsername repository: aRepository [
 		todoItem := TidbitToDoItem new
 			summary: 'task ', priority printString;
 			priority: priority;
+			importance: (importance at: (priority \\ 3) + 1);
 			completeByDate: (today addDays: priority - 30);
 			completeByTime: (Time fromSeconds: (17 + 16 atRandom) * 60 * 30);
 			estimatedDuration: (Duration minutes: ((12 atRandom) * 15));

@@ -23,9 +23,139 @@ TidbitViewTask >> dataRows [
 ]
 
 { #category : #rendering }
-TidbitViewTask >> renderContentOn: html [
+TidbitViewTask >> renderCards: aUser on: html [
 
-	self renderTableOn: html
+	html div mdcLayoutGrid; with: [
+		html div mdcLayoutGrid__inner; with: [
+			self tasksFiltered do: [ :eachItem |
+				html div mdcLayoutGrid__cell with: [
+					html div mdcCard; with: [
+						html div mdcCard__media; class: 'mdc-card__media--16-9';
+							style: 'background: #', eachItem colorCode asHexString; with: [
+								html div mdcCard__mediaContent; with: [
+									html heading level2; mdcTypography_headline6;
+										style: 'text-align: center; margin-top: 0px; background: white; opacity: .5';
+										with: eachItem summary ] ].
+						html div mdcCard__primaryAction; style: 'padding: 4px'; with: [
+							html heading level3; mdcTypography_subtitle2; with: eachItem mdDisplaySecondaryString.
+							html div mdcTypography_body2; with: eachItem description ] ] ] ] ] ]
+]
+
+{ #category : #rendering }
+TidbitViewTask >> renderChips: aUser on: html [
+	| iconMap |
+
+	iconMap := Dictionary new at: 'High' put: 'star'; at: 'Medium' put: 'star_half'; at: 'Low' put: 'star_outline'; yourself.
+
+	html unorderedList mdcList; mdcList_dense;
+		"style: 'min-width: 400px';"
+		with: [
+			self tasksFiltered
+				do: [ :eachItem |
+					html div mdcChip; mdcRippleUpgraded;
+						style: 'background: #', eachItem colorCode asHexString;
+						with: [
+							html span mdcMaterialIcons; mdcChip__icon; mdcChip__icon_leading;
+								with: (iconMap at: eachItem importance ifAbsent: [ 'star' ]).
+							html span mdcChip__text; with: [
+								html text: eachItem mdPrimaryString ] ] ]
+				separatedBy: [ html space ] ]
+]
+
+{ #category : #rendering }
+TidbitViewTask >> renderContentOn: html [
+	| user itemsStyle |
+
+	user := self mcwApplicationGet viewUserModel.	
+	user ifNil: [ ^ self ].
+
+	html heading level6; mdcTypography_headline6; style: 'margin: 4px auto'; with: user mdPrimaryString.
+
+	itemsStyle := self mcwApplicationGet viewTaskFilter itemsStyle.
+
+	itemsStyle = #listSingleLine ifTrue: [
+		^ self renderListSingleLine: user on: html ].
+
+	itemsStyle = #listTwoLine ifTrue: [
+		^ self renderListTwoLine: user on: html ].
+
+	itemsStyle = #chips ifTrue: [
+		^ self renderChips: user on: html ].
+
+	itemsStyle = #cards ifTrue: [
+		^ self renderCards: user on: html ].
+
+	self renderTable: user on: html
+]
+
+{ #category : #rendering }
+TidbitViewTask >> renderListSingleLine: aUser on: html [
+
+	html unorderedList mdcList; mdcList_dense;
+		"style: 'min-width: 400px';"
+		with: [
+			self tasksFiltered do: [ :eachItem |
+				html listItem mdcListItem; with: [
+					html span mdcListItem__text; with:
+						((eachItem mdPrimaryString , ' - ' , eachItem mdDisplaySecondaryString)
+							truncateWithElipsisTo: 60) ] ] ]
+]
+
+{ #category : #rendering }
+TidbitViewTask >> renderListTwoLine: aUser on: html [
+	| filteredList listHigh listMedium listLow |
+
+	filteredList := self tasksFiltered.
+
+	listHigh := filteredList select: [ :each | each importance = 'High' ].
+	listMedium := filteredList select: [ :each | each importance = 'Medium' ].
+	listLow := filteredList select: [ :each | each importance = 'Low' ].
+
+	html div mdcListGroup; mdcTheme_surface; with: [
+		html div mdcListGroup__subheader; with: 'High'.
+		html unorderedList mdcList; mdcList_twoLine; with: [
+			self renderListTwoLineItems: listHigh on: html ] ].
+
+	html div mdcListGroup; mdcTheme_surface; with: [
+		html div mdcListGroup__subheader; with: 'Medium'.
+		html unorderedList mdcList; mdcList_twoLine; with: [
+			self renderListTwoLineItems: listMedium on: html ] ].
+
+	html div mdcListGroup; mdcTheme_surface; with: [
+		html div mdcListGroup__subheader; with: 'Low'.
+		html unorderedList mdcList; mdcList_twoLine; with: [
+			self renderListTwoLineItems: listLow on: html ] ]
+]
+
+{ #category : #rendering }
+TidbitViewTask >> renderListTwoLineItems: anItemList on: html [
+
+	anItemList isEmpty ifTrue: [
+		html listItem mdcListItem; with: [
+			html span mdcListItem__text; with: [
+				html span mdcListItem__secondaryText; with: '** NONE **' ] ].
+		^ self ].
+
+	anItemList do: [ :eachItem |
+		html listItem mdcListItem; with: [
+			html span mdcListItem__text; with: [
+				html span mdcListItem__primaryText; with:
+					eachItem mdPrimaryString.
+				html span mdcListItem__secondaryText; with:
+					(eachItem mdDisplaySecondaryString truncateWithElipsisTo: 60) ] ] ]
+]
+
+{ #category : #rendering }
+TidbitViewTask >> renderTable: aUser on: html [
+
+	html div mdcDataTable with: [
+		html div mdcDataTable__tableContainer; with: [
+			| dataRows |
+			dataRows := self dataRows.
+			html table mdcDataTable__table;  with: [
+				self renderTableHeadingsOn: html.
+				self renderTableRows: dataRows on: html ].
+		self renderTableRows: dataRows paginationOn: html ] ]
 ]
 
 { #category : #rendering }
@@ -38,24 +168,6 @@ TidbitViewTask >> renderTableHeadingsOn: html [
 			dataHeadings do: [ :each |
 				html tableHeading mdcDataTable__headerCell; mdcRole: 'columnHeader'; scope: 'col'; with: each ] ] ]
 
-]
-
-{ #category : #rendering }
-TidbitViewTask >> renderTableOn: html [
-	| user |
-
-	user := self mcwApplicationGet viewUserModel.	
-	user ifNil: [ ^ self ].
-
-	html heading level6; mdcTypography_headline6; with: user mdPrimaryString.
-	html div mdcDataTable with: [
-		html div mdcDataTable__tableContainer; with: [
-			| dataRows |
-			dataRows := self dataRows.
-			html table mdcDataTable__table;  with: [
-				self renderTableHeadingsOn: html.
-				self renderTableRows: dataRows on: html ].
-		self renderTableRows: dataRows paginationOn: html ] ]
 ]
 
 { #category : #rendering }
@@ -99,10 +211,10 @@ TidbitViewTask >> tasksFiltered [
 	tasksAll := user toDoItems.
 	tasksFilterDone := self mcwApplicationGet viewTaskFilter filterDone.
 
-	tasksFilterDone = 'doneOnly'
+	tasksFilterDone = #doneOnly
 		ifTrue: [ ^ tasksAll select: [ :eachTask | eachTask done ] ].
 
-	tasksFilterDone = 'notDoneOnly'
+	tasksFilterDone = #notDoneOnly
 		ifTrue: [ ^ tasksAll reject: [ :eachTask | eachTask done ] ].
 
 	^ tasksAll
