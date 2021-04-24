@@ -2,6 +2,7 @@ Class {
 	#name : #TidbitToDoApp,
 	#superclass : #MCWResponsiveApplication,
 	#instVars : [
+		'viewMap',
 		'viewUser',
 		'viewUsers',
 		'viewTask',
@@ -100,7 +101,8 @@ TidbitToDoApp >> buildSideNavList [
 	^ MCWListBasic new
 		addListItem: (MCWListItemIcon  itemText: 'Home' iconName: 'home' callback: [ self viewUserGo ]);
 		addListItem: (MCWListItemIcon  itemText: 'Tasks' iconName: 'checklist' callback: [ self viewTaskGo ]);
-		addListItem: (MCWListItemIcon  itemText: 'Users' iconName: 'view_list' callback: [ self viewUsersGo ]);
+		addListItem: (MCWListItemIcon  itemText: 'Users' iconName: 'perm_identity' callback: [ self viewUsersGo ]);
+		addListItem: (MCWListItemIcon  itemText: 'Tools' iconName: 'build_circle' callback: [ self viewToolsGo ]);
 		yourself
 ]
 
@@ -128,11 +130,13 @@ TidbitToDoApp >> headerTitle [
 { #category : #initialization }
 TidbitToDoApp >> initialize [
 
+	self viewMap: IdentityDictionary new.
 	self viewUser: TidbitViewGridContent new.
 	self viewUser content1: nil.
 	self viewUsers: TidbitViewUsers new.
 	self viewTask: TidbitViewTask new.
 	self viewTaskFilter: TidbitViewTaskFilter new.
+	self viewMapAt: #Tools put: TidbitViewTools new.
 
 	super initialize.
 	self layout sideSheet beHidden.
@@ -176,8 +180,18 @@ TidbitToDoApp >> registerUsername: aUsername password: aPassword [
 TidbitToDoApp >> repository [
 
 	"^ TidbitExampleDatabase memory1"
-	"^ TidbitExampleDatabase memory2"
 	^ VORepository current
+]
+
+{ #category : #'utility - repository' }
+TidbitToDoApp >> repositoryClear [
+	"Do nothing for memory repository"
+]
+
+{ #category : #'utility - repository' }
+TidbitToDoApp >> repositoryReset [
+
+	TidbitExampleDatabase repositorySetUpMemorySingleton
 ]
 
 { #category : #'accessing - model' }
@@ -199,6 +213,34 @@ TidbitToDoApp >> setCanvasContent2: aModel [
 
 	self viewUser content2: newView.
 
+]
+
+{ #category : #accessing }
+TidbitToDoApp >> viewMap [
+	^ viewMap
+]
+
+{ #category : #accessing }
+TidbitToDoApp >> viewMap: anObject [
+	viewMap := anObject
+]
+
+{ #category : #accessing }
+TidbitToDoApp >> viewMapAt: aKey [
+
+	self viewMapAt: aKey ifAbsent: [ nil ]
+]
+
+{ #category : #accessing }
+TidbitToDoApp >> viewMapAt: aKey ifAbsent: aBlock [
+
+	self viewMap at: aKey ifAbsent: aBlock
+]
+
+{ #category : #accessing }
+TidbitToDoApp >> viewMapAt: aKey put: aContentArea [
+
+	self viewMap at: aKey put: aContentArea
 ]
 
 { #category : #accessing }
@@ -226,6 +268,13 @@ TidbitToDoApp >> viewTaskGo [
 
 	self layout contentArea component: self viewTask.
 	self layout sideSheet beUnHidden
+]
+
+{ #category : #navigation }
+TidbitToDoApp >> viewToolsGo [
+
+	self layout contentArea component: (self viewMap at: #Tools).
+	self layout sideSheet beHidden
 ]
 
 { #category : #accessing }

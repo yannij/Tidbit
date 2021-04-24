@@ -3,7 +3,6 @@ Class {
 	#superclass : #Object,
 	#classVars : [
 		'Memory1',
-		'Memory2',
 		'Mongo1'
 	],
 	#category : #'Tidbit-Core'
@@ -122,22 +121,6 @@ TidbitExampleDatabase class >> memory1Clear [
 ]
 
 { #category : #accessing }
-TidbitExampleDatabase class >> memory2 [
-	^ Memory2
-]
-
-{ #category : #accessing }
-TidbitExampleDatabase class >> memory2: anObject [
-	Memory2 := anObject
-]
-
-{ #category : #accessing }
-TidbitExampleDatabase class >> memory2Clear [
-
-	Memory2 := nil
-]
-
-{ #category : #accessing }
 TidbitExampleDatabase class >> mongo1 [
 	^ Mongo1
 ]
@@ -163,18 +146,6 @@ TidbitExampleDatabase class >> repositorySetUpMemory1 [
 	self memory1: VOMemoryRepository new.
 
 	1 to: 10 do: [ :index | self buildUser: 'a', index printString repository: self memory1 ]
-]
-
-{ #category : #initalize }
-TidbitExampleDatabase class >> repositorySetUpMemory2 [
-	"
-	self memory2Clear.
-	self repositorySetUpMemory2.
-	"
-
-	self memory2: VOMemoryRepository new.
-
-	1 to: 10 do: [ :index | self buildUser: 'b', index printString repository: self memory2 ]
 ]
 
 { #category : #initalize }
@@ -212,6 +183,8 @@ TidbitExampleDatabase class >> repositorySetUpMongo1Host: aHostname port: aPortn
 	| mongo |
 
 	mongo := (VOMongoRepository host: aHostname port: aPortno database: 'Tidbit').
+	mongo removeAll: TidbitUser.
+	mongo removeAll: TidbitToDoItem.
 
 	1 to: 10 do: [ :index | self buildUser: 'mongo', index printString repository: mongo ]
 ]

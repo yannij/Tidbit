@@ -20,7 +20,8 @@ BaselineOfTidbit >> baseline: spec [
 			package: 'Tidbit-MaterialComponentsWeb' with: [ spec requires: #('Tidbit-Core') ].
 
 		spec
-			group: 'default' with: #('Tidbit-MaterialComponentsWeb' 'Tidbit-Core-Tests') ]
+			group: 'default' with: #('Tidbit-MaterialComponentsWeb' 'Tidbit-Core-Tests');
+			group: 'preload' with: #('Voyage') ]
 ]
 
 { #category : #dependencies }
