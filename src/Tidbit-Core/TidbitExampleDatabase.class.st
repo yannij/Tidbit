@@ -18,7 +18,7 @@ TidbitExampleDatabase class >> buildUser: aUsername [
 TidbitExampleDatabase class >> buildUser: aUsername repository: aRepository [
 	| userModel itemCount today importance |
 
-	importance := #('High' 'Medium' 'Low').
+	importance := TidbitToDoItem importanceValues.
 
 	userModel := TidbitUser new
 		username: aUsername;
@@ -29,7 +29,7 @@ TidbitExampleDatabase class >> buildUser: aUsername repository: aRepository [
 		yourself.
 
 	today := Date today.
-	itemCount := 10 atRandom - 1.
+	itemCount := 25 atRandom - 1.
 	itemCount timesRepeat: [
 		| priority todoItem |
 		priority := 100 atRandom.
@@ -42,7 +42,7 @@ TidbitExampleDatabase class >> buildUser: aUsername repository: aRepository [
 			estimatedDuration: (Duration minutes: ((12 atRandom) * 15));
 			colorCode: (Color indexedColors at: 256 atRandom);
 			yourself.
-		(priority \\ 3) isZero ifTrue: [ todoItem done: true ].
+		(priority \\ 2) isZero ifTrue: [ todoItem done: true ].
 		(priority \\ 5) isZero ifTrue: [ todoItem description: self loremText ].
 		todoItem save.
 		userModel toDoItemsAdd: todoItem ].

@@ -135,7 +135,7 @@ TidbitToDoApp >> initialize [
 	self viewUser content1: nil.
 	self viewUsers: TidbitViewUsers new.
 	self viewTask: TidbitViewTask new.
-	self viewTaskFilter: TidbitViewTaskFilter new.
+	self viewTaskFilter: TidbitViewTaskSideSheet new.
 	self viewMapAt: #Tools put: TidbitViewTools new.
 
 	super initialize.

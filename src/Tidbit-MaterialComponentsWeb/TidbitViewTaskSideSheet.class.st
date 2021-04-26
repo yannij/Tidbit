@@ -1,63 +1,60 @@
 Class {
-	#name : #TidbitViewTaskFilter,
+	#name : #TidbitViewTaskSideSheet,
 	#superclass : #MCWWebComponent,
 	#instVars : [
 		'user',
 		'filterDone',
-		'itemsStyle'
+		'itemsStyle',
+		'tabImportance'
 	],
 	#category : #'Tidbit-MaterialComponentsWeb'
 }
 
 { #category : #accessing }
-TidbitViewTaskFilter >> filterDone [
+TidbitViewTaskSideSheet >> filterDone [
 	^ filterDone
 ]
 
 { #category : #accessing }
-TidbitViewTaskFilter >> filterDone: anObject [
+TidbitViewTaskSideSheet >> filterDone: anObject [
 	filterDone := anObject
 ]
 
 { #category : #initialization }
-TidbitViewTaskFilter >> initialize [
+TidbitViewTaskSideSheet >> initialize [
 
 	super initialize.
 
 	self filterDone: #both.
+	self tabImportance: TidbitToDoItem importanceValueHigh.
 	self itemsStyle: #table
 ]
 
 { #category : #accessing }
-TidbitViewTaskFilter >> itemsStyle [
+TidbitViewTaskSideSheet >> itemsStyle [
 	^ itemsStyle
 ]
 
 { #category : #accessing }
-TidbitViewTaskFilter >> itemsStyle: anObject [
+TidbitViewTaskSideSheet >> itemsStyle: anObject [
 	itemsStyle := anObject
 ]
 
 { #category : #rendering }
-TidbitViewTaskFilter >> renderContentOn: html [
+TidbitViewTaskSideSheet >> renderContentOn: html [
 
-	self renderFilterFormOn: html.
-	self renderItemsStyleFormOn: html
+	self renderFilterRadioButtonsOn: html.
+	self renderItemsStyleRadioButtonsOn: html
 ]
 
 { #category : #rendering }
-TidbitViewTaskFilter >> renderFilterFormOn: html [
+TidbitViewTaskSideSheet >> renderFilterRadioButtonsOn: html [
+	| formId group |
 
-	html form: [
-		html submitButton mdcButton; mdcButton_raised; value: 'Filter'.
-		html break.
-		self renderFilterRadioButtonsOn: html ]
-]
+	html heading level6; mdcTypography_subtitle1; style: 'margin: 4px auto'; with: 'Filter Done/Not-done'.
 
-{ #category : #rendering }
-TidbitViewTaskFilter >> renderFilterRadioButtonsOn: html [
-	| group |
-
+	formId := html nextId.
+	html form id: formId; with: [
 	group := html radioGroup.
 	{#both->'Both'. #doneOnly->'Done Only'. #notDoneOnly->'Not Done Only'}
 		do: [ :each | | optionId |
@@ -66,29 +63,26 @@ TidbitViewTaskFilter >> renderFilterRadioButtonsOn: html [
 				html div mdcRadio; mdcAutoInit: 'MDCRadio'; with: [
 					html radioButton mdcRadio__nativeControl; id: optionId; group: group;
 						selected: self filterDone = each key;
-						callback: [ self filterDone: each key ].
+						callback: [ self filterDone: each key ];
+						onChange: (html jQuery ajax script: [ :s | s << (s jQuery id: formId) call: 'submit' ]);
+						yourself.
 					html div mdcRadio__background; with: [
 						html div mdcRadio__outerCircle.
 						html div mdcRadio__innerCircle ].
 					html div mdcRadio__ripple ].
 				html label for: optionId; with: each value ] ]
-		separatedBy: [ html break ]
+		separatedBy: [ html break ] ]
 ]
 
 { #category : #rendering }
-TidbitViewTaskFilter >> renderItemsStyleFormOn: html [
+TidbitViewTaskSideSheet >> renderItemsStyleRadioButtonsOn: html [
+	| formId group |
 
-	html form: [
-		html submitButton mdcButton; mdcButton_raised; value: 'Items style'.
-		html break.
-		self renderItemsStyleRadioButtonsOn: html ]
-]
+	html heading level6; mdcTypography_subtitle1; style: 'margin: 4px auto'; with: 'Items style'.
 
-{ #category : #rendering }
-TidbitViewTaskFilter >> renderItemsStyleRadioButtonsOn: html [
-	| group |
-
+	formId := html nextId.
 	group := html radioGroup.
+	html form id: formId; with: [
 	{#table->'Table'. #listSingleLine->'List single-line'. #listTwoLine->'List two-line'. #chips->'Chips'. #cards->'Cards'}
 		do: [ :each | | optionId |
 			optionId := html nextId.
@@ -96,21 +90,41 @@ TidbitViewTaskFilter >> renderItemsStyleRadioButtonsOn: html [
 				html div mdcRadio; mdcAutoInit: 'MDCRadio'; with: [
 					html radioButton mdcRadio__nativeControl; id: optionId; group: group;
 						selected: self itemsStyle = each key;
-						callback: [ self itemsStyle: each key ].
+						callback: [ self itemsStyle: each key ];
+						onChange: (html jQuery ajax script: [ :s | s << (s jQuery id: formId) call: 'submit' ]);
+						yourself.
 					html div mdcRadio__background; with: [
 						html div mdcRadio__outerCircle.
 						html div mdcRadio__innerCircle ].
 					html div mdcRadio__ripple ].
 				html label for: optionId; with: each value ] ]
-		separatedBy: [ html break ]
+		separatedBy: [ html break ] ]
 ]
 
 { #category : #accessing }
-TidbitViewTaskFilter >> user [
+TidbitViewTaskSideSheet >> tabImportance [
+	^ tabImportance
+]
+
+{ #category : #accessing }
+TidbitViewTaskSideSheet >> tabImportance: anObject [
+	tabImportance := anObject
+]
+
+{ #category : #accessing }
+TidbitViewTaskSideSheet >> tabImportanceSelected [
+
+	^ self tabImportance
+		ifNil: [ TidbitToDoItem importanceValueHigh ]
+		ifNotNil: [ :value | value ]
+]
+
+{ #category : #accessing }
+TidbitViewTaskSideSheet >> user [
 	^ user
 ]
 
 { #category : #accessing }
-TidbitViewTaskFilter >> user: anObject [
+TidbitViewTaskSideSheet >> user: anObject [
 	user := anObject
 ]

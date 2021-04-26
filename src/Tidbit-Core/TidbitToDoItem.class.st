@@ -25,6 +25,34 @@ TidbitToDoItem class >> descriptionContainer [
 		yourself
 ]
 
+{ #category : #accessing }
+TidbitToDoItem class >> importanceValueHigh [
+
+	^ 'High'
+]
+
+{ #category : #accessing }
+TidbitToDoItem class >> importanceValueLow [
+
+	^ 'Low'
+]
+
+{ #category : #accessing }
+TidbitToDoItem class >> importanceValueMedium [
+
+	^ 'Medium'
+]
+
+{ #category : #accessing }
+TidbitToDoItem class >> importanceValues [
+
+	^ OrderedCollection new
+		add: self importanceValueHigh;
+		add: self importanceValueMedium;
+		add: self importanceValueLow;
+		yourself
+]
+
 { #category : #voyage }
 TidbitToDoItem class >> isVoyageRoot [
 
@@ -242,9 +270,27 @@ TidbitToDoItem >> importanceDescription [
 		accessor: #importance;
 		label: 'Importance';
 		cssClass: 'mcw-textfield';
-		options: {'High'. 'Medium'. 'Low'};
+		options: self class importanceValues;
 		priority: 80;
 		yourself
+]
+
+{ #category : #accessing }
+TidbitToDoItem >> importanceIsHigh [
+
+	^ self importance = self class importanceValueHigh
+]
+
+{ #category : #accessing }
+TidbitToDoItem >> importanceIsLow [
+
+	^ self importance = self class importanceValueLow
+]
+
+{ #category : #accessing }
+TidbitToDoItem >> importanceIsMedium [
+
+	^ self importance = self class importanceValueMedium
 ]
 
 { #category : #initialization }
@@ -259,7 +305,7 @@ TidbitToDoItem >> initialize [
 	self completeByTime: Time now.
 	self estimatedDuration: 1 hour.
 	self priority: 0.
-	self importance: 'Medium'.
+	self importance: self class importanceValueMedium.
 	self colorCode: Color new.
 	self calendars: OrderedCollection new.
 
