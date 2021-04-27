@@ -118,13 +118,3 @@ TidbitViewTaskSideSheet >> tabImportanceSelected [
 		ifNil: [ TidbitToDoItem importanceValueHigh ]
 		ifNotNil: [ :value | value ]
 ]
-
-{ #category : #accessing }
-TidbitViewTaskSideSheet >> user [
-	^ user
-]
-
-{ #category : #accessing }
-TidbitViewTaskSideSheet >> user: anObject [
-	user := anObject
-]

@@ -5,34 +5,32 @@ Class {
 }
 
 { #category : #rendering }
-TidbitViewUsers >> dataRows [
-	| users |
+TidbitViewUsers >> dataRowFrom: aUser [
+	| dataRow |
 
-	users := self mcwApplicationGet repository selectAll: TidbitUser.
+	dataRow := OrderedCollection new
+		add: aUser username;
+		add: aUser toDoItemsCount;
+		add: aUser fullName;
+		add: aUser email;
+		add: aUser website;
+		add: aUser dateCreated;
+		yourself.
 
-	^ users asOrderedCollection collect: [ :eachUser |
-		| dataRow |
-		dataRow := OrderedCollection new.
-		dataRow add: eachUser toDoItemsCount.
-		dataRow add: eachUser username.
-		dataRow add: eachUser fullName.
-		dataRow add: eachUser email.
-		dataRow add: eachUser website.
-		dataRow add: eachUser dateCreated.
-		dataRow ]
+	^ dataRow
 ]
 
 { #category : #rendering }
 TidbitViewUsers >> renderContentOn: html [
 
-	self renderTableOn: html
+	self renderUsersOn: html
 ]
 
 { #category : #rendering }
 TidbitViewUsers >> renderTableHeadingsOn: html [
 	| dataHeadings |
 
-	dataHeadings := #( 'ToDo Count' 'Username' 'Full Name' 'Email' 'Website' 'Date Created').
+	dataHeadings := #( 'Username' 'ToDo Count' 'Full Name' 'Email' 'Website' 'Date Created').
 	html tableHead: [
 		html tableRow "mdcDataTable__headerRow" class: 'mdc-data-table__header-row'; with: [
 			dataHeadings do: [ :each |
@@ -41,31 +39,7 @@ TidbitViewUsers >> renderTableHeadingsOn: html [
 ]
 
 { #category : #rendering }
-TidbitViewUsers >> renderTableOn: html [
-
-	html heading level6; mdcTypography_headline6; with: 'Users'.
-	html div mdcDataTable with: [
-		html div mdcDataTable__tableContainer; with: [
-			| dataRows |
-			dataRows := self dataRows.
-			html table mdcDataTable__table;  with: [
-				self renderTableHeadingsOn: html.
-				self renderTableRows: dataRows on: html ].
-		self renderTableRows: dataRows paginationOn: html ] ]
-]
-
-{ #category : #rendering }
-TidbitViewUsers >> renderTableRows: dataRows on: html [
-
-	html tableBody mdcDataTable__content; with: [
-		dataRows do: [ :eachRow |
-			html tableRow mdcDataTable__row; with: [
-				eachRow keysAndValuesDo: [ :index :each |
-					html tableData mdcDataTable__cell; scope: 'row'; with: each ] ] ] ]
-]
-
-{ #category : #rendering }
-TidbitViewUsers >> renderTableRows: dataRows paginationOn: html [
+TidbitViewUsers >> renderTablePagination: aUserList on: html [
 
 	html div mdcDataTable__pagination with: [
 		html div mdcDataTable__paginationTrailing; with: [
@@ -74,7 +48,7 @@ TidbitViewUsers >> renderTableRows: dataRows paginationOn: html [
 					html text: 'Rows per page' ] ].
 				html div x; with: []".
 			html div mdcDataTable__paginationNavigation; with: [
-				html div mdcDataTable__paginationTotal; with: [ html text: '1-', dataRows size printString, ' of ', dataRows size printString ].
+				html div mdcDataTable__paginationTotal; with: [ html text: '1-', aUserList size printString, ' of ', aUserList size printString ].
 				html button mdcIconButton; mdcMaterialIcons; mdcDataTable__paginationButton; attributeAt: 'data-first-page' put: 'true'; disabled;
 					with: [ html div mdcButton__icon; with: 'first_page' ].
 				html button mdcIconButton; mdcMaterialIcons; mdcDataTable__paginationButton; attributeAt: 'data-prev-page' put: 'true'; disabled;
@@ -83,4 +57,39 @@ TidbitViewUsers >> renderTableRows: dataRows paginationOn: html [
 					with: [ html div mdcButton__icon; with: 'chevron_right' ].
 				html button mdcIconButton; mdcMaterialIcons; mdcDataTable__paginationButton; attributeAt: 'data-last-page' put: 'true';
 					with: [ html div mdcButton__icon; with: 'last_page' ] ] ] ]
+]
+
+{ #category : #rendering }
+TidbitViewUsers >> renderTableRows: aUserList on: html [
+
+	html tableBody mdcDataTable__content; with: [
+		aUserList do: [ :eachUser |
+			html tableRow mdcDataTable__row; with: [
+				(self dataRowFrom: eachUser) doWithIndex: [ :eachCell :index |
+					html tableData mdcDataTable__cell; scope: 'row'; with: [
+						index = 1
+							ifTrue: [ html anchor callback: [ self mcwApplicationGet viewUserSetTo: eachUser ]; with: eachCell ]
+							ifFalse: [ html text: eachCell ] ] ] ] ] ]
+]
+
+{ #category : #rendering }
+TidbitViewUsers >> renderUsersOn: html [
+	| userList |
+
+	userList := self users.
+
+	html heading level6; mdcTypography_headline6; with: 'Users'.
+
+	html div mdcDataTable with: [
+		html div mdcDataTable__tableContainer; with: [
+			html table mdcDataTable__table;  with: [
+				self renderTableHeadingsOn: html.
+				self renderTableRows: userList on: html ].
+			self renderTablePagination: userList on: html ] ]
+]
+
+{ #category : #rendering }
+TidbitViewUsers >> users [
+
+	^ self mcwApplicationGet repository selectAll: TidbitUser
 ]

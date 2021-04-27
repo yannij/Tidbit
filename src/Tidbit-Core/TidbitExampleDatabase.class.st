@@ -29,12 +29,12 @@ TidbitExampleDatabase class >> buildUser: aUsername repository: aRepository [
 		yourself.
 
 	today := Date today.
-	itemCount := 25 atRandom - 1.
-	itemCount timesRepeat: [
+	itemCount := 25 atRandom.
+	1 to: itemCount do: [ :index |
 		| priority todoItem |
 		priority := 100 atRandom.
 		todoItem := TidbitToDoItem new
-			summary: 'task ', priority printString;
+			summary: 'task ', index printString;
 			priority: priority;
 			importance: (importance at: (priority \\ 3) + 1);
 			completeByDate: (today addDays: priority - 30);

@@ -311,7 +311,8 @@ TidbitToDoApp >> viewUserSetTo: aModel [
 		^ self ].
 
 	newView := aModel asComponent addValidatedForm; yourself.
-	self viewUser content1: newView
+	self viewUser content1: newView.
+	self viewUserGo
 ]
 
 { #category : #accessing }
