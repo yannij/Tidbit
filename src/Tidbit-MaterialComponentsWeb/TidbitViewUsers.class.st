@@ -68,7 +68,9 @@ TidbitViewUsers >> renderTableRows: aUserList on: html [
 				(self dataRowFrom: eachUser) doWithIndex: [ :eachCell :index |
 					html tableData mdcDataTable__cell; scope: 'row'; with: [
 						index = 1
-							ifTrue: [ html anchor callback: [ self mcwApplicationGet viewUserSetTo: eachUser ]; with: eachCell ]
+							ifTrue: [
+								html div mdcChip; mdcRippleUpgraded; with: [
+									html anchor mdcChip__text; callback: [ self mcwApplicationGet viewUserSetTo: eachUser ]; with: eachCell ] ]
 							ifFalse: [ html text: eachCell ] ] ] ] ] ]
 ]
 

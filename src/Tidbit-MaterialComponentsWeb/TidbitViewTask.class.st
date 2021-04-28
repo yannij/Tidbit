@@ -22,6 +22,12 @@ TidbitViewTask >> dataRows [
 		dataRow ]
 ]
 
+{ #category : #accessing }
+TidbitViewTask >> denseView [
+
+	^ self mcwApplicationGet denseView
+]
+
 { #category : #'rendering - styles' }
 TidbitViewTask >> renderCards: aUser on: html [
 	| list selected |
@@ -92,12 +98,13 @@ TidbitViewTask >> renderChips: aUser on: html [
 		at: TidbitToDoItem importanceValueLow put: 'star_outline';
 		yourself.
 
-	html unorderedList mdcList; mdcList_dense;
+	html unorderedList mdcList; mdcList_dense_if: self denseView;
 		"style: 'min-width: 400px';"
 		with: [
 			self tasksFiltered
 				do: [ :eachItem |
 					html div mdcChip; mdcRippleUpgraded;
+						"style: 'margin: 0px 4px 8px 0px';"
 						style: 'background: #', eachItem colorCode asHexString;
 						with: [
 							html span mdcMaterialIcons; mdcChip__icon; mdcChip__icon_leading;
@@ -128,7 +135,10 @@ TidbitViewTask >> renderContentOn: html [
 { #category : #'rendering - styles' }
 TidbitViewTask >> renderListSingleLine: aUser on: html [
 
-	html unorderedList mdcList; mdcList_dense; mdcTheme_surface;
+	html unorderedList
+		mdcList;
+		mdcList_dense_if: self denseView;
+		mdcTheme_surface;
 		"style: 'min-width: 400px';"
 		with: [
 			self tasksFiltered do: [ :eachItem |
@@ -150,17 +160,17 @@ TidbitViewTask >> renderListTwoLine: aUser on: html [
 
 	html div mdcListGroup; mdcTheme_surface; with: [
 		html div mdcListGroup__subheader; with: 'High'.
-		html unorderedList mdcList; mdcList_twoLine; with: [
+		html unorderedList mdcList; mdcList_twoLine; mdcList_dense_if: self denseView; with: [
 			self renderListTwoLineItems: listHigh on: html ] ].
 
 	html div mdcListGroup; mdcTheme_surface; with: [
 		html div mdcListGroup__subheader; with: 'Medium'.
-		html unorderedList mdcList; mdcList_twoLine; with: [
+		html unorderedList mdcList; mdcList_twoLine; mdcList_dense_if: self denseView; with: [
 			self renderListTwoLineItems: listMedium on: html ] ].
 
 	html div mdcListGroup; mdcTheme_surface; with: [
 		html div mdcListGroup__subheader; with: 'Low'.
-		html unorderedList mdcList; mdcList_twoLine; with: [
+		html unorderedList mdcList; mdcList_twoLine; mdcList_dense_if: self denseView; with: [
 			self renderListTwoLineItems: listLow on: html ] ]
 ]
 

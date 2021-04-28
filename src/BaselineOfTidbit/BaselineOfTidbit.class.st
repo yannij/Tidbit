@@ -10,7 +10,7 @@ BaselineOfTidbit >> baseline: spec [
 
 	spec for: #common do: [
 
-		self neoJSON: spec.
+		"self neoJSON: spec."
 		self materialComponentsWeb: spec.
 		self voyage: spec.
 
@@ -59,7 +59,8 @@ BaselineOfTidbit >> materialComponentsWeb: spec [
 
 	spec
 		baseline: 'MaterialComponentsWeb'
-		with: [ spec repository: 'github://yannij/MaterialComponentsWeb:master/src' ].
+		with: [ spec repository: 'github://yannij/MaterialComponentsWeb:master/src';
+			loads: #( 'default' )  ].
 
 ]
 
