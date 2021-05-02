@@ -35,13 +35,19 @@ TidbitToDoMongoApp class >> initialize [
 { #category : #'utility - repository' }
 TidbitToDoMongoApp >> mongoHost [
 
-	^ OSEnvironment current at: 'MONGO_HOST' ifAbsent: [ VOMongoRepository defaultHost ]
+	^ DockerDeploy current
+		configsAt: DockerDeploy configNameDefault
+		atKey: 'mongo-host'
+		ifAbsent: [ VOMongoRepository defaultHost ]
 ]
 
 { #category : #'utility - repository' }
 TidbitToDoMongoApp >> mongoPort [
 
-	^ OSEnvironment current at: 'MONGO_PORT' ifAbsent: [ VOMongoRepository defaultPort ]
+	^ DockerDeploy current
+		configsAt: DockerDeploy configNameDefault
+		atKey: 'mongo-port'
+		ifAbsent: [ VOMongoRepository defaultPort ]
 ]
 
 { #category : #'utility - repository' }

@@ -26,6 +26,19 @@ TidbitToDoApp class >> initialize [
 	^ self mcwRegisterDeployment: self applicationPath
 ]
 
+{ #category : #deploy }
+TidbitToDoApp class >> loadDockerConfiguration [
+	"
+	TidbitToDoApp loadDockerConfiguration
+	"
+
+	DockerDeploy current
+		loadConfigNamed: DockerDeploy configNameDefault;
+		loadSecretNamed: ShrineApp dockerSecretsName;
+		yourself.
+
+]
+
 { #category : #initialization }
 TidbitToDoApp >> appBarTitle [
 
