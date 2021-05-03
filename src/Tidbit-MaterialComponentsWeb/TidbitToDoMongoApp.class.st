@@ -33,30 +33,12 @@ TidbitToDoMongoApp class >> initialize [
 ]
 
 { #category : #'utility - repository' }
-TidbitToDoMongoApp >> mongoHost [
-
-	^ DockerDeploy current
-		configsAt: DockerDeploy configNameDefault
-		atKey: 'mongo-host'
-		ifAbsent: [ VOMongoRepository defaultHost ]
-]
-
-{ #category : #'utility - repository' }
-TidbitToDoMongoApp >> mongoPort [
-
-	^ DockerDeploy current
-		configsAt: DockerDeploy configNameDefault
-		atKey: 'mongo-port'
-		ifAbsent: [ VOMongoRepository defaultPort ]
-]
-
-{ #category : #'utility - repository' }
 TidbitToDoMongoApp >> repository [
 
 	^ TidbitExampleDatabase mongo1
 		ifNotNil: [ :value | value ]
 		ifNil: [
-			TidbitExampleDatabase mongo1: (VOMongoRepository host: self mongoHost port: self mongoPort database: 'Tidbit').
+			TidbitExampleDatabase repositorySetUpMongo1.
 			TidbitExampleDatabase mongo1 ]
 ]
 
@@ -69,5 +51,5 @@ TidbitToDoMongoApp >> repositoryClear [
 { #category : #'utility - repository' }
 TidbitToDoMongoApp >> repositoryReset [
 
-	TidbitExampleDatabase repositorySetUpMongo1Host: self mongoHost port: self mongoPort
+	TidbitExampleDatabase repositorySetUpMongo1
 ]

@@ -139,6 +139,24 @@ TidbitExampleDatabase class >> mongo1Clear [
 	Mongo1 := nil
 ]
 
+{ #category : #accessing }
+TidbitExampleDatabase class >> mongoHost [
+
+	^ DockerDeploy current
+		configsAt: DockerDeploy configNameDefault
+		atKey: 'mongo-host'
+		ifAbsent: [ VOMongoRepository defaultHost ]
+]
+
+{ #category : #accessing }
+TidbitExampleDatabase class >> mongoPort [
+
+	^ DockerDeploy current
+		configsAt: DockerDeploy configNameDefault
+		atKey: 'mongo-port'
+		ifAbsent: [ VOMongoRepository defaultPort ]
+]
+
 { #category : #initalize }
 TidbitExampleDatabase class >> repositorySetUpMemory1 [
 	"
@@ -174,14 +192,14 @@ TidbitExampleDatabase class >> repositorySetUpMongo1 [
 	self repositorySetUpMongo1.
 	"
 
-	self repositorySetUpMongo1Host: VOMongoRepository defaultHost port: VOMongoRepository defaultPort
+	self repositorySetUpMongo1Host: self mongoHost port: self mongoPort
 ]
 
 { #category : #initalize }
 TidbitExampleDatabase class >> repositorySetUpMongo1Host: aHostname port: aPortno [
 	"
 	self mongo1Clear.
-	self repositorySetUpMongo1Host: VOMongoRepository defaultHost port: VOMongoRepository defaultPort.
+	self repositorySetUpMongo1Host: self mongoHost port: self mongoPort.
 	"
 	| mongo |
 
@@ -189,5 +207,7 @@ TidbitExampleDatabase class >> repositorySetUpMongo1Host: aHostname port: aPortn
 	mongo removeAll: TidbitUser.
 	mongo removeAll: TidbitToDoItem.
 
-	1 to: 10 do: [ :index | self buildUser: 'mongo', index printString repository: mongo ]
+	1 to: 10 do: [ :index | self buildUser: 'mongo', index printString repository: mongo ].
+
+	self mongo1: mongo
 ]
