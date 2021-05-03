@@ -18,25 +18,26 @@ TidbitToDoApp class >> applicationPath [
 ]
 
 { #category : #'class initialization' }
+TidbitToDoApp class >> dockerDeployPostLoad [
+	<dockerDeployPostLoad>
+
+	WAComponent mcwPublicServerUrlInstallDockerConfig
+]
+
+{ #category : #'class initialization' }
+TidbitToDoApp class >> dockerDeployPreLoad [
+	<dockerDeployPreLoad>
+
+	DockerDeploy current configNamesAddDefault
+]
+
+{ #category : #'class initialization' }
 TidbitToDoApp class >> initialize [
 	"Register path with Seaside.
 	WAAdmin unregister: self applicationPath.
 	"
 
 	^ self mcwRegisterDeployment: self applicationPath
-]
-
-{ #category : #deploy }
-TidbitToDoApp class >> loadDockerConfiguration [
-	"
-	TidbitToDoApp loadDockerConfiguration
-	"
-
-	DockerDeploy current
-		loadConfigNamed: DockerDeploy configNameDefault;
-		loadSecretNamed: ShrineApp dockerSecretsName;
-		yourself.
-
 ]
 
 { #category : #initialization }
