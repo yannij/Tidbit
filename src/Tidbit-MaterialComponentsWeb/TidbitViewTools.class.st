@@ -30,6 +30,9 @@ TidbitViewTools >> renderContentOn: html [
 			caption: 'Delete current database content, and recreate original demo content. Will logout'
 			callback: [ self mcwApplicationGet repositoryReset; logout ]
 			on: html.
-		 ].
-
+		html break; break.
+		html span mdcTypography_subtitle1; with: 'DockerDeploy default config'.
+		html preformatted: (DockerDeploy current configs at: DockerDeploy configNameDefault) printString.
+		html preformatted: 'mongoHost: ', TidbitExampleDatabase mongoHost printString.
+		html preformatted: 'mongoPort: ', TidbitExampleDatabase mongoPort printString ]
 ]

@@ -32,6 +32,12 @@ TidbitToDoMongoApp class >> initialize [
 	^ self mcwRegisterDeployment: self applicationPath
 ]
 
+{ #category : #accessing }
+TidbitToDoMongoApp >> applicationTitle [
+
+	^ 'Tidbit ToDo/Mongo'
+]
+
 { #category : #'utility - repository' }
 TidbitToDoMongoApp >> repository [
 
