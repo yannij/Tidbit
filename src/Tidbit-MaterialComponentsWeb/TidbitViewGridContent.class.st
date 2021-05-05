@@ -1,6 +1,6 @@
 Class {
 	#name : #TidbitViewGridContent,
-	#superclass : #MCWWebComponent,
+	#superclass : #MCWLayoutComponent,
 	#instVars : [
 		'contents',
 		'view'
@@ -75,7 +75,7 @@ TidbitViewGridContent >> renderViewOn: html [
 		style: '--mdc-layout-grid-gutter-desktop: 16px';
 		with: [
 		html div mdcLayoutGrid__inner; with: [
-			html div mdcLayoutGrid__cell_span: self view layoutCellSpan; with: [
+			html div mdcLayoutGrid__cell_span: self mcwApplicationGet layout cellSpan; with: [
 				html render: self view ] ] ]
 
 ]

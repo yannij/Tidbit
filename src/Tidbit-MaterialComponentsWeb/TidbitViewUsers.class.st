@@ -1,6 +1,6 @@
 Class {
 	#name : #TidbitViewUsers,
-	#superclass : #MCWWebComponent,
+	#superclass : #MCWLayoutComponent,
 	#category : #'Tidbit-MaterialComponentsWeb'
 }
 

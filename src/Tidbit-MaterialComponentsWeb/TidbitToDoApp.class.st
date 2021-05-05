@@ -40,13 +40,6 @@ TidbitToDoApp class >> initialize [
 	^ self mcwRegisterDeployment: self applicationPath
 ]
 
-{ #category : #initialization }
-TidbitToDoApp >> appBarTitle [
-
-	^ self applicationTitle 
-
-]
-
 { #category : #accessing }
 TidbitToDoApp >> applicationTitle [
 
@@ -142,7 +135,9 @@ TidbitToDoApp >> headerTitle [
 ]
 
 { #category : #initialization }
-TidbitToDoApp >> initialize [
+TidbitToDoApp >> initializeLayout [
+
+	self materialVersionDefault.
 
 	self viewMap: IdentityDictionary new.
 	self viewUser: TidbitViewGridContent new.
@@ -152,7 +147,10 @@ TidbitToDoApp >> initialize [
 	self viewTaskFilter: TidbitViewTaskSideSheet new.
 	self viewMapAt: #Tools put: TidbitViewTools new.
 
-	super initialize.
+	self settings: self buildApplicationSettings.
+	self layout: self buildLayout.
+	self beLayoutStructureDesktop.
+
 	self layout sideSheet beHidden.
 
 	"self settings setFont: MCWGoogleFont allAvailable atRandom."

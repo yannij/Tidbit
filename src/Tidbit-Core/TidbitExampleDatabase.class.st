@@ -104,7 +104,7 @@ TidbitExampleDatabase class >> initialize [
 { #category : #initalize }
 TidbitExampleDatabase class >> loremText [
 
-	^ 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+	^ String loremIpsum truncateTo: 123
 ]
 
 { #category : #accessing }

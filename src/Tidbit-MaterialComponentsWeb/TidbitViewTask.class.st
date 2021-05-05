@@ -1,6 +1,6 @@
 Class {
 	#name : #TidbitViewTask,
-	#superclass : #MCWWebComponent,
+	#superclass : #MCWLayoutComponent,
 	#category : #'Tidbit-MaterialComponentsWeb'
 }
 

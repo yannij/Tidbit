@@ -1,6 +1,6 @@
 Class {
 	#name : #TidbitViewTaskSideSheet,
-	#superclass : #MCWWebComponent,
+	#superclass : #MCWLayoutComponent,
 	#instVars : [
 		'user',
 		'filterDone',
