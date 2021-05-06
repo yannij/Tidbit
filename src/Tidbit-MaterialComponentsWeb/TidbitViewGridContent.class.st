@@ -2,8 +2,7 @@ Class {
 	#name : #TidbitViewGridContent,
 	#superclass : #MCWLayoutComponent,
 	#instVars : [
-		'contents',
-		'view'
+		'contents'
 	],
 	#category : #'Tidbit-MaterialComponentsWeb'
 }
@@ -53,39 +52,14 @@ TidbitViewGridContent >> initialize [
 { #category : #rendering }
 TidbitViewGridContent >> renderContentOn: html [
 
-	self view notNil
-		ifTrue: [ ^ self renderViewOn: html ].
-
 	html div mdcLayoutGrid;
-		style: '--mdc-layout-grid-margin-desktop: 16px';
-		style: '--mdc-layout-grid-gutter-desktop: 16px';
+		"style: '--mdc-layout-grid-margin-desktop: 16px';
+		style: '--mdc-layout-grid-gutter-desktop: 16px';"
+		style: 'border: 1px solid red';
 		with: [
 		html div mdcLayoutGrid__inner; with: [
 			self contents do: [ :each |
-				html div mdcLayoutGrid__cell_span6; with: [
+				html div mdcLayoutGrid__cell_span: self mcwApplicationGet layout cellSpan; with: [
 					html render: each ] ] ] ]
 
-]
-
-{ #category : #rendering }
-TidbitViewGridContent >> renderViewOn: html [ 
-
-	html div mdcLayoutGrid;
-		style: '--mdc-layout-grid-margin-desktop: 16px';
-		style: '--mdc-layout-grid-gutter-desktop: 16px';
-		with: [
-		html div mdcLayoutGrid__inner; with: [
-			html div mdcLayoutGrid__cell_span: self mcwApplicationGet layout cellSpan; with: [
-				html render: self view ] ] ]
-
-]
-
-{ #category : #accessing }
-TidbitViewGridContent >> view [
-	^ view
-]
-
-{ #category : #accessing }
-TidbitViewGridContent >> view: anObject [
-	view := anObject
 ]
