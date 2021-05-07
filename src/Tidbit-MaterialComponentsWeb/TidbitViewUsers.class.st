@@ -23,7 +23,9 @@ TidbitViewUsers >> dataRowFrom: aUser [
 { #category : #rendering }
 TidbitViewUsers >> renderContentOn: html [
 
-	self renderUsersOn: html
+
+	html div style: 'padding: 8px'; with: [
+		self renderUsersOn: html ]
 ]
 
 { #category : #rendering }
@@ -80,7 +82,7 @@ TidbitViewUsers >> renderUsersOn: html [
 
 	userList := self users.
 
-	html heading level6; mdcTypography_headline6; with: 'Users'.
+	html heading level3; mdcTypography_subtitle1; with: 'Users'.
 
 	html div mdcDataTable with: [
 		html div mdcDataTable__tableContainer; with: [

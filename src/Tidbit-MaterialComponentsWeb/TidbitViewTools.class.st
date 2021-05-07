@@ -17,7 +17,7 @@ TidbitViewTools >> renderButton: aButtonText caption: aCaptionText callback: aBl
 { #category : #rendering }
 TidbitViewTools >> renderContentOn: html [
 
-	html div with: [
+	html div style: 'padding: 8px'; with: [
 		html heading level3; mdcTypography_subtitle1; with: 'Tools'.
 		self
 			renderButton: 'Reset connection'

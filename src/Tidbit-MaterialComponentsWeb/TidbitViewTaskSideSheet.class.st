@@ -48,10 +48,21 @@ TidbitViewTaskSideSheet >> renderContentOn: html [
 ]
 
 { #category : #rendering }
+TidbitViewTaskSideSheet >> renderFieldLabel: aString on: html [
+
+	html heading
+		level6;
+		mdcTypography_subtitle1;
+		style: 'margin: 16px 0 8px';
+		style: 'padding: 0 12px';
+		with: aString
+]
+
+{ #category : #rendering }
 TidbitViewTaskSideSheet >> renderFilterRadioButtonsOn: html [
 	| formId group |
 
-	html heading level6; mdcTypography_subtitle1; style: 'margin: 4px auto'; with: 'Filter Done/Not-done'.
+	self renderFieldLabel: 'Filter Done/Not-done' on: html.
 
 	formId := html nextId.
 	html form id: formId; with: [
@@ -78,7 +89,7 @@ TidbitViewTaskSideSheet >> renderFilterRadioButtonsOn: html [
 TidbitViewTaskSideSheet >> renderItemsStyleRadioButtonsOn: html [
 	| formId group |
 
-	html heading level6; mdcTypography_subtitle1; style: 'margin: 4px auto'; with: 'Items style'.
+	self renderFieldLabel: 'Items style' on: html.
 
 	formId := html nextId.
 	group := html radioGroup.

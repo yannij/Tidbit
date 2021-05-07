@@ -53,9 +53,7 @@ TidbitViewGridContent >> initialize [
 TidbitViewGridContent >> renderContentOn: html [
 
 	html div mdcLayoutGrid;
-		"style: '--mdc-layout-grid-margin-desktop: 16px';
-		style: '--mdc-layout-grid-gutter-desktop: 16px';"
-		style: 'border: 1px solid red';
+		"style: 'border: 1px solid red';"
 		with: [
 		html div mdcLayoutGrid__inner; with: [
 			self contents do: [ :each |

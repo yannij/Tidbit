@@ -127,9 +127,10 @@ TidbitViewTask >> renderContentOn: html [
 		value = #doneOnly ifTrue: [ heading := heading, ' - Done tasks' ].
 		value = #notDoneOnly ifTrue: [ heading := heading, ' - Not done tasks' ] ].
 
-	html heading level6; mdcTypography_headline6; style: 'margin: 4px auto'; with: heading.
-
-	self renderStyledItemsFor: user on: html
+	html div style: 'padding: 8px'; with: [
+		"html heading level6; mdcTypography_headline6; style: 'margin: 4px auto'; with: heading."
+		html heading level3; mdcTypography_subtitle1; with: heading.
+		self renderStyledItemsFor: user on: html ]
 ]
 
 { #category : #'rendering - styles' }
