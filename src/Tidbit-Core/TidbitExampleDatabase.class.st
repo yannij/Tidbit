@@ -24,7 +24,7 @@ TidbitExampleDatabase class >> buildUser: aUsername repository: aRepository [
 		username: aUsername;
 		fullName: aUsername capitalized, ' Test';
 		email: aUsername, '@foo.com';
-		website: 'foo.com/', aUsername;
+		website: 'http://foo.com/', aUsername;
 		passwordHash: (MCWLogin passwordHashFor: 'secret');
 		yourself.
 

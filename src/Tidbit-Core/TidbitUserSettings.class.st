@@ -79,15 +79,15 @@ TidbitUserSettings >> layoutDensityDescription [
 ]
 
 { #category : #printing }
-TidbitUserSettings >> mdDisplaySecondaryString [
-
-	^ 'Layout Density: ', self layoutDensity greaseString
-]
-
-{ #category : #printing }
 TidbitUserSettings >> mdPrimaryString [
 
 	^ 'User Settings for: ', self user mdPrimaryString
+]
+
+{ #category : #printing }
+TidbitUserSettings >> mdSecondaryString [
+
+	^ 'Layout Density: ', self layoutDensity greaseString
 ]
 
 { #category : #accessing }

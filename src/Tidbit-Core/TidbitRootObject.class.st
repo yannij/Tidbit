@@ -45,33 +45,15 @@ TidbitRootObject >> hasDataBadge [
 ]
 
 { #category : #printing }
-TidbitRootObject >> mdDisplaySecondaryString [
-
-	^ '<Model:', self hash printString, '>'
-]
-
-{ #category : #printing }
 TidbitRootObject >> mdPrimaryString [
 
 	^ self printString
 ]
 
 { #category : #printing }
-TidbitRootObject >> mdlDisplayId [
+TidbitRootObject >> mdSecondaryString [
 
-	^ self printString
-]
-
-{ #category : #printing }
-TidbitRootObject >> mdlDisplayString [
-
-	^ self printString
-]
-
-{ #category : #printing }
-TidbitRootObject >> mdlDisplaySummaryString [
-
-	^ self mdlDisplayString truncateWithElipsisTo: 65
+	^ '<Model:', self hash printString, '>'
 ]
 
 { #category : #accessing }

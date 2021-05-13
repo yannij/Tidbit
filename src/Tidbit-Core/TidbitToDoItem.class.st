@@ -317,23 +317,17 @@ TidbitToDoItem >> isVoyageRoot [
 ]
 
 { #category : #printing }
-TidbitToDoItem >> mdDisplaySecondaryString [
-
-	^ (self done ifTrue: [ 'DONE' ] ifFalse: [ 'NOT-DONE' ]),
-		', ', 'Priority ', self priority printString,
-		', ', 'Complete by  ', self completeByDate printString
-]
-
-{ #category : #printing }
 TidbitToDoItem >> mdPrimaryString [
 
 	^ self summary
 ]
 
 { #category : #printing }
-TidbitToDoItem >> mdlDisplayString [
+TidbitToDoItem >> mdSecondaryString [
 
-	^ self summary
+	^ (self done ifTrue: [ 'DONE' ] ifFalse: [ 'NOT-DONE' ]),
+		', ', 'Priority ', self priority printString,
+		', ', 'Complete by  ', self completeByDate printString
 ]
 
 { #category : #accessing }

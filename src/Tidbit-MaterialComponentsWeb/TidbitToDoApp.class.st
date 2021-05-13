@@ -59,13 +59,6 @@ TidbitToDoApp >> authenticateUsername: aUsername password: aPassword [
 				ifFalse: [ nil ] ]
 ]
 
-{ #category : #accessing }
-TidbitToDoApp >> browserTabTitle [
-
-	^ self headerTitle
-
-]
-
 { #category : #initialization }
 TidbitToDoApp >> buildLoginComponent [
 
@@ -106,10 +99,10 @@ TidbitToDoApp >> buildMainFab [
 TidbitToDoApp >> buildSideNavList [
 
 	^ MCWListBasic new
-		addListItem: (MCWListItemIcon  itemText: 'Home' iconName: 'home' callback: [ self viewUserGo ]);
-		addListItem: (MCWListItemIcon  itemText: 'Tasks' iconName: 'checklist' callback: [ self viewTaskGo ]);
-		addListItem: (MCWListItemIcon  itemText: 'Users' iconName: 'perm_identity' callback: [ self viewUsersGo ]);
-		addListItem: (MCWListItemIcon  itemText: 'Tools' iconName: 'build_circle' callback: [ self viewToolsGo ]);
+		listItemAdd: (MCWListItemIcon  itemText: 'Home' iconName: 'home' callback: [ self viewUserGo ]);
+		listItemAdd: (MCWListItemIcon  itemText: 'Tasks' iconName: 'checklist' callback: [ self viewTaskGo ]);
+		listItemAdd: (MCWListItemIcon  itemText: 'Users' iconName: 'perm_identity' callback: [ self viewUsersGo ]);
+		listItemAdd: (MCWListItemIcon  itemText: 'Tools' iconName: 'build_circle' callback: [ self viewToolsGo ]);
 		yourself
 ]
 
@@ -126,12 +119,6 @@ TidbitToDoApp >> findUser: aUsername [
 	^ (self repository selectAll: TidbitUser)
 		ifEmpty: [ nil ]
 		ifNotEmpty: [ :value | value detect: [ :eachUser | eachUser username = aUsername ] ifNone: [ nil ] ]
-]
-
-{ #category : #accessing }
-TidbitToDoApp >> headerTitle [
-
-	^ '(Tidbit-ToDo2)'
 ]
 
 { #category : #initialization }

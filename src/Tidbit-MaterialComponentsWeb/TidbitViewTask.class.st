@@ -37,7 +37,7 @@ TidbitViewTask >> renderCards: aUser on: html [
 
 	self renderCardsTabsOn: html.
 
-	html div mdcLayoutGrid; id: nil; with: [
+	html div mdcLayoutGrid; style: 'padding-left: 0px; padding-right: 0px'; with: [
 		html div mdcLayoutGrid__inner; with: [
 			self renderCardsItems: list on: html ] ]
 ]
@@ -55,7 +55,7 @@ TidbitViewTask >> renderCardsItems: anItemList on: html [
 								style: 'text-align: center; margin-top: 0px; background: white; opacity: .5';
 								with: eachItem summary ] ].
 				html div mdcCard__primaryAction; style: 'padding: 4px'; with: [
-					html heading level3; mdcTypography_subtitle2; with: eachItem mdDisplaySecondaryString.
+					html heading level3; mdcTypography_subtitle2; with: eachItem mdSecondaryString.
 					html div mdcTypography_body2; with: eachItem description ] ] ] ]
 ]
 
@@ -145,7 +145,7 @@ TidbitViewTask >> renderListSingleLine: aUser on: html [
 			self tasksFiltered do: [ :eachItem |
 				html listItem mdcListItem; with: [
 					html span mdcListItem__text; with:
-						((eachItem mdPrimaryString , ' - ' , eachItem mdDisplaySecondaryString)
+						((eachItem mdPrimaryString , ' - ' , eachItem mdSecondaryString)
 							truncateWithElipsisTo: 60) ] ] ]
 ]
 
@@ -190,7 +190,7 @@ TidbitViewTask >> renderListTwoLineItems: anItemList on: html [
 				html span mdcListItem__primaryText; with:
 					eachItem mdPrimaryString.
 				html span mdcListItem__secondaryText; with:
-					(eachItem mdDisplaySecondaryString truncateWithElipsisTo: 60) ] ] ]
+					(eachItem mdSecondaryString truncateWithElipsisTo: 60) ] ] ]
 ]
 
 { #category : #rendering }
@@ -209,7 +209,8 @@ TidbitViewTask >> renderStyledItemsFor: user on: html [
 		^ self renderChips: user on: html ].
 
 	itemsStyle = #cards ifTrue: [
-		^ self renderCards: user on: html ].
+		html div style: 'max-width: 960px'; with: [ self renderCards: user on: html ].
+		^ self ].
 
 	self renderTable: user on: html
 ]
