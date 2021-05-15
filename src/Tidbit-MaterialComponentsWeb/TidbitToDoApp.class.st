@@ -150,6 +150,25 @@ TidbitToDoApp >> initializeLayout [
 
 ]
 
+{ #category : #navigation }
+TidbitToDoApp >> navTo: aModel [
+	| newView |
+
+	aModel ifNil: [ ^ self ].
+
+	newView := aModel asComponent
+					addValidatedForm;
+					"addMessage: 'hello';"
+					yourself.
+
+	self viewUser content2: newView.
+
+]
+
+{ #category : #navigation }
+TidbitToDoApp >> navTo: aModel  aspect: anAspect [
+]
+
 { #category : #'utility - login' }
 TidbitToDoApp >> newUsername: aUsername password: aPassword [
 	| userModel |
@@ -198,21 +217,6 @@ TidbitToDoApp >> repositoryReset [
 TidbitToDoApp >> saveObject: anObject [
 
 	self mcwApplicationGet repository save: anObject
-]
-
-{ #category : #navigation }
-TidbitToDoApp >> setCanvasContent2: aModel [
-	| newView |
-
-	aModel ifNil: [ ^ self ].
-
-	newView := aModel asComponent
-					addValidatedForm;
-					"addMessage: 'hello';"
-					yourself.
-
-	self viewUser content2: newView.
-
 ]
 
 { #category : #accessing }
