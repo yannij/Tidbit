@@ -25,7 +25,7 @@ TidbitViewTask >> dataRows [
 { #category : #accessing }
 TidbitViewTask >> denseView [
 
-	^ self mcwApplicationGet denseView
+	^ self layout app denseView
 ]
 
 { #category : #'rendering - styles' }
@@ -118,7 +118,7 @@ TidbitViewTask >> renderChips: aUser on: html [
 TidbitViewTask >> renderContentOn: html [
 	| user heading |
 
-	user := self mcwApplicationGet viewUserModel.	
+	user := self layout app viewUserModel.	
 	user ifNil: [ ^ self ].
 
 	heading := user mdPrimaryString.
@@ -276,14 +276,14 @@ TidbitViewTask >> renderTableRows: dataRows paginationOn: html [
 { #category : #accessing }
 TidbitViewTask >> sideSheet [
 
-	^ self mcwApplicationGet viewTaskFilter
+	^ self layout app viewTaskFilter
 ]
 
 { #category : #accessing }
 TidbitViewTask >> tasksFiltered [
 	| user tasksFilterDone tasksAll |
 
-	user := self mcwApplicationGet viewUserModel.	
+	user := self layout app viewUserModel.	
 	user ifNil: [ ^ #() ].
 
 	tasksAll := user toDoItems.

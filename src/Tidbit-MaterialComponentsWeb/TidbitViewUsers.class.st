@@ -72,7 +72,7 @@ TidbitViewUsers >> renderTableRows: aUserList on: html [
 						index = 1
 							ifTrue: [
 								html div mdcChip; mdcRippleUpgraded; with: [
-									html anchor mdcChip__text; callback: [ self mcwApplicationGet viewUserSetTo: eachUser ]; with: eachCell ] ]
+									html anchor mdcChip__text; callback: [ self layout app viewUserSetTo: eachUser ]; with: eachCell ] ]
 							ifFalse: [ html text: eachCell ] ] ] ] ] ]
 ]
 
@@ -95,5 +95,5 @@ TidbitViewUsers >> renderUsersOn: html [
 { #category : #rendering }
 TidbitViewUsers >> users [
 
-	^ self mcwApplicationGet repository selectAll: TidbitUser
+	^ self layout app repository selectAll: TidbitUser
 ]

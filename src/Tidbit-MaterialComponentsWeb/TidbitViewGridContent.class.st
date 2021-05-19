@@ -57,7 +57,7 @@ TidbitViewGridContent >> renderContentOn: html [
 		with: [
 		html div mdcLayoutGrid__inner; with: [
 			self contents do: [ :each |
-				html div mdcLayoutGrid__cell_span: self mcwApplicationGet layout cellSpan; with: [
+				html div mdcLayoutGrid__cell_span: self layout cellSpan; with: [
 					html render: each ] ] ] ]
 
 ]

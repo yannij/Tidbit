@@ -127,17 +127,19 @@ TidbitToDoApp >> initializeLayout [
 	self materialVersionDefault.
 
 	self viewMap: IdentityDictionary new.
+	self viewMapAt: #Tools put: TidbitViewTools new.
 	self viewUser: TidbitViewGridContent new.
 	self viewUser content1: nil.
 	self viewUsers: TidbitViewUsers new.
 	self viewTask: TidbitViewTask new.
 	self viewTaskFilter: TidbitViewTaskSideSheet new.
-	self viewMapAt: #Tools put: TidbitViewTools new.
 
 	self settings: self buildApplicationSettings.
 	self layout: self buildLayout.
 	self viewUser layout: self layout.
+	self viewUsers layout: self layout.
 	self viewTask layout: self layout.
+	self viewTaskFilter layout: self layout.
 	self beLayoutStructureDesktop.
 
 	self layout sideSheet beHidden.
@@ -217,7 +219,7 @@ TidbitToDoApp >> repositoryReset [
 { #category : #'accessing - model' }
 TidbitToDoApp >> saveObject: anObject [
 
-	self mcwApplicationGet repository save: anObject
+	self repository save: anObject
 ]
 
 { #category : #accessing }

@@ -22,13 +22,13 @@ TidbitViewTools >> renderContentOn: html [
 		self
 			renderButton: 'Reset connection'
 			caption: 'Clear the repository connection which is cached in a class variable'
-			callback: [ self mcwApplicationGet repositoryClear ]
+			callback: [ self layout app repositoryClear ]
 			on: html.
 		html break; break.
 		self
 			renderButton: 'Reset database'
 			caption: 'Delete current database content, and recreate original demo content. Will logout'
-			callback: [ self mcwApplicationGet repositoryReset; logout ]
+			callback: [ self layout app repositoryReset; logout ]
 			on: html.
 		html break; break.
 		html span mdcTypography_subtitle1; with: 'DockerDeploy default config'.
