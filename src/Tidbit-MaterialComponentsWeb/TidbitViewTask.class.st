@@ -127,7 +127,10 @@ TidbitViewTask >> renderContentOn: html [
 		value = #doneOnly ifTrue: [ heading := heading, ' - Done tasks' ].
 		value = #notDoneOnly ifTrue: [ heading := heading, ' - Not done tasks' ] ].
 
-	html div style: 'padding: 8px'; with: [
+	html div style: 'padding: 8px';
+		mdcStyle: self layout contentAreaWidthCalc if: self layout sideSheetVisible;
+		style: 'max-width: 960px';
+		with: [
 		"html heading level6; mdcTypography_headline6; style: 'margin: 4px auto'; with: heading."
 		html heading level3; mdcTypography_subtitle1; with: heading.
 		self renderStyledItemsFor: user on: html ]
@@ -209,8 +212,7 @@ TidbitViewTask >> renderStyledItemsFor: user on: html [
 		^ self renderChips: user on: html ].
 
 	itemsStyle = #cards ifTrue: [
-		html div style: 'max-width: 960px'; with: [ self renderCards: user on: html ].
-		^ self ].
+		^ self renderCards: user on: html ].
 
 	self renderTable: user on: html
 ]
@@ -222,7 +224,7 @@ TidbitViewTask >> renderTable: aUser on: html [
 		html div mdcDataTable__tableContainer; with: [
 			| dataRows |
 			dataRows := self dataRows.
-			html table mdcDataTable__table;  with: [
+			html table mdcDataTable__table; style: 'max-width: 960px'; style: 'overflow-x: auto'; with: [
 				self renderTableHeadingsOn: html.
 				self renderTableRows: dataRows on: html ].
 		self renderTableRows: dataRows paginationOn: html ] ]

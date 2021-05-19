@@ -137,6 +137,7 @@ TidbitToDoApp >> initializeLayout [
 	self settings: self buildApplicationSettings.
 	self layout: self buildLayout.
 	self viewUser layout: self layout.
+	self viewTask layout: self layout.
 	self beLayoutStructureDesktop.
 
 	self layout sideSheet beHidden.
