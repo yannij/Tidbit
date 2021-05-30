@@ -113,7 +113,7 @@ TidbitUser >> descriptionToDoItems [
 
 	^ MAToManyRelationDescription new
 		accessor: #toDoItems;
-		classes: {TidbitToDoItem};
+		classes: (Array with: TidbitToDoItem);
 		default: OrderedCollection new;
 		label: 'ToDo Items';
 		cssClass: 'mcw-textfield';

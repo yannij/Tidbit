@@ -352,6 +352,7 @@ TidbitToDoItem >> priorityDescription [
 		priority: 60;
 		beInteger;
 		mcwSliderStep: 5;
+		mcwComponentClass: MCWSliderComponent;
 		yourself
 ]
 
