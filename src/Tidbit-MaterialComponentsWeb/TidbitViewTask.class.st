@@ -1,8 +1,20 @@
 Class {
 	#name : #TidbitViewTask,
 	#superclass : #MCWLayoutComponent,
+	#instVars : [
+		'report'
+	],
 	#category : #'Tidbit-MaterialComponentsWeb'
 }
+
+{ #category : #accessing }
+TidbitViewTask >> buildReport [
+
+	^ (MCWReport rows: self tasksFiltered description: TidbitToDoItem magritteTemplate magritteDescription)
+		showHeader: true;
+		showFooter: true;
+		yourself
+]
 
 { #category : #accessing }
 TidbitViewTask >> dataRows [
@@ -67,25 +79,23 @@ TidbitViewTask >> renderCardsTabsOn: html [
 			html div mdcTabScroller__scrollArea; mdcTabScroller__scrollArea_scroll; with: [
 				TidbitToDoItem importanceValues withIndexDo: [ :eachValue :index |
 					html div mdcTabScroller__scrollContent; with: [
-						| tagTab tagTabId tagTabIndicator tagTabIndicatorId |
+						| tagTab tagTabIndicator |
 						(tagTab := html anchor) mdcTab; "mdcAutoInit: 'MDCTab';"
-							id: (tagTabId := html nextId);
+							id: html nextId;
 							callback: [ self sideSheet tabImportance: eachValue ];
 							with: [
 									html span mdcTab__content; with: [
 									html span mdcTab__textLabel; with: eachValue ].
 									(tagTabIndicator := html span)
 										mdcTabIndicator;
-										id: (tagTabIndicatorId := html nextId);
+										id: html nextId;
 										with: [
 											html span mdcTabIndicator__content; mdcTabIndicator__content_underline ].
 								html span mdcTab__ripple; mdcRippleUpgraded ].
 						eachValue = self sideSheet tabImportance ifTrue: [
 							html script: (html jQuery script: [ :s | s
 									<< ((s jQuery id: tagTab id) call: 'focus');
-									<< ((s jQuery id: tagTabIndicator id) call: 'addClass' with: 'mdc-tab-indicator--active') ])
-							"tagTab mdcTab_active.
-							tagTabIndicator mdcTabIndicator_active" ] ] ] ] ] ]
+									<< ((s jQuery id: tagTabIndicator id) call: 'addClass' with: 'mdc-tab-indicator--active') ]) ] ] ] ] ] ]
 ]
 
 { #category : #'rendering - styles' }
@@ -128,8 +138,9 @@ TidbitViewTask >> renderContentOn: html [
 		value = #notDoneOnly ifTrue: [ heading := heading, ' - Not done tasks' ] ].
 
 	html div style: 'padding: 8px';
-		mdcStyle: self layout contentAreaWidthCalc if: self layout sideSheetVisible;
+		"mdcStyle: self layout contentAreaWidthCalc if: self layout sideSheetVisible;"
 		style: 'max-width: 960px';
+		style: 'width: 960px';
 		with: [
 		"html heading level6; mdcTypography_headline6; style: 'margin: 4px auto'; with: heading."
 		html heading level3; mdcTypography_subtitle1; with: heading.
@@ -220,57 +231,18 @@ TidbitViewTask >> renderStyledItemsFor: user on: html [
 { #category : #'rendering - styles' }
 TidbitViewTask >> renderTable: aUser on: html [
 
-	html div mdcDataTable with: [
-		html div mdcDataTable__tableContainer; with: [
-			| dataRows |
-			dataRows := self dataRows.
-			html table mdcDataTable__table; style: 'max-width: 960px'; style: 'overflow-x: auto'; with: [
-				self renderTableHeadingsOn: html.
-				self renderTableRows: dataRows on: html ].
-		self renderTableRows: dataRows paginationOn: html ] ]
+	self report ifNil: [ self report: self buildReport ].
+	html render: self report
 ]
 
-{ #category : #'rendering - styles' }
-TidbitViewTask >> renderTableHeadingsOn: html [
-	| dataHeadings |
-
-	dataHeadings := #( 'Done' 'Summary' 'Complete By' 'Duration' 'Importance' 'Priority' 'Color Code' 'Description' ).
-	html tableHead: [
-		html tableRow "mdcDataTable__headerRow" class: 'mdc-data-table__header-row'; with: [
-			dataHeadings do: [ :each |
-				html tableHeading mdcDataTable__headerCell; mdcRole: 'columnHeader'; scope: 'col'; with: each ] ] ]
-
+{ #category : #accessing }
+TidbitViewTask >> report [
+	^ report
 ]
 
-{ #category : #'rendering - styles' }
-TidbitViewTask >> renderTableRows: dataRows on: html [
-
-	html tableBody mdcDataTable__content; with: [
-		dataRows do: [ :eachRow |
-			html tableRow mdcDataTable__row; with: [
-				eachRow keysAndValuesDo: [ :index :each |
-					html tableData mdcDataTable__cell; scope: 'row'; with: each ] ] ] ]
-]
-
-{ #category : #'rendering - styles' }
-TidbitViewTask >> renderTableRows: dataRows paginationOn: html [
-
-	html div mdcDataTable__pagination with: [
-		html div mdcDataTable__paginationTrailing; with: [
-			"html div mdcDataTable__paginationRowsPerPage; with: [
-				html div mdcDataTable__paginationRowsPerPageLabel; with: [
-					html text: 'Rows per page' ] ].
-				html div x; with: []".
-			html div mdcDataTable__paginationNavigation; with: [
-				html div mdcDataTable__paginationTotal; with: [ html text: '1-', dataRows size printString, ' of ', dataRows size printString ].
-				html button mdcIconButton; mdcMaterialIcons; mdcDataTable__paginationButton; attributeAt: 'data-first-page' put: 'true'; disabled;
-					with: [ html div mdcButton__icon; with: 'first_page' ].
-				html button mdcIconButton; mdcMaterialIcons; mdcDataTable__paginationButton; attributeAt: 'data-prev-page' put: 'true'; disabled;
-					with: [ html div mdcButton__icon; with: 'chevron_left' ].
-				html button mdcIconButton; mdcMaterialIcons; mdcDataTable__paginationButton; attributeAt: 'data-next-page' put: 'true';
-					with: [ html div mdcButton__icon; with: 'chevron_right' ].
-				html button mdcIconButton; mdcMaterialIcons; mdcDataTable__paginationButton; attributeAt: 'data-last-page' put: 'true';
-					with: [ html div mdcButton__icon; with: 'last_page' ] ] ] ]
+{ #category : #accessing }
+TidbitViewTask >> report: anObject [
+	report := anObject
 ]
 
 { #category : #accessing }

@@ -20,6 +20,13 @@ TidbitViewTaskSideSheet >> filterDone: anObject [
 	filterDone := anObject
 ]
 
+{ #category : #accessing }
+TidbitViewTaskSideSheet >> filterDoneSet: anObject [
+
+	self filterDone: anObject.
+	self mcwApplicationGet viewTask report: nil
+]
+
 { #category : #initialization }
 TidbitViewTaskSideSheet >> initialize [
 
@@ -74,7 +81,7 @@ TidbitViewTaskSideSheet >> renderFilterRadioButtonsOn: html [
 				html div mdcRadio; mdcAutoInit: 'MDCRadio'; with: [
 					html radioButton mdcRadio__nativeControl; id: optionId; group: group;
 						selected: self filterDone = each key;
-						callback: [ self filterDone: each key ];
+						callback: [ self filterDoneSet: each key ];
 						onChange: (html jQuery ajax script: [ :s | s << (s jQuery id: formId) call: 'submit' ]);
 						yourself.
 					html div mdcRadio__background; with: [

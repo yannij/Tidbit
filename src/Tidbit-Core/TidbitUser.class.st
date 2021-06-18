@@ -104,6 +104,7 @@ TidbitUser >> descriptionPasswordHash [
 		label: 'Password';
 		cssClass: 'mcw-textfield';
 		priority: 15;
+		beHidden;
 		yourself
 ]
 
