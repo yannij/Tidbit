@@ -15,7 +15,7 @@ BaselineOfTidbit >> baseline: spec [
 		self voyage: spec.
 
 		spec
-			package: 'Tidbit-Core' with: [ spec requires: #('Voyage' 'MaterialComponentsWeb') ];
+			package: 'Tidbit-Core' with: [ spec requires: #('MaterialComponentsWeb' 'Voyage') ];
 			package: 'Tidbit-Core-Tests' with: [ spec requires: #('Tidbit-Core') ];
 			package: 'Tidbit-MaterialComponentsWeb' with: [ spec requires: #('Tidbit-Core') ].
 
@@ -25,60 +25,12 @@ BaselineOfTidbit >> baseline: spec [
 ]
 
 { #category : #dependencies }
-BaselineOfTidbit >> lightningMDB: spec [
-
-	spec
-		package: 'LightningMDB-Core' with: [ 
-			spec 
-				repository: 'http://smalltalkhub.com/mc/JanVanDeSandt/LightningMDB/main' ].
-	spec
-		package: 'LightningMDB-Tests-Core' with: [ 
-			spec 
-				repository: 'http://smalltalkhub.com/mc/JanVanDeSandt/LightningMDB/main' ].
-	spec
-		package: 'LightningMDB-Dictionary' with: [ 
-			spec 
-				repository: 'http://smalltalkhub.com/mc/JanVanDeSandt/LightningMDB/main' ].
-	spec
-		package: 'LightningMDB-Tests-Dictionary' with: [ 
-			spec 
-				repository: 'http://smalltalkhub.com/mc/JanVanDeSandt/LightningMDB/main' ].
-
-	"spec
-		project: 'LightningMDB'
-		with: [ 
-			spec
-				className: 'ConfigurationOfLightningMDB';
-				version: 'release3.5';
-				repository: 'http://smalltalkhub.com/mc/JanVanDeSandt/LightningMDB/main' ]."
-
-]
-
-{ #category : #dependencies }
 BaselineOfTidbit >> materialComponentsWeb: spec [
 
 	spec
 		baseline: 'MaterialComponentsWeb'
 		with: [ spec repository: 'github://yannij/MaterialComponentsWeb:master/src';
 			loads: #('Responsive' 'Material-Web-Magritte') ].
-
-]
-
-{ #category : #dependencies }
-BaselineOfTidbit >> materialDesignLite: spec [
-
-	spec
-		baseline: 'MaterialDesignLite'
-		with: [ spec repository: 'github://DuneSt/MaterialDesignLite:v1.1.0/src' ].
-
-]
-
-{ #category : #dependencies }
-BaselineOfTidbit >> neoJSON: spec [
-
-	spec
-		baseline: 'NeoJSON'
-		with: [ spec repository: 'github://svenvc/NeoJSON:17/repository' ].
 
 ]
 
