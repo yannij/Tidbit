@@ -32,7 +32,7 @@ TidbitViewTools >> renderContentOn: html [
 			on: html.
 		html break; break.
 		html span mdcTypography_subtitle1; with: 'DockerDeploy default config'.
-		html preformatted: (DockerDeploy current configs at: DockerDeploy configNameDefault) printString.
+		html preformatted: (DockerDeploy current configs at: DockerDeploy configNameDefault ifAbsent: [ nil ]) printString.
 		html preformatted: 'mongoHost: ', TidbitExampleDatabase mongoHost printString.
 		html preformatted: 'mongoPort: ', TidbitExampleDatabase mongoPort printString ]
 ]
