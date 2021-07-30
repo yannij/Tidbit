@@ -28,7 +28,8 @@ TidbitToDoApp class >> dockerDeployPostLoad [
 TidbitToDoApp class >> dockerDeployPreLoad [
 	<dockerDeployPreLoad>
 
-	DockerDeploy current configNamesAddDefault
+	DockerDeploy current configNamesAdd: DockerDeploy defaultConfigName.
+	DockerDeploy current secretNamesAdd: DockerDeploy defaultMongoSecretName
 ]
 
 { #category : #'class initialization' }
@@ -206,14 +207,14 @@ TidbitToDoApp >> repository [
 ]
 
 { #category : #'utility - repository' }
-TidbitToDoApp >> repositoryClear [
-	"Do nothing for memory repository"
+TidbitToDoApp >> repositoryRecreateTestData [
+
+	TidbitExampleDatabase repositorySetUpMemorySingleton
 ]
 
 { #category : #'utility - repository' }
-TidbitToDoApp >> repositoryReset [
-
-	TidbitExampleDatabase repositorySetUpMemorySingleton
+TidbitToDoApp >> repositoryResetConnection [
+	"Do nothing for memory repository"
 ]
 
 { #category : #'accessing - model' }

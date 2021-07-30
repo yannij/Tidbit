@@ -133,28 +133,75 @@ TidbitExampleDatabase class >> mongo1: anObject [
 	Mongo1 := anObject
 ]
 
-{ #category : #accessing }
-TidbitExampleDatabase class >> mongo1Clear [
+{ #category : #initalize }
+TidbitExampleDatabase class >> mongo1RecreateTestData [
+	"
+	self mongo1ResetConnection; mongo1RecreateTestData
+	"
 
-	Mongo1 := nil
+	self mongo1 ifNil: [
+		"TODO: log an error"
+		^ self ].
+
+	self mongoRepositorySetUp: self mongo1
+]
+
+{ #category : #initalize }
+TidbitExampleDatabase class >> mongo1ResetConnection [
+
+	Mongo1 := self mongoRepositoryBuild
+]
+
+{ #category : #accessing }
+TidbitExampleDatabase class >> mongoDatabaseName [
+
+	^ DockerDeploy current secretsAt: DockerDeploy defaultMongoSecretName atKey: 'mongo-database' ifAbsent: [ '' ]
 ]
 
 { #category : #accessing }
 TidbitExampleDatabase class >> mongoHost [
 
-	^ DockerDeploy current
-		configsAt: DockerDeploy configNameDefault
-		atKey: 'mongo-host'
-		ifAbsent: [ VOMongoRepository defaultHost ]
+	^ DockerDeploy current mongoHostDefault
+		ifNotNil: [ :value | value ]
+		ifNil: [ VOMongoRepository defaultHost ]
 ]
 
 { #category : #accessing }
 TidbitExampleDatabase class >> mongoPort [
 
-	^ DockerDeploy current
-		configsAt: DockerDeploy configNameDefault
-		atKey: 'mongo-port'
-		ifAbsent: [ VOMongoRepository defaultPort ]
+	^ DockerDeploy current mongoPortDefault
+		ifNotNil: [ :value | value ]
+		ifNil: [ VOMongoRepository defaultPort ]
+]
+
+{ #category : #initalize }
+TidbitExampleDatabase class >> mongoRepositoryBuild [
+	| mongo username pwd |
+
+	username := DockerDeploy current secretsAt: DockerDeploy defaultMongoSecretName atKey: 'mongo-username' ifAbsent: [ nil ].
+	pwd := DockerDeploy current secretsAt: DockerDeploy defaultMongoSecretName atKey: 'mongo-password' ifAbsent: [ nil ].
+
+	mongo := VOMongoRepository
+		host: self mongoHost
+		port: self mongoPort
+		database: self mongoDatabaseName
+		username: username
+		password: pwd.
+
+	^ mongo
+]
+
+{ #category : #initalize }
+TidbitExampleDatabase class >> mongoRepositorySetUp: aMongoRepository [
+	"
+	self mongo1Clear.
+	self repositorySetUpMongo: self mongoRepositoryBuild.
+	"
+
+	aMongoRepository removeAll: TidbitUser.
+	aMongoRepository removeAll: TidbitToDoItem.
+
+	1 to: 10 do: [ :index | self buildUser: 'mongo', index printString repository: aMongoRepository ]
 ]
 
 { #category : #initalize }
@@ -184,30 +231,4 @@ TidbitExampleDatabase class >> repositorySetUpMemorySingleton [
 	self buildUserGuest.
 	1 to: 10 do: [ :index |
 		self buildUser: 'user', index printString ]
-]
-
-{ #category : #initalize }
-TidbitExampleDatabase class >> repositorySetUpMongo1 [
-	"
-	self repositorySetUpMongo1.
-	"
-
-	self repositorySetUpMongo1Host: self mongoHost port: self mongoPort
-]
-
-{ #category : #initalize }
-TidbitExampleDatabase class >> repositorySetUpMongo1Host: aHostname port: aPortno [
-	"
-	self mongo1Clear.
-	self repositorySetUpMongo1Host: self mongoHost port: self mongoPort.
-	"
-	| mongo |
-
-	mongo := (VOMongoRepository host: aHostname port: aPortno database: 'Tidbit').
-	mongo removeAll: TidbitUser.
-	mongo removeAll: TidbitToDoItem.
-
-	1 to: 10 do: [ :index | self buildUser: 'mongo', index printString repository: mongo ].
-
-	self mongo1: mongo
 ]

@@ -24,6 +24,13 @@ TidbitToDoMongoApp class >> applicationPath [
 ]
 
 { #category : #'class initialization' }
+TidbitToDoMongoApp class >> dockerDeployPostLoad [
+	<dockerDeployPostLoad>
+
+	TidbitExampleDatabase mongo1ResetConnection
+]
+
+{ #category : #'class initialization' }
 TidbitToDoMongoApp class >> initialize [
 	"Register path with Seaside.
 	WAAdmin unregister: self applicationPath.
@@ -42,20 +49,16 @@ TidbitToDoMongoApp >> applicationTitle [
 TidbitToDoMongoApp >> repository [
 
 	^ TidbitExampleDatabase mongo1
-		ifNotNil: [ :value | value ]
-		ifNil: [
-			TidbitExampleDatabase repositorySetUpMongo1.
-			TidbitExampleDatabase mongo1 ]
 ]
 
 { #category : #'utility - repository' }
-TidbitToDoMongoApp >> repositoryClear [
+TidbitToDoMongoApp >> repositoryRecreateTestData [
 
-	TidbitExampleDatabase mongo1Clear
+	TidbitExampleDatabase mongo1RecreateTestData
 ]
 
 { #category : #'utility - repository' }
-TidbitToDoMongoApp >> repositoryReset [
+TidbitToDoMongoApp >> repositoryResetConnection [
 
-	TidbitExampleDatabase repositorySetUpMongo1
+	TidbitExampleDatabase mongo1ResetConnection
 ]

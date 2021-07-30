@@ -72,5 +72,5 @@ TidbitViewUsers >> report: anObject [
 { #category : #rendering }
 TidbitViewUsers >> users [
 
-	^ self layout app repository selectAll: TidbitUser
+	^ self mcwApplicationGet repository selectAll: TidbitUser
 ]

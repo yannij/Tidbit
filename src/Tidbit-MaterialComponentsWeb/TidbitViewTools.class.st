@@ -21,18 +21,18 @@ TidbitViewTools >> renderContentOn: html [
 		html heading level3; mdcTypography_subtitle1; with: 'Tools'.
 		self
 			renderButton: 'Reset connection'
-			caption: 'Clear the repository connection which is cached in a class variable'
-			callback: [ self layout app repositoryClear ]
+			caption: 'Reset the repository connection which is cached in a class variable'
+			callback: [ self mcwApplicationGet repositoryResetConnection ]
 			on: html.
 		html break; break.
 		self
 			renderButton: 'Reset database'
 			caption: 'Delete current database content, and recreate original demo content. Will logout'
-			callback: [ self layout app repositoryReset; logout ]
+			callback: [ self mcwApplicationGet repositoryRecreateTestData; logout ]
 			on: html.
 		html break; break.
-		html span mdcTypography_subtitle1; with: 'DockerDeploy default config'.
-		html preformatted: (DockerDeploy current configs at: DockerDeploy configNameDefault ifAbsent: [ nil ]) printString.
-		html preformatted: 'mongoHost: ', TidbitExampleDatabase mongoHost printString.
-		html preformatted: 'mongoPort: ', TidbitExampleDatabase mongoPort printString ]
+		html span mdcTypography_subtitle1; with: 'Mongo config'.
+		html preformatted: 'mongo-host: ', TidbitExampleDatabase mongoHost printString.
+		html preformatted: 'mongo-port: ', TidbitExampleDatabase mongoPort printString.
+		html preformatted: 'mongo-database: ', TidbitExampleDatabase mongoDatabaseName printString ]
 ]
