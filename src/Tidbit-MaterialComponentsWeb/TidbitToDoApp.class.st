@@ -28,8 +28,7 @@ TidbitToDoApp class >> dockerDeployPostLoad [
 TidbitToDoApp class >> dockerDeployPreLoad [
 	<dockerDeployPreLoad>
 
-	DockerDeploy current configNamesAdd: DockerDeploy defaultConfigName.
-	DockerDeploy current secretNamesAdd: DockerDeploy defaultMongoSecretName
+	DockerDeploy current configNamesAdd: DockerDeploy defaultConfigName
 ]
 
 { #category : #'class initialization' }

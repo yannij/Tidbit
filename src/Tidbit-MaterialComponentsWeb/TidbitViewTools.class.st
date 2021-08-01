@@ -34,5 +34,5 @@ TidbitViewTools >> renderContentOn: html [
 		html span mdcTypography_subtitle1; with: 'Mongo config'.
 		html preformatted: 'mongo-host: ', TidbitExampleDatabase mongoHost printString.
 		html preformatted: 'mongo-port: ', TidbitExampleDatabase mongoPort printString.
-		html preformatted: 'mongo-database: ', TidbitExampleDatabase mongoDatabaseName printString ]
+		html preformatted: 'mongo-database: ', TidbitExampleDatabase mongoDatabase printString ]
 ]

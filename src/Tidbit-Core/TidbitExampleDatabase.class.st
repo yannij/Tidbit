@@ -153,9 +153,9 @@ TidbitExampleDatabase class >> mongo1ResetConnection [
 ]
 
 { #category : #accessing }
-TidbitExampleDatabase class >> mongoDatabaseName [
+TidbitExampleDatabase class >> mongoDatabase [
 
-	^ DockerDeploy current secretsAt: DockerDeploy defaultMongoSecretName atKey: 'mongo-database' ifAbsent: [ '' ]
+	^ DockerDeploy current mongoDatabaseDefault
 ]
 
 { #category : #accessing }
@@ -178,13 +178,17 @@ TidbitExampleDatabase class >> mongoPort [
 TidbitExampleDatabase class >> mongoRepositoryBuild [
 	| mongo username pwd |
 
-	username := DockerDeploy current secretsAt: DockerDeploy defaultMongoSecretName atKey: 'mongo-username' ifAbsent: [ nil ].
-	pwd := DockerDeploy current secretsAt: DockerDeploy defaultMongoSecretName atKey: 'mongo-password' ifAbsent: [ nil ].
+	username := DockerDeploy current secretsAt: DockerDeploy defaultMongoSecretName atKey: 'mongo-username'.
+	(username isNil or: [ username isEmpty ]) ifTrue: [
+		^ self error: 'mongo-username is nil or empty' ].
+	pwd := DockerDeploy current secretsAt: DockerDeploy defaultMongoSecretName atKey: 'mongo-password'.
+	(pwd isNil or: [ pwd isEmpty ]) ifTrue: [
+		^ self error: 'mongo-password is nil or empty' ].
 
 	mongo := VOMongoRepository
 		host: self mongoHost
 		port: self mongoPort
-		database: self mongoDatabaseName
+		database: self mongoDatabase
 		username: username
 		password: pwd.
 
