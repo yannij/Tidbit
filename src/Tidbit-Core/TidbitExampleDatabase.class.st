@@ -199,7 +199,7 @@ TidbitExampleDatabase class >> mongoRepositoryBuild [
 TidbitExampleDatabase class >> mongoRepositorySetUp: aMongoRepository [
 	"
 	self mongo1Clear.
-	self repositorySetUpMongo: self mongoRepositoryBuild.
+	self mongoRepositorySetUp: self mongoRepositoryBuild.
 	"
 
 	aMongoRepository removeAll: TidbitUser.

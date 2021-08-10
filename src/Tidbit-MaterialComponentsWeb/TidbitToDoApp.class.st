@@ -40,6 +40,12 @@ TidbitToDoApp class >> initialize [
 	^ self mcwRegisterDeployment: self applicationPath
 ]
 
+{ #category : #testing }
+TidbitToDoApp >> anonymousLoginAllowed [
+
+	^ false
+]
+
 { #category : #accessing }
 TidbitToDoApp >> applicationTitle [
 
