@@ -178,6 +178,10 @@ TidbitExampleDatabase class >> mongoPort [
 TidbitExampleDatabase class >> mongoRepositoryBuild [
 	| mongo username pwd |
 
+	"
+	To set up config values, run:
+		DockerDeploy current runStartup
+	"
 	username := DockerDeploy current secretsAt: DockerDeploy defaultMongoSecretName atKey: 'mongo-username'.
 	(username isNil or: [ username isEmpty ]) ifTrue: [
 		^ self error: 'mongo-username is nil or empty' ].

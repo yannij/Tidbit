@@ -105,10 +105,10 @@ TidbitToDoApp >> buildMainFab [
 TidbitToDoApp >> buildSideNavList [
 
 	^ MCWListBasic new
-		listItemAdd: (MCWListItemIcon  itemText: 'Home' iconName: 'home' callback: [ self viewUserGo ]);
-		listItemAdd: (MCWListItemIcon  itemText: 'Tasks' iconName: 'checklist' callback: [ self viewTaskGo ]);
-		listItemAdd: (MCWListItemIcon  itemText: 'Users' iconName: 'perm_identity' callback: [ self viewUsersGo ]);
-		listItemAdd: (MCWListItemIcon  itemText: 'Tools' iconName: 'build_circle' callback: [ self viewToolsGo ]);
+		listItemAdd: (MCWListItemIcon  itemText: 'Home' iconName: 'home' callback: [ self dismissMenuIfModalDrawer. self viewUserGo ]);
+		listItemAdd: (MCWListItemIcon  itemText: 'Tasks' iconName: 'checklist' callback: [ self dismissMenuIfModalDrawer. self viewTaskGo ]);
+		listItemAdd: (MCWListItemIcon  itemText: 'Users' iconName: 'perm_identity' callback: [ self dismissMenuIfModalDrawer. self viewUsersGo ]);
+		listItemAdd: (MCWListItemIcon  itemText: 'Tools' iconName: 'build_circle' callback: [ self dismissMenuIfModalDrawer. self viewToolsGo ]);
 		yourself
 ]
 
@@ -146,7 +146,7 @@ TidbitToDoApp >> initializeLayout [
 	self viewUsers layout: self layout.
 	self viewTask layout: self layout.
 	self viewTaskFilter layout: self layout.
-	self beLayoutStructureDesktop.
+	self layout beDesktopStyle.
 
 	self layout sideSheet beHidden.
 
