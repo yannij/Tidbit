@@ -161,6 +161,12 @@ TidbitToDoApp >> initializeLayout [
 
 { #category : #navigation }
 TidbitToDoApp >> navTo: aModel [
+
+	self navTo: aModel  aspect: nil
+]
+
+{ #category : #navigation }
+TidbitToDoApp >> navTo: aModel  aspect: anAspect [
 	| newView |
 
 	aModel ifNil: [ ^ self ].
@@ -170,12 +176,8 @@ TidbitToDoApp >> navTo: aModel [
 					"addMessage: 'hello';"
 					yourself.
 
-	self viewUser content2: newView.
-
-]
-
-{ #category : #navigation }
-TidbitToDoApp >> navTo: aModel  aspect: anAspect [
+	self layout contentArea component: newView.
+	self layout sideSheet beHidden
 ]
 
 { #category : #'utility - login' }

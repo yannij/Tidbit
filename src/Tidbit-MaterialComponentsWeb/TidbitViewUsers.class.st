@@ -13,6 +13,9 @@ TidbitViewUsers >> buildReport [
 	^ (MCWReport rows: self users description: TidbitUser magritteTemplate magritteDescription)
 		showHeader: true;
 		showFooter: true;
+		addColumn: (DGActionColumn new
+			commandBlock: (MessageSend receiver: self selector: #navTo:);
+			yourself);
 		yourself
 ]
 
@@ -30,6 +33,12 @@ TidbitViewUsers >> dataRowFrom: aUser [
 		yourself.
 
 	^ dataRow
+]
+
+{ #category : #rendering }
+TidbitViewUsers >> navTo: aModel [
+
+	self mcwApplicationGet navTo: aModel
 ]
 
 { #category : #rendering }

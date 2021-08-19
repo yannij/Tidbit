@@ -13,6 +13,9 @@ TidbitViewTask >> buildReport [
 	^ (MCWReport rows: self tasksFiltered description: TidbitToDoItem magritteTemplate magritteDescription)
 		showHeader: true;
 		showFooter: true;
+		addColumn: (DGActionColumn new
+			commandBlock: (MessageSend receiver: self selector: #navTo:);
+			yourself);
 		yourself
 ]
 
@@ -38,6 +41,12 @@ TidbitViewTask >> dataRows [
 TidbitViewTask >> denseView [
 
 	^ self layout app denseView
+]
+
+{ #category : #rendering }
+TidbitViewTask >> navTo: aModel [
+
+	self mcwApplicationGet navTo: aModel
 ]
 
 { #category : #'rendering - styles' }
@@ -66,9 +75,13 @@ TidbitViewTask >> renderCardsItems: anItemList on: html [
 							html heading level2; mdcTypography_headline6;
 								style: 'text-align: center; margin-top: 0px; background: white; opacity: .5';
 								with: eachItem summary ] ].
-				html div mdcCard__primaryAction; style: 'padding: 4px'; with: [
-					html heading level3; mdcTypography_subtitle2; with: eachItem mdSecondaryString.
-					html div mdcTypography_body2; with: eachItem description ] ] ] ]
+				html div mdcCard__primaryAction; style: 'padding: 4px';
+					onClick: ((html jQuery ajax)
+						callback: [ self mcwApplicationGet navTo: eachItem ];
+						onComplete: html javascript refresh);
+					with: [
+						html heading level3; mdcTypography_subtitle2; with: eachItem mdSecondaryString.
+						html div mdcTypography_body2; with: eachItem description ] ] ] ]
 ]
 
 { #category : #'rendering - styles' }
@@ -116,6 +129,9 @@ TidbitViewTask >> renderChips: aUser on: html [
 					html div mdcChip; mdcRippleUpgraded;
 						"style: 'margin: 0px 4px 8px 0px';"
 						style: 'background: #', eachItem colorCode asHexString;
+						onClick: ((html jQuery ajax)
+							callback: [ self mcwApplicationGet navTo: eachItem ];
+							onComplete: html javascript refresh);
 						with: [
 							html span mdcMaterialIcons; mdcChip__icon; mdcChip__icon_leading;
 								with: (iconMap at: eachItem importance ifAbsent: [ 'star' ]).
@@ -139,8 +155,8 @@ TidbitViewTask >> renderContentOn: html [
 
 	html div style: 'padding: 8px';
 		"mdcStyle: self layout contentAreaWidthCalc if: self layout sideSheetVisible;"
-		style: 'max-width: 960px';
-		style: 'width: 960px';
+		"style: 'max-width: 960px';
+		style: 'width: 960px';"
 		with: [
 		"html heading level6; mdcTypography_headline6; style: 'margin: 4px auto'; with: heading."
 		html heading level3; mdcTypography_subtitle1; with: heading.
@@ -157,10 +173,15 @@ TidbitViewTask >> renderListSingleLine: aUser on: html [
 		"style: 'min-width: 400px';"
 		with: [
 			self tasksFiltered do: [ :eachItem |
-				html listItem mdcListItem; with: [
-					html span mdcListItem__text; with:
-						((eachItem mdPrimaryString , ' - ' , eachItem mdSecondaryString)
-							truncateWithElipsisTo: 60) ] ] ]
+				html listItem
+					mdcListItem;
+					onClick: ((html jQuery ajax)
+						callback: [ self mcwApplicationGet navTo: eachItem ];
+						onComplete: html javascript refresh);
+					with: [
+						html span mdcListItem__text; with:
+							((eachItem mdPrimaryString , ' - ' , eachItem mdSecondaryString)
+								truncateWithElipsisTo: 60) ] ] ]
 ]
 
 { #category : #'rendering - styles' }
@@ -199,12 +220,17 @@ TidbitViewTask >> renderListTwoLineItems: anItemList on: html [
 		^ self ].
 
 	anItemList do: [ :eachItem |
-		html listItem mdcListItem; with: [
-			html span mdcListItem__text; with: [
-				html span mdcListItem__primaryText; with:
-					eachItem mdPrimaryString.
-				html span mdcListItem__secondaryText; with:
-					(eachItem mdSecondaryString truncateWithElipsisTo: 60) ] ] ]
+		html listItem
+			mdcListItem;
+			onClick: ((html jQuery ajax)
+				callback: [ self mcwApplicationGet navTo: eachItem ];
+				onComplete: html javascript refresh);
+			with: [
+				html span mdcListItem__text; with: [
+					html span mdcListItem__primaryText; with:
+						eachItem mdPrimaryString.
+					html span mdcListItem__secondaryText; with:
+						(eachItem mdSecondaryString truncateWithElipsisTo: 60) ] ] ]
 ]
 
 { #category : #rendering }
@@ -232,7 +258,8 @@ TidbitViewTask >> renderStyledItemsFor: user on: html [
 TidbitViewTask >> renderTable: aUser on: html [
 
 	self report ifNil: [ self report: self buildReport ].
-	html render: self report
+	html div style: 'overflow-x: scroll;'; with: [
+		html render: self report ]
 ]
 
 { #category : #accessing }
