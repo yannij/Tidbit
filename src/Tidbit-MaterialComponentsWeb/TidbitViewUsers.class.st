@@ -13,7 +13,7 @@ TidbitViewUsers >> buildReport [
 	^ (MCWReport rows: self users description: TidbitUser magritteTemplate magritteDescription)
 		showHeader: true;
 		showFooter: true;
-		addColumn: (DGActionColumn new
+		addColumn: (MCWActionColumn new
 			commandBlock: (MessageSend receiver: self selector: #navTo:);
 			yourself);
 		yourself
