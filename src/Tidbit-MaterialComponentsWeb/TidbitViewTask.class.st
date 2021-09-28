@@ -179,7 +179,7 @@ TidbitViewTask >> renderListSingleLine: aUser on: html [
 						callback: [ self mcwApplicationGet navTo: eachItem ];
 						onComplete: html javascript refresh);
 					with: [
-						html span mdcListItem__text; with:
+						html span mdcDeprecatedListItem__text; with:
 							((eachItem mdPrimaryString , ' - ' , eachItem mdSecondaryString)
 								truncateWithElipsisTo: 60) ] ] ]
 ]
@@ -196,17 +196,17 @@ TidbitViewTask >> renderListTwoLine: aUser on: html [
 
 	html div mdcListGroup; mdcTheme_surface; with: [
 		html div mdcListGroup__subheader; with: 'High'.
-		html unorderedList mdcList; mdcList_twoLine; mdcList_dense_if: self denseView; with: [
+		html unorderedList mdcList; mdcDeprecatedList_twoLine; mdcList_dense_if: self denseView; with: [
 			self renderListTwoLineItems: listHigh on: html ] ].
 
 	html div mdcListGroup; mdcTheme_surface; with: [
 		html div mdcListGroup__subheader; with: 'Medium'.
-		html unorderedList mdcList; mdcList_twoLine; mdcList_dense_if: self denseView; with: [
+		html unorderedList mdcList; mdcDeprecatedList_twoLine; mdcList_dense_if: self denseView; with: [
 			self renderListTwoLineItems: listMedium on: html ] ].
 
 	html div mdcListGroup; mdcTheme_surface; with: [
 		html div mdcListGroup__subheader; with: 'Low'.
-		html unorderedList mdcList; mdcList_twoLine; mdcList_dense_if: self denseView; with: [
+		html unorderedList mdcList; mdcDeprecatedList_twoLine; mdcList_dense_if: self denseView; with: [
 			self renderListTwoLineItems: listLow on: html ] ]
 ]
 
@@ -215,7 +215,7 @@ TidbitViewTask >> renderListTwoLineItems: anItemList on: html [
 
 	anItemList isEmpty ifTrue: [
 		html listItem mdcListItem; with: [
-			html span mdcListItem__text; with: [
+			html span mdcDeprecatedListItem__text; with: [
 				html span mdcListItem__secondaryText; with: '** NONE **' ] ].
 		^ self ].
 
@@ -226,7 +226,7 @@ TidbitViewTask >> renderListTwoLineItems: anItemList on: html [
 				callback: [ self mcwApplicationGet navTo: eachItem ];
 				onComplete: html javascript refresh);
 			with: [
-				html span mdcListItem__text; with: [
+				html span mdcDeprecatedListItem__text; with: [
 					html span mdcListItem__primaryText; with:
 						eachItem mdPrimaryString.
 					html span mdcListItem__secondaryText; with:
