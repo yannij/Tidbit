@@ -121,7 +121,7 @@ TidbitViewTask >> renderChips: aUser on: html [
 		at: TidbitToDoItem importanceValueLow put: 'star_outline';
 		yourself.
 
-	html unorderedList mdcList; mdcList_dense_if: self denseView;
+	html unorderedList mdcDeprecatedList; mdcList_dense_if: self denseView;
 		"style: 'min-width: 400px';"
 		with: [
 			self tasksFiltered
@@ -167,14 +167,14 @@ TidbitViewTask >> renderContentOn: html [
 TidbitViewTask >> renderListSingleLine: aUser on: html [
 
 	html unorderedList
-		mdcList;
+		mdcDeprecatedList;
 		mdcList_dense_if: self denseView;
 		mdcTheme_surface;
 		"style: 'min-width: 400px';"
 		with: [
 			self tasksFiltered do: [ :eachItem |
 				html listItem
-					mdcListItem;
+					mdcDeprecatedListItem;
 					onClick: ((html jQuery ajax)
 						callback: [ self mcwApplicationGet navTo: eachItem ];
 						onComplete: html javascript refresh);
@@ -196,17 +196,17 @@ TidbitViewTask >> renderListTwoLine: aUser on: html [
 
 	html div mdcListGroup; mdcTheme_surface; with: [
 		html div mdcListGroup__subheader; with: 'High'.
-		html unorderedList mdcList; mdcDeprecatedList_twoLine; mdcList_dense_if: self denseView; with: [
+		html unorderedList mdcDeprecatedList; mdcDeprecatedList_twoLine; mdcList_dense_if: self denseView; with: [
 			self renderListTwoLineItems: listHigh on: html ] ].
 
 	html div mdcListGroup; mdcTheme_surface; with: [
 		html div mdcListGroup__subheader; with: 'Medium'.
-		html unorderedList mdcList; mdcDeprecatedList_twoLine; mdcList_dense_if: self denseView; with: [
+		html unorderedList mdcDeprecatedList; mdcDeprecatedList_twoLine; mdcList_dense_if: self denseView; with: [
 			self renderListTwoLineItems: listMedium on: html ] ].
 
 	html div mdcListGroup; mdcTheme_surface; with: [
 		html div mdcListGroup__subheader; with: 'Low'.
-		html unorderedList mdcList; mdcDeprecatedList_twoLine; mdcList_dense_if: self denseView; with: [
+		html unorderedList mdcDeprecatedList; mdcDeprecatedList_twoLine; mdcList_dense_if: self denseView; with: [
 			self renderListTwoLineItems: listLow on: html ] ]
 ]
 
@@ -214,14 +214,14 @@ TidbitViewTask >> renderListTwoLine: aUser on: html [
 TidbitViewTask >> renderListTwoLineItems: anItemList on: html [
 
 	anItemList isEmpty ifTrue: [
-		html listItem mdcListItem; with: [
+		html listItem mdcDeprecatedListItem; with: [
 			html span mdcDeprecatedListItem__text; with: [
 				html span mdcListItem__secondaryText; with: '** NONE **' ] ].
 		^ self ].
 
 	anItemList do: [ :eachItem |
 		html listItem
-			mdcListItem;
+			mdcDeprecatedListItem;
 			onClick: ((html jQuery ajax)
 				callback: [ self mcwApplicationGet navTo: eachItem ];
 				onComplete: html javascript refresh);
