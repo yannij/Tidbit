@@ -104,7 +104,7 @@ TidbitToDoApp >> buildMainFab [
 { #category : #initialization }
 TidbitToDoApp >> buildSideNavList [
 
-	^ MCWListBasic new
+	^ MCWList new
 		listItemAdd: (MCWListItemIcon  itemText: 'Home' iconName: 'home' callback: [ self dismissMenuIfModalDrawer. self viewUserGo ]);
 		listItemAdd: (MCWListItemIcon  itemText: 'Tasks' iconName: 'checklist' callback: [ self dismissMenuIfModalDrawer. self viewTaskGo ]);
 		listItemAdd: (MCWListItemIcon  itemText: 'Users' iconName: 'perm_identity' callback: [ self dismissMenuIfModalDrawer. self viewUsersGo ]);
@@ -115,7 +115,7 @@ TidbitToDoApp >> buildSideNavList [
 { #category : #initialization }
 TidbitToDoApp >> buildSideSheet [
 
-	^ MCWSideSheet new
+	^ MDSSideSheet new
 ]
 
 { #category : #'utility - login' }
@@ -153,9 +153,7 @@ TidbitToDoApp >> initializeLayout [
 	"self settings setFont: MCWGoogleFont allAvailable atRandom."
 	self layout contentArea component: self viewUser.
 	self layout sideSheet component: self viewTaskFilter.
-	self loginComponent: self buildLoginComponent.
-
-	self applicationPostInitialize: self
+	self loginComponent: self buildLoginComponent
 
 ]
 
