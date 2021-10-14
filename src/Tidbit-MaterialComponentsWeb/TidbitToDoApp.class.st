@@ -60,7 +60,7 @@ TidbitToDoApp >> authenticateUsername: aUsername password: aPassword [
 	^ (self findUser: aUsername)
 		ifNil: [ nil ]
 		ifNotNil: [ :value |
-			value passwordHash = (MCWLogin passwordHashFor: (aPassword ifNil: [ '' ] ifNotNil: [ :arg | arg ]))
+			value passwordHash = (MDSLogin passwordHashFor: (aPassword ifNil: [ '' ] ifNotNil: [ :arg | arg ]))
 				ifTrue: [ value ]
 				ifFalse: [ nil ] ]
 ]
@@ -68,7 +68,7 @@ TidbitToDoApp >> authenticateUsername: aUsername password: aPassword [
 { #category : #initialization }
 TidbitToDoApp >> buildLoginComponent [
 
-	^ MCWLogin new
+	^ MDSLogin new
 		loginTitle: self applicationTitle;
 		authenticationBlock: [ :username :password |
 			| userOrNil |
@@ -98,7 +98,7 @@ TidbitToDoApp >> buildLoginComponent [
 { #category : #initialization }
 TidbitToDoApp >> buildSideNavList [
 
-	^ MCWList new
+	^ MDSDeprecatedList new
 		listItemAdd: (MCWListItemIcon  itemText: 'Home' iconName: 'home' callback: [ self dismissMenuIfModalDrawer. self viewUserGo ]);
 		listItemAdd: (MCWListItemIcon  itemText: 'Tasks' iconName: 'checklist' callback: [ self dismissMenuIfModalDrawer. self viewTaskGo ]);
 		listItemAdd: (MCWListItemIcon  itemText: 'Users' iconName: 'perm_identity' callback: [ self dismissMenuIfModalDrawer. self viewUsersGo ]);
@@ -179,7 +179,7 @@ TidbitToDoApp >> newUsername: aUsername password: aPassword [
 	userModel := TidbitUser new
 		username: aUsername;
 		fullName: aUsername;
-		passwordHash: (MCWLogin passwordHashFor: aPassword);
+		passwordHash: (MDSLogin passwordHashFor: aPassword);
 		yourself.
 
 	self repository save: userModel.

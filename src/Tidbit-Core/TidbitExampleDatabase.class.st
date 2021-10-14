@@ -25,7 +25,7 @@ TidbitExampleDatabase class >> buildUser: aUsername repository: aRepository [
 		fullName: aUsername capitalized, ' Test';
 		email: aUsername, '@foo.com';
 		website: 'http://foo.com/', aUsername;
-		passwordHash: (MCWLogin passwordHashFor: 'secret');
+		passwordHash: (MDSLogin passwordHashFor: 'secret');
 		yourself.
 
 	today := Date today.
@@ -60,7 +60,7 @@ TidbitExampleDatabase class >> buildUserDemo [
 	userModel := TidbitUser new
 		username: 'demo';
 		fullName: 'Demo User';
-		passwordHash: (MCWLogin passwordHashFor: 'secret');
+		passwordHash: (MDSLogin passwordHashFor: 'secret');
 		yourself.
 
 	userModel
@@ -80,7 +80,7 @@ TidbitExampleDatabase class >> buildUserGuest [
 	userModel := TidbitUser new
 		username: 'guest';
 		fullName: 'Guest User';
-		passwordHash: (MCWLogin passwordHashFor: 'secret');
+		passwordHash: (MDSLogin passwordHashFor: 'secret');
 		yourself.
 
 	userModel
