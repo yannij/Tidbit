@@ -1,6 +1,6 @@
 Class {
 	#name : #TidbitViewTask,
-	#superclass : #MCWLayoutComponent,
+	#superclass : #MDSComponent,
 	#instVars : [
 		'report'
 	],
@@ -40,7 +40,7 @@ TidbitViewTask >> dataRows [
 { #category : #accessing }
 TidbitViewTask >> denseView [
 
-	^ self layout app denseView
+	^ self mcwApplicationGet denseView
 ]
 
 { #category : #rendering }
@@ -144,7 +144,7 @@ TidbitViewTask >> renderChips: aUser on: html [
 TidbitViewTask >> renderContentOn: html [
 	| user heading |
 
-	user := self layout app viewUserModel.	
+	user := self mcwApplicationGet viewUserModel.	
 	user ifNil: [ ^ self ].
 
 	heading := user mdPrimaryString.
@@ -275,14 +275,14 @@ TidbitViewTask >> report: anObject [
 { #category : #accessing }
 TidbitViewTask >> sideSheet [
 
-	^ self layout app viewTaskFilter
+	^ self mcwApplicationGet viewTaskFilter
 ]
 
 { #category : #accessing }
 TidbitViewTask >> tasksFiltered [
 	| user tasksFilterDone tasksAll |
 
-	user := self layout app viewUserModel.	
+	user := self mcwApplicationGet viewUserModel.	
 	user ifNil: [ ^ #() ].
 
 	tasksAll := user toDoItems.

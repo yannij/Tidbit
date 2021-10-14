@@ -1,6 +1,6 @@
 Class {
 	#name : #TidbitViewGridContent,
-	#superclass : #MCWLayoutComponent,
+	#superclass : #MDSComponent,
 	#instVars : [
 		'contents'
 	],
@@ -51,13 +51,16 @@ TidbitViewGridContent >> initialize [
 
 { #category : #rendering }
 TidbitViewGridContent >> renderContentOn: html [
+	| layout |
+
+	layout := self mcwApplicationGet layout.
 
 	html div mdcLayoutGrid;
 		"style: 'border: 1px solid red';"
 		with: [
 		html div mdcLayoutGrid__inner; with: [
 			self contents do: [ :each |
-				html div mdcLayoutGrid__cell_span: self layout cellSpan; with: [
+				html div mdcLayoutGrid__cell_span: layout cellSpan; with: [
 					html render: each ] ] ] ]
 
 ]

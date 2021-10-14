@@ -96,12 +96,6 @@ TidbitToDoApp >> buildLoginComponent [
 ]
 
 { #category : #initialization }
-TidbitToDoApp >> buildMainFab [
-
-	^ nil
-]
-
-{ #category : #initialization }
 TidbitToDoApp >> buildSideNavList [
 
 	^ MCWList new
@@ -142,10 +136,10 @@ TidbitToDoApp >> initializeLayout [
 
 	self settings: self buildApplicationSettings.
 	self layout: self buildLayout.
-	self viewUser layout: self layout.
+	"self viewUser layout: self layout.
 	self viewUsers layout: self layout.
 	self viewTask layout: self layout.
-	self viewTaskFilter layout: self layout.
+	self viewTaskFilter layout: self layout."
 	self layout beDesktopStyle.
 
 	self layout sideSheet beHidden.

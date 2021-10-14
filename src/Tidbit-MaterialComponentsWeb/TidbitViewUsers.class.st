@@ -1,6 +1,6 @@
 Class {
 	#name : #TidbitViewUsers,
-	#superclass : #MCWLayoutComponent,
+	#superclass : #MDSComponent,
 	#instVars : [
 		'report'
 	],
