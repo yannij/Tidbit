@@ -98,11 +98,11 @@ TidbitToDoApp >> buildLoginComponent [
 { #category : #initialization }
 TidbitToDoApp >> buildSideNavList [
 
-	^ MDSDeprecatedList new
-		listItemAdd: (MCWListItemIcon  itemText: 'Home' iconName: 'home' callback: [ self dismissMenuIfModalDrawer. self viewUserGo ]);
-		listItemAdd: (MCWListItemIcon  itemText: 'Tasks' iconName: 'checklist' callback: [ self dismissMenuIfModalDrawer. self viewTaskGo ]);
-		listItemAdd: (MCWListItemIcon  itemText: 'Users' iconName: 'perm_identity' callback: [ self dismissMenuIfModalDrawer. self viewUsersGo ]);
-		listItemAdd: (MCWListItemIcon  itemText: 'Tools' iconName: 'build_circle' callback: [ self dismissMenuIfModalDrawer. self viewToolsGo ]);
+	^ MDSList new
+		itemsAdd: (MDSListItem itemText: 'Home' iconName: 'home' callback: [ self dismissMenuIfModalDrawer. self viewUserGo ]);
+		itemsAdd: (MDSListItem itemText: 'Tasks' iconName: 'checklist' callback: [ self dismissMenuIfModalDrawer. self viewTaskGo ]);
+		itemsAdd: (MDSListItem itemText: 'Users' iconName: 'perm_identity' callback: [ self dismissMenuIfModalDrawer. self viewUsersGo ]);
+		itemsAdd: (MDSListItem itemText: 'Tools' iconName: 'build_circle' callback: [ self dismissMenuIfModalDrawer. self viewToolsGo ]);
 		yourself
 ]
 
