@@ -144,7 +144,7 @@ TidbitViewTask >> renderChips: aUser on: html [
 TidbitViewTask >> renderContentOn: html [
 	| user heading |
 
-	user := self mcwApplicationGet viewUserModel.	
+	user := self mcwApplicationGet currentUser.	
 	user ifNil: [ ^ self ].
 
 	heading := user mdPrimaryString.
@@ -282,7 +282,7 @@ TidbitViewTask >> sideSheet [
 TidbitViewTask >> tasksFiltered [
 	| user tasksFilterDone tasksAll |
 
-	user := self mcwApplicationGet viewUserModel.	
+	user := self mcwApplicationGet currentUser.
 	user ifNil: [ ^ #() ].
 
 	tasksAll := user toDoItems.

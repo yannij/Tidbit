@@ -1,12 +1,16 @@
 Class {
 	#name : #TidbitToDoApp,
-	#superclass : #MCWResponsiveApplication,
+	#superclass : #MDSResponsiveApp,
 	#instVars : [
+		'loginComponent',
+		'currentUser',
+		'settingsView',
 		'viewMap',
 		'viewUser',
 		'viewUsers',
 		'viewTask',
-		'viewTaskFilter'
+		'viewTaskFilter',
+		'appSettings'
 	],
 	#category : #'Tidbit-MaterialComponentsWeb'
 }
@@ -47,6 +51,18 @@ TidbitToDoApp >> anonymousLoginAllowed [
 ]
 
 { #category : #accessing }
+TidbitToDoApp >> appSettings [
+
+	^ appSettings
+]
+
+{ #category : #accessing }
+TidbitToDoApp >> appSettings: anObject [
+
+	appSettings := anObject
+]
+
+{ #category : #accessing }
 TidbitToDoApp >> applicationTitle [
 
 	^ 'Tidbit ToDo'
@@ -63,6 +79,26 @@ TidbitToDoApp >> authenticateUsername: aUsername password: aPassword [
 			value passwordHash = (MDSLogin passwordHashFor: (aPassword ifNil: [ '' ] ifNotNil: [ :arg | arg ]))
 				ifTrue: [ value ]
 				ifFalse: [ nil ] ]
+]
+
+{ #category : #initialization }
+TidbitToDoApp >> buildApplicationSettings [
+
+	^ MDMApplicationSettings new
+]
+
+{ #category : #initialization }
+TidbitToDoApp >> buildBodyRegion [
+
+	^ MDSBodyRegion new
+]
+
+{ #category : #initialization }
+TidbitToDoApp >> buildLayout [
+
+	^ (MDSLayoutAutoResponsive on: self)
+		initializeComplete;
+		yourself
 ]
 
 { #category : #initialization }
@@ -96,6 +132,30 @@ TidbitToDoApp >> buildLoginComponent [
 ]
 
 { #category : #initialization }
+TidbitToDoApp >> buildPopupMenuSettings [
+	| list |
+
+	list := (MDSMenuList id: 'settingsPopup')
+		itemsAdd: (MDSListItem iconName: 'view_sidebar' itemText: 'Side Sheet' callback: [ self layout sideSheetHiddenToggle ]);
+		"itemsAdd: (MDSListItem iconName: 'waves' itemText: 'Responsive' callback: [ self toggleAutoResponsive ]);"
+		itemsAdd: (MDSListItem iconName: 'minimize' itemText: 'Collapse' callback: [ self layout topAappBarCollapsedToggle ]);
+		itemsAdd: (MDSListItem iconName: 'all_out' itemText: 'Dense' callback: [ self layout denseViewToggle ]);
+		"itemsAdd: (MDSListItem iconName: 'color_lens' itemText: 'Style' callback: [ self configureStyle ]);"
+		itemsAdd: (MDSListItem iconName: 'login' itemText: 'Login' callback: [ self login ]);
+		itemsAdd: (MDSListItem iconName: 'logout' itemText: 'Logout' callback: [ self logout ]);
+		yourself.
+
+	^ list
+]
+
+{ #category : #initialization }
+TidbitToDoApp >> buildSideNav [
+
+	^ (MDSDrawer content: self buildSideNavList)
+		yourself
+]
+
+{ #category : #initialization }
 TidbitToDoApp >> buildSideNavList [
 
 	^ MDSList new
@@ -112,6 +172,37 @@ TidbitToDoApp >> buildSideSheet [
 	^ MDSSideSheet new
 ]
 
+{ #category : #initialization }
+TidbitToDoApp >> buildTopAppBar [
+	| settingsPopup |
+
+	settingsPopup := self buildPopupMenuSettings.
+
+	^ (MDSTopAppBar title: self applicationTitle)
+		startSectionAdd: self buildNavigationIcon;
+		endSectionAdd: (MDSTopAppBarActionItem materialIcon: 'settings' onClickScript: settingsPopup openScript);
+		endSectionAdd: settingsPopup;
+		yourself
+]
+
+{ #category : #actions }
+TidbitToDoApp >> configureStyle [
+
+	self settingsView toggleHiddenValue
+]
+
+{ #category : #accessing }
+TidbitToDoApp >> currentUser [
+
+	^ currentUser
+]
+
+{ #category : #accessing }
+TidbitToDoApp >> currentUser: anObject [
+
+	currentUser := anObject
+]
+
 { #category : #'utility - login' }
 TidbitToDoApp >> findUser: aUsername [
 	"Answer the user having username matching aUsername, or nil if not found"
@@ -122,14 +213,47 @@ TidbitToDoApp >> findUser: aUsername [
 ]
 
 { #category : #initialization }
+TidbitToDoApp >> initialize [
+
+	super initialize.
+
+	self initializeLayout
+]
+
+{ #category : #initialization }
 TidbitToDoApp >> initializeLayout [
+
+	self materialVersionDefault.
+
+	self loginComponent: self buildLoginComponent.
+	self viewMap: IdentityDictionary new.
+	self viewMapAt: #Tools put: TidbitViewTools new.
+	self viewUsers: TidbitViewUsers new.
+	self viewTask: TidbitViewTask new.
+	self viewTaskFilter: TidbitViewTaskSideSheet new.
+
+	self appSettings: self buildApplicationSettings.
+	self topAppBar: self buildTopAppBar .
+	self sideNav: self buildSideNav.
+	self bodyRegion: self buildBodyRegion.
+	self sideSheet: self buildSideSheet.
+	self sideSheet beHidden.
+
+	self layout: self buildLayout.
+
+	self sideSheet component: self viewTaskFilter.
+	self bodyRegion component: self viewUser
+]
+
+{ #category : #initialization }
+TidbitToDoApp >> initializeLayoutOLD [
 
 	self materialVersionDefault.
 
 	self viewMap: IdentityDictionary new.
 	self viewMapAt: #Tools put: TidbitViewTools new.
-	self viewUser: TidbitViewGridContent new.
-	self viewUser content1: nil.
+	"self viewUser: TidbitViewGridContent new.
+	self viewUser content1: nil."
 	self viewUsers: TidbitViewUsers new.
 	self viewTask: TidbitViewTask new.
 	self viewTaskFilter: TidbitViewTaskSideSheet new.
@@ -149,6 +273,18 @@ TidbitToDoApp >> initializeLayout [
 	self layout sideSheet component: self viewTaskFilter.
 	self loginComponent: self buildLoginComponent
 
+]
+
+{ #category : #accessing }
+TidbitToDoApp >> loginComponent [
+
+	^ loginComponent
+]
+
+{ #category : #accessing }
+TidbitToDoApp >> loginComponent: anObject [
+
+	loginComponent := anObject
 ]
 
 { #category : #navigation }
@@ -198,6 +334,25 @@ TidbitToDoApp >> registerUsername: aUsername password: aPassword [
 		ifNotNil: [ :value | "User already exists" nil ]
 ]
 
+{ #category : #rendering }
+TidbitToDoApp >> renderLayoutOn: html [
+
+	self renderSetColorTheme: self themeColors on: html.
+	self renderSetTypographyFont: self themeFontFamily on: html.
+
+	self isLoggedIn
+		ifTrue: [ html render: self layout ]
+		ifFalse: [
+			self loginComponent
+				ifNotNil: [ :value | html render: value  ]
+				ifNil: [
+					self anonymousLoginAllowed
+						ifTrue: [ html render: self layout ]
+						ifFalse: [
+							self loginComponent ifNil: [ self loginComponent: self buildLoginComponent ].
+							html render: self loginComponent ] ] ]
+]
+
 { #category : #'utility - repository' }
 TidbitToDoApp >> repository [
 
@@ -220,6 +375,36 @@ TidbitToDoApp >> repositoryResetConnection [
 TidbitToDoApp >> saveObject: anObject [
 
 	self repository save: anObject
+]
+
+{ #category : #accessing }
+TidbitToDoApp >> settingsView [
+
+	^ settingsView
+]
+
+{ #category : #accessing }
+TidbitToDoApp >> settingsView: anObject [
+
+	settingsView := anObject
+]
+
+{ #category : #rendering }
+TidbitToDoApp >> themeColors [
+	| result |
+
+	result := OrderedDictionary new.
+
+	self appSettings mdcTheme themeItems keysAndValuesDo: [ :eachKey :eachValue |
+		result at: eachKey put: eachValue asHexString ].
+
+	^ result
+]
+
+{ #category : #rendering }
+TidbitToDoApp >> themeFontFamily [
+
+	^ self appSettings mdcTypography fontFamily
 ]
 
 { #category : #accessing }
@@ -297,28 +482,22 @@ TidbitToDoApp >> viewUser: anObject [
 { #category : #navigation }
 TidbitToDoApp >> viewUserGo [
 
-	self layout contentArea component: self viewUser.
-	self layout sideSheet beHidden
-]
-
-{ #category : #navigation }
-TidbitToDoApp >> viewUserModel [
-
-	^ self viewUser content1
-		ifNil: [ nil ]
-		ifNotNil: [ :value | value model ]
+	self bodyRegion component: self viewUser.
+	self sideSheet beHidden
 ]
 
 { #category : #navigation }
 TidbitToDoApp >> viewUserSetTo: aModel [
 	| newView |
 
+	self currentUser: aModel.
+
 	aModel ifNil: [
-		self viewUser content1: nil.
+		self viewUser: nil.
 		^ self ].
 
 	newView := aModel asComponent addValidatedForm; yourself.
-	self viewUser content1: newView.
+	self viewUser: newView.
 	self viewUserGo
 ]
 
