@@ -140,7 +140,7 @@ TidbitToDoApp >> buildPopupMenuSettings [
 		"itemsAdd: (MDSListItem iconName: 'waves' itemText: 'Responsive' callback: [ self toggleAutoResponsive ]);"
 		itemsAdd: (MDSListItem iconName: 'minimize' itemText: 'Collapse' callback: [ self layout topAappBarCollapsedToggle ]);
 		itemsAdd: (MDSListItem iconName: 'all_out' itemText: 'Dense' callback: [ self layout denseViewToggle ]);
-		"itemsAdd: (MDSListItem iconName: 'color_lens' itemText: 'Style' callback: [ self configureStyle ]);"
+		itemsAdd: (MDSListItem iconName: 'color_lens' itemText: 'Style' callback: [ self configureStyle ]);
 		itemsAdd: (MDSListItem iconName: 'login' itemText: 'Login' callback: [ self login ]);
 		itemsAdd: (MDSListItem iconName: 'logout' itemText: 'Logout' callback: [ self logout ]);
 		yourself.
@@ -187,8 +187,11 @@ TidbitToDoApp >> buildTopAppBar [
 
 { #category : #actions }
 TidbitToDoApp >> configureStyle [
+	| tmp |
 
-	self settingsView toggleHiddenValue
+	tmp := self bodyRegion component.
+	self bodyRegion component: self settingsView.
+	self settingsView: tmp
 ]
 
 { #category : #accessing }
@@ -233,7 +236,8 @@ TidbitToDoApp >> initializeLayout [
 	self viewTaskFilter: TidbitViewTaskSideSheet new.
 
 	self appSettings: self buildApplicationSettings.
-	self topAppBar: self buildTopAppBar .
+	self settingsView: MDMApplicationSettingsView new.
+	self topAppBar: self buildTopAppBar.
 	self sideNav: self buildSideNav.
 	self bodyRegion: self buildBodyRegion.
 	self sideSheet: self buildSideSheet.
@@ -243,36 +247,6 @@ TidbitToDoApp >> initializeLayout [
 
 	self sideSheet component: self viewTaskFilter.
 	self bodyRegion component: self viewUser
-]
-
-{ #category : #initialization }
-TidbitToDoApp >> initializeLayoutOLD [
-
-	self materialVersionDefault.
-
-	self viewMap: IdentityDictionary new.
-	self viewMapAt: #Tools put: TidbitViewTools new.
-	"self viewUser: TidbitViewGridContent new.
-	self viewUser content1: nil."
-	self viewUsers: TidbitViewUsers new.
-	self viewTask: TidbitViewTask new.
-	self viewTaskFilter: TidbitViewTaskSideSheet new.
-
-	self settings: self buildApplicationSettings.
-	self layout: self buildLayout.
-	"self viewUser layout: self layout.
-	self viewUsers layout: self layout.
-	self viewTask layout: self layout.
-	self viewTaskFilter layout: self layout."
-	self layout beDesktopStyle.
-
-	self layout sideSheet beHidden.
-
-	"self settings setFont: MCWGoogleFont allAvailable atRandom."
-	self layout contentArea component: self viewUser.
-	self layout sideSheet component: self viewTaskFilter.
-	self loginComponent: self buildLoginComponent
-
 ]
 
 { #category : #accessing }
@@ -290,7 +264,7 @@ TidbitToDoApp >> loginComponent: anObject [
 { #category : #navigation }
 TidbitToDoApp >> navTo: aModel [
 
-	self navTo: aModel  aspect: nil
+	self navTo: aModel aspect: nil
 ]
 
 { #category : #navigation }
@@ -304,8 +278,8 @@ TidbitToDoApp >> navTo: aModel  aspect: anAspect [
 					"addMessage: 'hello';"
 					yourself.
 
-	self layout contentArea component: newView.
-	self layout sideSheet beHidden
+	self bodyRegion component: newView.
+	self sideSheet beHidden
 ]
 
 { #category : #'utility - login' }
@@ -407,6 +381,24 @@ TidbitToDoApp >> themeFontFamily [
 	^ self appSettings mdcTypography fontFamily
 ]
 
+{ #category : #updating }
+TidbitToDoApp >> updateRootFonts: anHtmlRoot [
+	| bugString |
+
+	super updateRootFonts: anHtmlRoot.
+
+	"fontNames := 'Roboto|Roboto+Condensed|Bree+Serif|Fontdiner+Swanky|Open+Sans|Oxygen+Mono|Pacifico'."
+	"fontNames := '|' join: (self fonts collect: [:eachChoice | eachChoice googleFontsFamily])."
+
+	"Patch for: https://github.com/material-components/material-components-web/issues/7264
+	[MDC-Data-Table] thead > tr > th values are not bold as shown in the example"
+	bugString := ':ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap'.
+
+	anHtmlRoot stylesheet url: (WAUrl absolute: 'https://fonts.googleapis.com/css?family=', self appSettings mdcTypography fontFamily, bugString).
+	self appSettings mdcTypography fontFamilies do: [ :eachFontFamily |
+		anHtmlRoot stylesheet url: (WAUrl absolute: 'https://fonts.googleapis.com/css?family=', eachFontFamily, bugString) ]
+]
+
 { #category : #accessing }
 TidbitToDoApp >> viewMap [
 	^ viewMap
@@ -458,15 +450,15 @@ TidbitToDoApp >> viewTaskFilter: anObject [
 { #category : #navigation }
 TidbitToDoApp >> viewTaskGo [
 
-	self layout contentArea component: self viewTask.
-	self layout sideSheet beUnHidden
+	self bodyRegion component: self viewTask.
+	self sideSheet beUnHidden
 ]
 
 { #category : #navigation }
 TidbitToDoApp >> viewToolsGo [
 
-	self layout contentArea component: (self viewMap at: #Tools).
-	self layout sideSheet beHidden
+	self bodyRegion component: (self viewMap at: #Tools).
+	self sideSheet beHidden
 ]
 
 { #category : #accessing }
@@ -514,6 +506,6 @@ TidbitToDoApp >> viewUsers: anObject [
 { #category : #navigation }
 TidbitToDoApp >> viewUsersGo [
 
-	self layout contentArea component: self viewUsers.
-	self layout sideSheet beHidden
+	self bodyRegion component: self viewUsers.
+	self sideSheet beHidden
 ]
