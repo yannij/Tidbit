@@ -1,14 +1,14 @@
 Class {
-	#name : #TidbitRootObject,
+	#name : #LoanexRootObject,
 	#superclass : #MDMModel,
 	#classInstVars : [
 		'DescriptionContainerClass'
 	],
-	#category : #'Tidbit-Core'
+	#category : #'Tidbit-Loanex-Model'
 }
 
 { #category : #accessing }
-TidbitRootObject class >> descriptionContainerClass [
+LoanexRootObject class >> descriptionContainerClass [
 	"
 	self descriptionContainerClass: MCWPriorityContainer.
 	self descriptionContainerClass: MDLPriorityContainer.
@@ -20,44 +20,44 @@ TidbitRootObject class >> descriptionContainerClass [
 ]
 
 { #category : #accessing }
-TidbitRootObject class >> descriptionContainerClass: anObject [
+LoanexRootObject class >> descriptionContainerClass: anObject [
 	DescriptionContainerClass := anObject
 ]
 
 { #category : #printing }
-TidbitRootObject >> chipIconName [
+LoanexRootObject >> chipIconName [
 
 	^ #toys
 ]
 
 { #category : #printing }
-TidbitRootObject >> dataBadgeValue [
+LoanexRootObject >> dataBadgeValue [
 
 	^ ''
 
 ]
 
 { #category : #printing }
-TidbitRootObject >> hasDataBadge [
+LoanexRootObject >> hasDataBadge [
 
 	^ false
 
 ]
 
 { #category : #printing }
-TidbitRootObject >> mdPrimaryString [
+LoanexRootObject >> mdPrimaryString [
 
 	^ self printString
 ]
 
 { #category : #printing }
-TidbitRootObject >> mdSecondaryString [
+LoanexRootObject >> mdSecondaryString [
 
 	^ '<Model:', self hash printString, '>'
 ]
 
 { #category : #accessing }
-TidbitRootObject >> mementoClass [
+LoanexRootObject >> mementoClass [
 
 	^ MAStraightMemento
 ]

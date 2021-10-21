@@ -1,7 +1,7 @@
 Class {
 	#name : #TidbitViewTools,
 	#superclass : #MDSComponent,
-	#category : #'Tidbit-MaterialComponentsWeb'
+	#category : #'Tidbit-ToDo-MaterialWeb'
 }
 
 { #category : #rendering }

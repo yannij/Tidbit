@@ -7,7 +7,7 @@ Class {
 		'itemsStyle',
 		'tabImportance'
 	],
-	#category : #'Tidbit-MaterialComponentsWeb'
+	#category : #'Tidbit-ToDo-MaterialWeb'
 }
 
 { #category : #accessing }

@@ -5,7 +5,7 @@ Class {
 		'Memory1',
 		'Mongo1'
 	],
-	#category : #'Tidbit-Core'
+	#category : #'Tidbit-ToDo-Model'
 }
 
 { #category : #initalize }

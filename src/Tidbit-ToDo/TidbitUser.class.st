@@ -11,7 +11,7 @@ Class {
 		'toDoItems',
 		'website'
 	],
-	#category : #'Tidbit-Core'
+	#category : #'Tidbit-ToDo-Model'
 }
 
 { #category : #voyage }

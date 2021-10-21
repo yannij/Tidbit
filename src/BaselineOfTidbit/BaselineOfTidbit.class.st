@@ -15,12 +15,11 @@ BaselineOfTidbit >> baseline: spec [
 		self voyage: spec.
 
 		spec
-			package: 'Tidbit-Core' with: [ spec requires: #('MaterialComponentsWeb' 'Voyage') ];
-			package: 'Tidbit-Core-Tests' with: [ spec requires: #('Tidbit-Core') ];
-			package: 'Tidbit-MaterialComponentsWeb' with: [ spec requires: #('Tidbit-Core') ].
+			package: 'Tidbit-ToDo' with: [ spec requires: #('MaterialComponentsWeb' 'Voyage') ];
+			package: 'Tidbit-Loanex' with: [ spec requires: #('MaterialComponentsWeb' 'Voyage') ].
 
 		spec
-			group: 'default' with: #('Tidbit-MaterialComponentsWeb' 'Tidbit-Core-Tests');
+			group: 'default' with: #('Tidbit-ToDo' 'Tidbit-Loanex');
 			group: 'preload' with: #('Voyage') ]
 ]
 
@@ -30,7 +29,7 @@ BaselineOfTidbit >> materialComponentsWeb: spec [
 	spec
 		baseline: 'MaterialComponentsWeb'
 		with: [ spec repository: 'github://yannij/MaterialComponentsWeb:master/src';
-			loads: #('Responsive' 'Material-Web-Magritte') ].
+			loads: #('Material-Web-Responsive' 'Material-Web-Magritte') ].
 
 ]
 

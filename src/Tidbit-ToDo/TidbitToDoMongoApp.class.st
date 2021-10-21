@@ -14,7 +14,7 @@ pharo Pharo.image eval ""TidbitExampleDatabase repositorySetUpMongo1Host: 'mongo
 Class {
 	#name : #TidbitToDoMongoApp,
 	#superclass : #TidbitToDoApp,
-	#category : #'Tidbit-MaterialComponentsWeb'
+	#category : #'Tidbit-ToDo-MaterialWeb'
 }
 
 { #category : #'class initialization' }

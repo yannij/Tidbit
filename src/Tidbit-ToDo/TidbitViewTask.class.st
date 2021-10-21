@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'report'
 	],
-	#category : #'Tidbit-MaterialComponentsWeb'
+	#category : #'Tidbit-ToDo-MaterialWeb'
 }
 
 { #category : #accessing }

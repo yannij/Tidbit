@@ -5,7 +5,7 @@ Class {
 		'user',
 		'layoutDensity'
 	],
-	#category : #'Tidbit-Core'
+	#category : #'Tidbit-ToDo-Model'
 }
 
 { #category : #voyage }

@@ -13,7 +13,7 @@ Class {
 		'importance',
 		'calendars'
 	],
-	#category : #'Tidbit-Core'
+	#category : #'Tidbit-ToDo-Model'
 }
 
 { #category : #voyage }

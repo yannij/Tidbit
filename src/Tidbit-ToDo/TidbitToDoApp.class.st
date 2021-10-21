@@ -1,3 +1,6 @@
+"
+I am an example ToDo app, built using Material Design Seaside, Magritte, and Voyage/Mongo
+"
 Class {
 	#name : #TidbitToDoApp,
 	#superclass : #MDSResponsiveApp,
@@ -12,7 +15,7 @@ Class {
 		'viewTaskFilter',
 		'appSettings'
 	],
-	#category : #'Tidbit-MaterialComponentsWeb'
+	#category : #'Tidbit-ToDo-MaterialWeb'
 }
 
 { #category : #'class initialization' }
