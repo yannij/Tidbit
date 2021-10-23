@@ -9,19 +9,19 @@ Class {
 
 { #category : #accessing }
 LoanexRootObject class >> descriptionContainerClass [
-	"
-	self descriptionContainerClass: MCWPriorityContainer.
-	self descriptionContainerClass: MDLPriorityContainer.
-	"
 
-	DescriptionContainerClass ifNil: [ DescriptionContainerClass := MCWPriorityContainer ].
-	^ DescriptionContainerClass
-
+	^ MCWPriorityContainer
 ]
 
 { #category : #accessing }
 LoanexRootObject class >> descriptionContainerClass: anObject [
 	DescriptionContainerClass := anObject
+]
+
+{ #category : #voyage }
+LoanexRootObject >> cardParameters [
+
+	^ Array with: self mdPrimaryString with: self mdSecondaryString
 ]
 
 { #category : #printing }
@@ -37,11 +37,29 @@ LoanexRootObject >> dataBadgeValue [
 
 ]
 
+{ #category : #voyage }
+LoanexRootObject >> descriptionContainer [
+	"Return the default description container."
+	<magritteContainer>
+
+	^ self class descriptionContainerClass new
+		componentRenderer: MCWCssRenderer;
+		label: self class label;
+		propertyAt: #cardWidth ifAbsentPut: [ 600 ];
+		yourself
+]
+
 { #category : #printing }
 LoanexRootObject >> hasDataBadge [
 
 	^ false
 
+]
+
+{ #category : #voyage }
+LoanexRootObject >> listItemParameters [
+
+	^ Array with: self mdPrimaryString with: self mdSecondaryString
 ]
 
 { #category : #printing }

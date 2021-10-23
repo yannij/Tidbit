@@ -2,44 +2,41 @@
 I am an example loan/borrow exchange app, built using Material Design Seaside, Magritte, and Voyage/Mongo. The functionality was inspired by a question raised on the Pharo database Discord channel (approx mid-October 2021).
 "
 Class {
-	#name : #TidbitLoanexApp,
+	#name : #LoanexApp,
 	#superclass : #MDSResponsiveApp,
 	#instVars : [
 		'loginComponent',
 		'currentUser',
-		'settingsView',
-		'viewMap',
 		'viewUser',
 		'viewUsers',
 		'viewTask',
-		'viewTaskFilter',
-		'appSettings'
+		'filterValues'
 	],
 	#category : #'Tidbit-Loanex-MaterialWeb'
 }
 
 { #category : #'class initialization' }
-TidbitLoanexApp class >> applicationPath [
+LoanexApp class >> applicationPath [
 
 	^ 'tidbit/loanex'
 ]
 
 { #category : #'class initialization' }
-TidbitLoanexApp class >> dockerDeployPostLoad [
+LoanexApp class >> dockerDeployPostLoad [
 	<dockerDeployPostLoad>
 
 	WAComponent mcwPublicServerUrlInstallDockerConfig
 ]
 
 { #category : #'class initialization' }
-TidbitLoanexApp class >> dockerDeployPreLoad [
+LoanexApp class >> dockerDeployPreLoad [
 	<dockerDeployPreLoad>
 
 	DockerDeploy current configNamesAdd: DockerDeploy defaultConfigName
 ]
 
 { #category : #'class initialization' }
-TidbitLoanexApp class >> initialize [
+LoanexApp class >> initialize [
 	"Register path with Seaside.
 	WAAdmin unregister: self applicationPath.
 	"
@@ -48,31 +45,19 @@ TidbitLoanexApp class >> initialize [
 ]
 
 { #category : #testing }
-TidbitLoanexApp >> anonymousLoginAllowed [
+LoanexApp >> anonymousLoginAllowed [
 
 	^ false
 ]
 
 { #category : #accessing }
-TidbitLoanexApp >> appSettings [
-
-	^ appSettings
-]
-
-{ #category : #accessing }
-TidbitLoanexApp >> appSettings: anObject [
-
-	appSettings := anObject
-]
-
-{ #category : #accessing }
-TidbitLoanexApp >> applicationTitle [
+LoanexApp >> applicationTitle [
 
 	^ 'LoanEx'
 ]
 
 { #category : #'utility - login' }
-TidbitLoanexApp >> authenticateUsername: aUsername password: aPassword [
+LoanexApp >> authenticateUsername: aUsername password: aPassword [
 	"Answer a user instance if hashed pssword matches saved passwrodHass,
 	or answer nil is does not match, or user not found"
 
@@ -85,19 +70,13 @@ TidbitLoanexApp >> authenticateUsername: aUsername password: aPassword [
 ]
 
 { #category : #initialization }
-TidbitLoanexApp >> buildApplicationSettings [
-
-	^ MDMApplicationSettings new
-]
-
-{ #category : #initialization }
-TidbitLoanexApp >> buildBodyRegion [
+LoanexApp >> buildBodyRegion [
 
 	^ MDSBodyRegion new
 ]
 
 { #category : #initialization }
-TidbitLoanexApp >> buildLayout [
+LoanexApp >> buildLayout [
 
 	^ (MDSLayoutAutoResponsive on: self)
 		initializeComplete;
@@ -105,7 +84,7 @@ TidbitLoanexApp >> buildLayout [
 ]
 
 { #category : #initialization }
-TidbitLoanexApp >> buildLoginComponent [
+LoanexApp >> buildLoginComponent [
 
 	^ MDSLogin new
 		loginTitle: self applicationTitle;
@@ -135,15 +114,14 @@ TidbitLoanexApp >> buildLoginComponent [
 ]
 
 { #category : #initialization }
-TidbitLoanexApp >> buildPopupMenuSettings [
+LoanexApp >> buildPopupMenuSettings [
 	| list |
 
 	list := (MDSMenuList id: 'settingsPopup')
 		itemsAdd: (MDSListItem iconName: 'view_sidebar' itemText: 'Side Sheet' callback: [ self layout sideSheetHiddenToggle ]);
-		"itemsAdd: (MDSListItem iconName: 'waves' itemText: 'Responsive' callback: [ self toggleAutoResponsive ]);"
 		itemsAdd: (MDSListItem iconName: 'minimize' itemText: 'Collapse' callback: [ self layout topAappBarCollapsedToggle ]);
 		itemsAdd: (MDSListItem iconName: 'all_out' itemText: 'Dense' callback: [ self layout denseViewToggle ]);
-		itemsAdd: (MDSListItem iconName: 'color_lens' itemText: 'Style' callback: [ self configureStyle ]);
+		"itemsAdd: (MDSListItem iconName: 'color_lens' itemText: 'Style' callback: [ self configureStyle ]);"
 		itemsAdd: (MDSListItem iconName: 'login' itemText: 'Login' callback: [ self login ]);
 		itemsAdd: (MDSListItem iconName: 'logout' itemText: 'Logout' callback: [ self logout ]);
 		yourself.
@@ -152,31 +130,31 @@ TidbitLoanexApp >> buildPopupMenuSettings [
 ]
 
 { #category : #initialization }
-TidbitLoanexApp >> buildSideNav [
+LoanexApp >> buildSideNav [
 
 	^ (MDSDrawer content: self buildSideNavList)
 		yourself
 ]
 
 { #category : #initialization }
-TidbitLoanexApp >> buildSideNavList [
+LoanexApp >> buildSideNavList [
 
 	^ MDSList new
 		itemsAdd: (MDSListItem itemText: 'Home' iconName: 'home' callback: [ self dismissMenuIfModalDrawer. self viewUserGo ]);
-		itemsAdd: (MDSListItem itemText: 'Tasks' iconName: 'checklist' callback: [ self dismissMenuIfModalDrawer. self viewTaskGo ]);
+		itemsAdd: (MDSListItem itemText: 'Loans' iconName: 'thumb_up' callback: [ self dismissMenuIfModalDrawer. self viewToyLoansGo ]);
+		itemsAdd: (MDSListItem itemText: 'Toys' iconName: 'widgets' callback: [ self dismissMenuIfModalDrawer. self viewTaskGo ]);
 		itemsAdd: (MDSListItem itemText: 'Users' iconName: 'perm_identity' callback: [ self dismissMenuIfModalDrawer. self viewUsersGo ]);
-		itemsAdd: (MDSListItem itemText: 'Tools' iconName: 'build_circle' callback: [ self dismissMenuIfModalDrawer. self viewToolsGo ]);
 		yourself
 ]
 
 { #category : #initialization }
-TidbitLoanexApp >> buildSideSheet [
+LoanexApp >> buildSideSheet [
 
 	^ MDSSideSheet new
 ]
 
 { #category : #initialization }
-TidbitLoanexApp >> buildTopAppBar [
+LoanexApp >> buildTopAppBar [
 	| settingsPopup |
 
 	settingsPopup := self buildPopupMenuSettings.
@@ -188,29 +166,46 @@ TidbitLoanexApp >> buildTopAppBar [
 		yourself
 ]
 
-{ #category : #actions }
-TidbitLoanexApp >> configureStyle [
-	| tmp |
+{ #category : #accessing }
+LoanexApp >> colorTheme [
 
-	tmp := self bodyRegion component.
-	self bodyRegion component: self settingsView.
-	self settingsView: tmp
+	^ {
+#'primary' -> '1EB980'.
+"#'on-primary' -> '000000'.
+#'secondary' -> 'FF6859'.
+#'on-secondary' -> '000000'.
+#'surface' -> '121212'.
+#'on-surface' -> 'FFFFFF'.
+#'background' -> '121212'"
+} asOrderedDictionary
 ]
 
 { #category : #accessing }
-TidbitLoanexApp >> currentUser [
+LoanexApp >> currentUser [
 
 	^ currentUser
 ]
 
 { #category : #accessing }
-TidbitLoanexApp >> currentUser: anObject [
+LoanexApp >> currentUser: anObject [
 
 	currentUser := anObject
 ]
 
+{ #category : #accessing }
+LoanexApp >> filterValues [
+
+	^ filterValues
+]
+
+{ #category : #accessing }
+LoanexApp >> filterValues: anObject [
+
+	filterValues := anObject
+]
+
 { #category : #'utility - login' }
-TidbitLoanexApp >> findUser: aUsername [
+LoanexApp >> findUser: aUsername [
 	"Answer the user having username matching aUsername, or nil if not found"
 
 	^ (self repository selectAll: LoanexUser)
@@ -219,27 +214,24 @@ TidbitLoanexApp >> findUser: aUsername [
 ]
 
 { #category : #initialization }
-TidbitLoanexApp >> initialize [
+LoanexApp >> initialize [
 
 	super initialize.
 
+	self filterValues: LoanexFilterValues new.
+	self filterValues toyAvailable: #both.
 	self initializeLayout
 ]
 
 { #category : #initialization }
-TidbitLoanexApp >> initializeLayout [
+LoanexApp >> initializeLayout [
 
 	self materialVersionDefault.
 
 	self loginComponent: self buildLoginComponent.
-	self viewMap: IdentityDictionary new.
-	self viewMapAt: #Tools put: TidbitViewTools new.
-	self viewUsers: TidbitViewUsers new.
-	self viewTask: TidbitViewTask new.
-	self viewTaskFilter: TidbitViewTaskSideSheet new.
+	self viewUsers: LoanexUserListView new.
+	self viewTask: (LoanexToyListView new filterView: LoanexToyFilterView new).
 
-	self appSettings: self buildApplicationSettings.
-	self settingsView: MDMApplicationSettingsView new.
 	self topAppBar: self buildTopAppBar.
 	self sideNav: self buildSideNav.
 	self bodyRegion: self buildBodyRegion.
@@ -248,30 +240,29 @@ TidbitLoanexApp >> initializeLayout [
 
 	self layout: self buildLayout.
 
-	self sideSheet component: self viewTaskFilter.
 	self bodyRegion component: self viewUser
 ]
 
 { #category : #accessing }
-TidbitLoanexApp >> loginComponent [
+LoanexApp >> loginComponent [
 
 	^ loginComponent
 ]
 
 { #category : #accessing }
-TidbitLoanexApp >> loginComponent: anObject [
+LoanexApp >> loginComponent: anObject [
 
 	loginComponent := anObject
 ]
 
 { #category : #navigation }
-TidbitLoanexApp >> navTo: aModel [
+LoanexApp >> navTo: aModel [
 
 	self navTo: aModel aspect: nil
 ]
 
 { #category : #navigation }
-TidbitLoanexApp >> navTo: aModel  aspect: anAspect [
+LoanexApp >> navTo: aModel  aspect: anAspect [
 	| newView |
 
 	aModel ifNil: [ ^ self ].
@@ -286,7 +277,7 @@ TidbitLoanexApp >> navTo: aModel  aspect: anAspect [
 ]
 
 { #category : #'utility - login' }
-TidbitLoanexApp >> newUsername: aUsername password: aPassword [
+LoanexApp >> newUsername: aUsername password: aPassword [
 	| userModel |
 
 	userModel := LoanexUser new
@@ -302,7 +293,7 @@ TidbitLoanexApp >> newUsername: aUsername password: aPassword [
 ]
 
 { #category : #'utility - login' }
-TidbitLoanexApp >> registerUsername: aUsername password: aPassword [
+LoanexApp >> registerUsername: aUsername password: aPassword [
 	"Answer a new user instance built from the userId/password,
 	or answer nil user already exists"
 
@@ -312,10 +303,10 @@ TidbitLoanexApp >> registerUsername: aUsername password: aPassword [
 ]
 
 { #category : #rendering }
-TidbitLoanexApp >> renderLayoutOn: html [
+LoanexApp >> renderLayoutOn: html [
 
-	self renderSetColorTheme: self themeColors on: html.
-	self renderSetTypographyFont: self themeFontFamily on: html.
+	self renderSetColorTheme: self colorTheme on: html.
+	self renderSetTypographyFont: 'Roboto Condensed' on: html.
 
 	self isLoggedIn
 		ifTrue: [ html render: self layout ]
@@ -331,158 +322,88 @@ TidbitLoanexApp >> renderLayoutOn: html [
 ]
 
 { #category : #'utility - repository' }
-TidbitLoanexApp >> repository [
+LoanexApp >> repository [
 
 	"^ TidbitExampleDatabase memory1"
 	^ VORepository current
 ]
 
 { #category : #'utility - repository' }
-TidbitLoanexApp >> repositoryRecreateTestData [
+LoanexApp >> repositoryRecreateTestData [
 
 	LoanexDatabase repositorySetUpMemorySingleton
 ]
 
 { #category : #'utility - repository' }
-TidbitLoanexApp >> repositoryResetConnection [
+LoanexApp >> repositoryResetConnection [
 	"Do nothing for memory repository"
 ]
 
 { #category : #'accessing - model' }
-TidbitLoanexApp >> saveObject: anObject [
+LoanexApp >> saveObject: anObject [
 
 	self repository save: anObject
 ]
 
-{ #category : #accessing }
-TidbitLoanexApp >> settingsView [
-
-	^ settingsView
-]
-
-{ #category : #accessing }
-TidbitLoanexApp >> settingsView: anObject [
-
-	settingsView := anObject
-]
-
-{ #category : #rendering }
-TidbitLoanexApp >> themeColors [
-	| result |
-
-	result := OrderedDictionary new.
-
-	self appSettings mdcTheme themeItems keysAndValuesDo: [ :eachKey :eachValue |
-		result at: eachKey put: eachValue asHexString ].
-
-	^ result
-]
-
-{ #category : #rendering }
-TidbitLoanexApp >> themeFontFamily [
-
-	^ self appSettings mdcTypography fontFamily
-]
-
 { #category : #updating }
-TidbitLoanexApp >> updateRootFonts: anHtmlRoot [
-	| bugString |
+LoanexApp >> updateRootFonts: anHtmlRoot [
 
 	super updateRootFonts: anHtmlRoot.
 
-	"fontNames := 'Roboto|Roboto+Condensed|Bree+Serif|Fontdiner+Swanky|Open+Sans|Oxygen+Mono|Pacifico'."
-	"fontNames := '|' join: (self fonts collect: [:eachChoice | eachChoice googleFontsFamily])."
-
-	"Patch for: https://github.com/material-components/material-components-web/issues/7264
-	[MDC-Data-Table] thead > tr > th values are not bold as shown in the example"
-	bugString := ':ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap'.
-
-	anHtmlRoot stylesheet url: (WAUrl absolute: 'https://fonts.googleapis.com/css?family=', self appSettings mdcTypography fontFamily, bugString).
-	self appSettings mdcTypography fontFamilies do: [ :eachFontFamily |
-		anHtmlRoot stylesheet url: (WAUrl absolute: 'https://fonts.googleapis.com/css?family=', eachFontFamily, bugString) ]
+	anHtmlRoot stylesheet url: (WAUrl absolute: 'https://fonts.googleapis.com/css?family=Roboto Condensed')
 ]
 
 { #category : #accessing }
-TidbitLoanexApp >> viewMap [
-	^ viewMap
-]
-
-{ #category : #accessing }
-TidbitLoanexApp >> viewMap: anObject [
-	viewMap := anObject
-]
-
-{ #category : #accessing }
-TidbitLoanexApp >> viewMapAt: aKey [
-
-	self viewMapAt: aKey ifAbsent: [ nil ]
-]
-
-{ #category : #accessing }
-TidbitLoanexApp >> viewMapAt: aKey ifAbsent: aBlock [
-
-	self viewMap at: aKey ifAbsent: aBlock
-]
-
-{ #category : #accessing }
-TidbitLoanexApp >> viewMapAt: aKey put: aContentArea [
-
-	self viewMap at: aKey put: aContentArea
-]
-
-{ #category : #accessing }
-TidbitLoanexApp >> viewTask [
+LoanexApp >> viewTask [
 	^ viewTask
 ]
 
 { #category : #accessing }
-TidbitLoanexApp >> viewTask: anObject [
+LoanexApp >> viewTask: anObject [
 	viewTask := anObject
 ]
 
-{ #category : #accessing }
-TidbitLoanexApp >> viewTaskFilter [
-	^ viewTaskFilter
-]
-
-{ #category : #accessing }
-TidbitLoanexApp >> viewTaskFilter: anObject [
-	viewTaskFilter := anObject
-]
-
 { #category : #navigation }
-TidbitLoanexApp >> viewTaskGo [
+LoanexApp >> viewTaskGo [
 
 	self bodyRegion component: self viewTask.
-	self sideSheet beUnHidden
+	self sideSheet component: self viewTask filterView.
+	self viewTask filterView
+		ifNil: [ self sideSheet beHidden ]
+		ifNotNil: [ :value | self sideSheet beUnHidden ]
 ]
 
 { #category : #navigation }
-TidbitLoanexApp >> viewToolsGo [
+LoanexApp >> viewToyLoansGo [
+	| newView |
 
-	self bodyRegion component: (self viewMap at: #Tools).
-	self sideSheet beHidden
+	newView := LoanexToyLoanListView new filterView: LoanexToyLoadFilterView new; yourself.
+	self bodyRegion component: newView.
+	self sideSheet component: newView filterView.
+	newView filterView
+		ifNil: [ self sideSheet beHidden ]
+		ifNotNil: [ :value | self sideSheet beUnHidden ]
 ]
 
 { #category : #accessing }
-TidbitLoanexApp >> viewUser [
+LoanexApp >> viewUser [
 	^ viewUser
 ]
 
 { #category : #accessing }
-TidbitLoanexApp >> viewUser: anObject [
+LoanexApp >> viewUser: anObject [
 	viewUser := anObject
 ]
 
 { #category : #navigation }
-TidbitLoanexApp >> viewUserGo [
+LoanexApp >> viewUserGo [
 
 	self bodyRegion component: self viewUser.
 	self sideSheet beHidden
 ]
 
 { #category : #navigation }
-TidbitLoanexApp >> viewUserSetTo: aModel [
+LoanexApp >> viewUserSetTo: aModel [
 	| newView |
 
 	self currentUser: aModel.
@@ -497,17 +418,17 @@ TidbitLoanexApp >> viewUserSetTo: aModel [
 ]
 
 { #category : #accessing }
-TidbitLoanexApp >> viewUsers [
+LoanexApp >> viewUsers [
 	^ viewUsers
 ]
 
 { #category : #accessing }
-TidbitLoanexApp >> viewUsers: anObject [
+LoanexApp >> viewUsers: anObject [
 	viewUsers := anObject
 ]
 
 { #category : #navigation }
-TidbitLoanexApp >> viewUsersGo [
+LoanexApp >> viewUsersGo [
 
 	self bodyRegion component: self viewUsers.
 	self sideSheet beHidden

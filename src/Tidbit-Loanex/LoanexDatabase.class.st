@@ -9,87 +9,56 @@ Class {
 }
 
 { #category : #initalize }
-LoanexDatabase class >> buildUser: aUsername [
+LoanexDatabase class >> buildToyLoans: itemCount repository: aRepository [
+	| today allUsers allToys |
 
-	self buildUser: aUsername repository: VORepository current
+	allUsers := (aRepository selectAll: LoanexUser) asOrderedCollection.
+	allToys := (aRepository selectAll: LoanexToy) asOrderedCollection.
+	today := Date today.
+	1 to: itemCount do: [ :index |
+		| newObject |
+		newObject := LoanexToyLoan new
+			toy: (allToys at: index);
+			borrower: allUsers atRandom;
+			dateBorrowed: (today addDays: index negated);
+			dateDue: (today addDays: index negated + 21);
+			yourself.
+		aRepository save: newObject.
+
+		newObject toy available: false.
+		aRepository save: newObject toy ]
+]
+
+{ #category : #initalize }
+LoanexDatabase class >> buildToys: itemCount repository: aRepository [
+	| today allUsers |
+
+	allUsers := (aRepository selectAll: LoanexUser) asOrderedCollection.
+	today := Date today.
+	1 to: itemCount do: [ :index |
+		| newObject |
+		newObject := LoanexToy new
+			"available: (index \\ 5) isZero not;"
+			summary: 'toy ', index printString;
+			dateAdded: (today addDays: index negated);
+			owner: allUsers atRandom;
+			yourself.
+		100 atRandom even ifTrue: [ newObject description: self loremText ].
+		aRepository save: newObject ]
 ]
 
 { #category : #initalize }
 LoanexDatabase class >> buildUser: aUsername repository: aRepository [
-	| userModel itemCount today importance |
-
-	importance := LoanexToy importanceValues.
+	| userModel |
 
 	userModel := LoanexUser new
 		username: aUsername;
 		fullName: aUsername capitalized, ' Test';
 		email: aUsername, '@foo.com';
-		website: 'http://foo.com/', aUsername;
 		passwordHash: (MDSLogin passwordHashFor: 'secret');
 		yourself.
-
-	today := Date today.
-	itemCount := 25 atRandom.
-	1 to: itemCount do: [ :index |
-		| priority todoItem |
-		priority := 100 atRandom.
-		todoItem := LoanexToy new
-			summary: 'task ', index printString;
-			priority: priority;
-			importance: (importance at: (priority \\ 3) + 1);
-			completeByDate: (today addDays: priority - 30);
-			completeByTime: (Time fromSeconds: (17 + 16 atRandom) * 60 * 30);
-			estimatedDuration: (Duration minutes: ((12 atRandom) * 15));
-			colorCode: (Color indexedColors at: 256 atRandom);
-			yourself.
-		(priority \\ 2) isZero ifTrue: [ todoItem done: true ].
-		(priority \\ 5) isZero ifTrue: [ todoItem description: self loremText ].
-		todoItem save.
-		userModel toDoItemsAdd: todoItem ].
 
 	aRepository save: userModel.
-
-	^ userModel
-
-]
-
-{ #category : #initalize }
-LoanexDatabase class >> buildUserDemo [
-	| userModel |
-
-	userModel := LoanexUser new
-		username: 'demo';
-		fullName: 'Demo User';
-		passwordHash: (MDSLogin passwordHashFor: 'secret');
-		yourself.
-
-	userModel
-		toDoItemsAdd: (LoanexToy new summary: 'foobar-1'; priority: 1; colorCode: (Color indexedColors at: 8); done: true; yourself);
-		toDoItemsAdd: (LoanexToy new summary: 'foobar-2'; priority: 2; colorCode: (Color indexedColors at: 9); description: self loremText; yourself).
-
-	VORepository current save: userModel.
-
-	^ userModel
-
-]
-
-{ #category : #initalize }
-LoanexDatabase class >> buildUserGuest [
-	| userModel |
-
-	userModel := LoanexUser new
-		username: 'guest';
-		fullName: 'Guest User';
-		passwordHash: (MDSLogin passwordHashFor: 'secret');
-		yourself.
-
-	userModel
-		toDoItemsAdd: (LoanexToy new summary: 'todo-1'; priority: 1; colorCode: (Color indexedColors at: 4); yourself);
-		toDoItemsAdd: (LoanexToy new summary: 'todo-2'; priority: 2; colorCode: (Color indexedColors at: 5); description: self loremText; yourself);
-		toDoItemsAdd: (LoanexToy new summary: 'todo-3'; priority: 3; colorCode: (Color indexedColors at: 6); done: true; yourself);
-		toDoItemsAdd: (LoanexToy new summary: 'todo-4'; priority: 4; colorCode: (Color indexedColors at: 7); yourself).
-
-	VORepository current save: userModel.
 
 	^ userModel
 
@@ -206,10 +175,14 @@ LoanexDatabase class >> mongoRepositorySetUp: aMongoRepository [
 	self mongoRepositorySetUp: self mongoRepositoryBuild.
 	"
 
-	aMongoRepository removeAll: LoanexUser.
+	aMongoRepository removeAll: LoanexToyLoan.
 	aMongoRepository removeAll: LoanexToy.
+	aMongoRepository removeAll: LoanexUser.
 
-	1 to: 10 do: [ :index | self buildUser: 'mongo', index printString repository: aMongoRepository ]
+	#('demo' 'guest' 'u1' 'u2' 'u3' 'u4' 'u5') do: [ :eachName |
+		self buildUser: eachName repository: aMongoRepository ].
+	self buildToys: 25 repository: aMongoRepository.
+	self buildToyLoans: 9 repository: aMongoRepository
 ]
 
 { #category : #initalize }
@@ -235,8 +208,8 @@ LoanexDatabase class >> repositorySetUpMemorySingleton [
 	repository := VOMemoryRepository new.
 	repository enableSingleton.
 
-	self buildUserDemo.
-	self buildUserGuest.
-	1 to: 5 do: [ :index |
-		self buildUser: 'user', index printString ]
+	#('demo' 'guest' 'u1' 'u2' 'u3' 'u4' 'u5') do: [ :eachName |
+		self buildUser: eachName repository: repository ].
+	self buildToys: 25 repository: repository.
+	self buildToyLoans: 9 repository: repository
 ]

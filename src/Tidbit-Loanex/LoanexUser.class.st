@@ -6,33 +6,17 @@ Class {
 		'username',
 		'passwordHash',
 		'fullName',
-		'email',
-		'userSettings',
-		'toDoItems',
-		'website'
+		'email'
 	],
 	#category : #'Tidbit-Loanex-Model'
 }
 
 { #category : #voyage }
-LoanexUser class >> descriptionToDoItems [
-	<voyageDescription>
+LoanexUser class >> descriptionContainer [
+	<voyageContainer>
 
-	^ VOToManyDescription new
-		attributeName: 'toDoItems';
-		accessor: #toDoItems;
-		beLazy;
-		yourself
-]
-
-{ #category : #voyage }
-LoanexUser class >> descriptionUserSettings [
-	"<voyageDescription>"
-
-	^ VOToOneDescription new
-		attributeName: 'userSettings';
-		accessor: #userSettings;
-		beLazy;
+	^ VOContainer new
+		collectionName: 'LonexUser'
 		yourself
 ]
 
@@ -40,6 +24,12 @@ LoanexUser class >> descriptionUserSettings [
 LoanexUser class >> isVoyageRoot [
 
 	^ true
+]
+
+{ #category : #rendering }
+LoanexUser >> cardParameters [
+
+	^ Array with: self username with: self fullName
 ]
 
 { #category : #accessing }
@@ -109,50 +99,6 @@ LoanexUser >> descriptionPasswordHash [
 ]
 
 { #category : #'accessing-magritte' }
-LoanexUser >> descriptionToDoItems [
-	<magritteDescription>
-
-	^ MAToManyRelationDescription new
-		accessor: #toDoItems;
-		classes: (Array with: LoanexToy);
-		default: OrderedCollection new;
-		label: 'Toys';
-		cssClass: 'mcw-textfield';
-		priority: 45;
-		"beOrdered;"
-		yourself
-]
-
-{ #category : #'accessing-magritte' }
-LoanexUser >> descriptionToDoItemsCount [
-	<magritteDescription>
-
-	^ MANumberDescription new
-		accessor: #toDoItemsCount;
-		default: 0;
-		label: 'ToDo Count';
-		cssClass: 'mcw-textfield';
-		priority: 40;
-		beInteger;
-		beReadonly;
-		yourself
-]
-
-{ #category : #'accessing-magritte' }
-LoanexUser >> descriptionUserSettings [
-	<magritteDescription>
-
-	^ MAToOneRelationDescription new
-		accessor: #userSettings;
-		label: 'User Settings';
-		classes: {TidbitUserSettings};
-		cssClass: 'mcw-textfield';
-		priority: 35;
-		beRequired;
-		yourself
-]
-
-{ #category : #'accessing-magritte' }
 LoanexUser >> descriptionUsername [
 	<magritteDescription>
 
@@ -162,19 +108,6 @@ LoanexUser >> descriptionUsername [
 		label: 'Username';
 		cssClass: 'mcw-textfield';
 		priority: 10;
-		yourself
-]
-
-{ #category : #'accessing-magritte' }
-LoanexUser >> descriptionWebSite [
-	<magritteDescription>
-
-	^ MAUrlDescription new
-		accessor: #website;
-		default: '';
-		label: 'Website';
-		cssClass: 'mcw-textfield';
-		priority: 35;
 		yourself
 ]
 
@@ -207,18 +140,25 @@ LoanexUser >> initialize [
 	self passwordHash: String new.
 	self dateCreated: DateAndTime now.
 	self fullName: String new.
-	self email: String new.
-	self website: String new.
+	self email: String new
+]
 
-	self userSettings: (TidbitUserSettings on: self).
-	self toDoItems: OrderedCollection new.
+{ #category : #rendering }
+LoanexUser >> listItemParameters [
 
+	^ Array with: self username with: self fullName
 ]
 
 { #category : #printing }
 LoanexUser >> mdPrimaryString [
 
 	^ self username
+]
+
+{ #category : #printing }
+LoanexUser >> mdSecondaryString [ 
+
+	^ self fullName
 ]
 
 { #category : #accessing }
@@ -232,38 +172,6 @@ LoanexUser >> passwordHash: anObject [
 ]
 
 { #category : #accessing }
-LoanexUser >> toDoItems [
-	^ toDoItems
-]
-
-{ #category : #accessing }
-LoanexUser >> toDoItems: anObject [
-	toDoItems := anObject
-]
-
-{ #category : #accessing }
-LoanexUser >> toDoItemsAdd: anItem [
-
-	self toDoItems add: anItem
-]
-
-{ #category : #accessing }
-LoanexUser >> toDoItemsCount [
-
-	^ toDoItems size
-]
-
-{ #category : #accessing }
-LoanexUser >> userSettings [
-	^ userSettings
-]
-
-{ #category : #accessing }
-LoanexUser >> userSettings: anObject [
-	userSettings := anObject
-]
-
-{ #category : #accessing }
 LoanexUser >> username [
 	^ username
 ]
@@ -271,14 +179,4 @@ LoanexUser >> username [
 { #category : #accessing }
 LoanexUser >> username: anObject [
 	username := anObject
-]
-
-{ #category : #accessing }
-LoanexUser >> website [
-	^ website
-]
-
-{ #category : #accessing }
-LoanexUser >> website: anObject [
-	website := anObject
 ]

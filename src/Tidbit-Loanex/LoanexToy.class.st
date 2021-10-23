@@ -4,14 +4,9 @@ Class {
 	#instVars : [
 		'summary',
 		'description',
-		'done',
-		'completeByDate',
-		'completeByTime',
-		'priority',
-		'colorCode',
-		'estimatedDuration',
-		'importance',
-		'calendars'
+		'available',
+		'dateAdded',
+		'owner'
 	],
 	#category : #'Tidbit-Loanex-Model'
 }
@@ -21,35 +16,7 @@ LoanexToy class >> descriptionContainer [
 	<voyageContainer>
 
 	^ VOContainer new
-		collectionName: 'TidbitToDoItem'
-		yourself
-]
-
-{ #category : #accessing }
-LoanexToy class >> importanceValueHigh [
-
-	^ 'High'
-]
-
-{ #category : #accessing }
-LoanexToy class >> importanceValueLow [
-
-	^ 'Low'
-]
-
-{ #category : #accessing }
-LoanexToy class >> importanceValueMedium [
-
-	^ 'Medium'
-]
-
-{ #category : #accessing }
-LoanexToy class >> importanceValues [
-
-	^ OrderedCollection new
-		add: self importanceValueHigh;
-		add: self importanceValueMedium;
-		add: self importanceValueLow;
+		collectionName: 'LonexToy'
 		yourself
 ]
 
@@ -60,127 +27,70 @@ LoanexToy class >> isVoyageRoot [
 ]
 
 { #category : #voyage }
-LoanexToy class >> mongoCompleteByDate [
+LoanexToy class >> mongoDateAdded [
 	<voyageDescription>
 
 	^ VOToOneDescription new
-		attributeName: 'completeByDate';
+		attributeName: 'dateAdded';
 		accessor: (MAPluggableAccessor
-			read: [ :todoItem | todoItem completeByDate ]
-			write: [ :todoItem :value | todoItem completeByDate: value asDate ]);
+			read: [ :model | model dateAdded ]
+			write: [ :model :value | model dateAdded: value asDate ]);
 		yourself
 ]
 
 { #category : #accessing }
-LoanexToy >> calendars [
-	^ calendars
+LoanexToy >> available [
+
+	^ available
 ]
 
 { #category : #accessing }
-LoanexToy >> calendars: anObject [
-	calendars := anObject
+LoanexToy >> available: anObject [
+
+	available := anObject
 ]
 
 { #category : #'accessing-magritte' }
-LoanexToy >> calendarsDescription [
-
-	<magritteDescription>
-	^ MAMultipleOptionDescription new
-		accessor: #calendars;
-		label: 'Calendars';
-		cssClass: 'mcw-textfield';
-		priority: 110;
-		options: #(Home Work Vacation Secret);
-		reference: MASymbolDescription new;
-		yourself
-]
-
-{ #category : #accessing }
-LoanexToy >> colorCode [
-	^ colorCode
-]
-
-{ #category : #accessing }
-LoanexToy >> colorCode: anObject [
-	colorCode := anObject
-]
-
-{ #category : #'accessing-magritte' }
-LoanexToy >> colorCodeDescription [
+LoanexToy >> availableDescription [
 	<magritteDescription>
 
-	^ MAColorDescription new
-		accessor: #colorCode;
-		default: Color white;
-		label: 'Color Code';
+	^ MABooleanDescription new
+		accessor: #available;
+		label: 'Available';
 		cssClass: 'mcw-textfield';
-		priority: 90;
+		priority: 10;
+		default: false;
 		yourself
 ]
 
-{ #category : #accessing }
-LoanexToy >> completeBy [
+{ #category : #rendering }
+LoanexToy >> cardParameters [
 
-	^ completeByDate asDate yyyymmdd, ' ', completeByTime print24
+	^ Array with: self summaryLine with: self description with: self owner username
 ]
 
 { #category : #accessing }
-LoanexToy >> completeByDate [
-	^ completeByDate
+LoanexToy >> dateAdded [
+
+	^ dateAdded
 ]
 
 { #category : #accessing }
-LoanexToy >> completeByDate: anObject [
-	completeByDate := anObject
+LoanexToy >> dateAdded: anObject [
+
+	dateAdded := anObject
 ]
 
 { #category : #'accessing-magritte' }
-LoanexToy >> completeByDateDescription [
+LoanexToy >> dateAddedDescription [
 	<magritteDescription>
 
 	^ MADateDescription new
-		accessor: #completeByDate;
+		accessor: #dateAdded;
 		default: Date today;
-		label: 'Complete By Date';
+		label: 'Date Added';
 		cssClass: 'mcw-textfield';
 		priority: 30;
-		yourself
-
-]
-
-{ #category : #'accessing-magritte' }
-LoanexToy >> completeByDescription [
-	<magritteDescription>
-
-	^ MAStringDescription new
-		accessor: #completeBy;
-		label: 'Complete By';
-		cssClass: 'mcw-textfield';
-		priority: 200;
-		beReadonly;
-		yourself
-
-]
-
-{ #category : #accessing }
-LoanexToy >> completeByTime [
-	^ completeByTime
-]
-
-{ #category : #accessing }
-LoanexToy >> completeByTime: anObject [
-	completeByTime := anObject
-]
-
-{ #category : #'accessing-magritte' }
-LoanexToy >> completeByTimeDescription [
-	<magritteDescription>
-
-	^ MATimeDescription new
-		accessor: #completeByTime;
-		label: 'Complete By Time';
-		cssClass: 'mcw-textfield';
-		priority: 40;
 		yourself
 ]
 
@@ -207,113 +117,25 @@ LoanexToy >> descriptionDescription [
 		yourself
 ]
 
-{ #category : #accessing }
-LoanexToy >> done [
-	^ done
-]
-
-{ #category : #accessing }
-LoanexToy >> done: anObject [
-	done := anObject
-]
-
-{ #category : #'accessing-magritte' }
-LoanexToy >> doneDescription [
-	<magritteDescription>
-
-	^ MABooleanDescription new
-		accessor: #done;
-		label: 'Done';
-		cssClass: 'mcw-textfield';
-		priority: 10;
-		default: false;
-		yourself
-]
-
-{ #category : #accessing }
-LoanexToy >> estimatedDuration [
-	^ estimatedDuration
-]
-
-{ #category : #accessing }
-LoanexToy >> estimatedDuration: anObject [
-	estimatedDuration := anObject
-]
-
-{ #category : #'accessing-magritte' }
-LoanexToy >> estimatedDurationDescription [
-	<magritteDescription>
-
-	^ MADurationDescription new
-		accessor: #estimatedDuration;
-		label: 'Estimated Duration';
-		cssClass: 'mcw-textfield';
-		priority: 50;
-		yourself
-]
-
-{ #category : #accessing }
-LoanexToy >> importance [
-	^ importance
-]
-
-{ #category : #accessing }
-LoanexToy >> importance: anObject [
-	importance := anObject
-]
-
-{ #category : #'accessing-magritte' }
-LoanexToy >> importanceDescription [
-	<magritteDescription>
-
-	^ MASingleOptionDescription new
-		accessor: #importance;
-		label: 'Importance';
-		cssClass: 'mcw-textfield';
-		options: self class importanceValues;
-		priority: 80;
-		yourself
-]
-
-{ #category : #accessing }
-LoanexToy >> importanceIsHigh [
-
-	^ self importance = self class importanceValueHigh
-]
-
-{ #category : #accessing }
-LoanexToy >> importanceIsLow [
-
-	^ self importance = self class importanceValueLow
-]
-
-{ #category : #accessing }
-LoanexToy >> importanceIsMedium [
-
-	^ self importance = self class importanceValueMedium
-]
-
 { #category : #initialization }
 LoanexToy >> initialize [
 
 	super initialize.
 
-	self done: false.
+	self available: true.
 	self summary: String new.
-	self description: String new.
-	self completeByDate: Date today.
-	self completeByTime: Time now.
-	self estimatedDuration: 1 hour.
-	self priority: 0.
-	self importance: self class importanceValueMedium.
-	self colorCode: Color new.
-	self calendars: OrderedCollection new.
-
+	self description: String new
 ]
 
 { #category : #'accessing-magritte' }
 LoanexToy >> isVoyageRoot [
 	^ true
+]
+
+{ #category : #rendering }
+LoanexToy >> listItemParameters [
+
+	^ Array with: self summaryLine with: self description with: nil with: 'chevron_right'
 ]
 
 { #category : #printing }
@@ -325,34 +147,32 @@ LoanexToy >> mdPrimaryString [
 { #category : #printing }
 LoanexToy >> mdSecondaryString [
 
-	^ (self done ifTrue: [ 'DONE' ] ifFalse: [ 'NOT-DONE' ]),
-		', ', 'Priority ', self priority printString,
-		', ', 'Complete by  ', self completeByDate printString
+	^ self description
 ]
 
 { #category : #accessing }
-LoanexToy >> priority [
-	^ priority
+LoanexToy >> owner [
+
+	^ owner
 ]
 
 { #category : #accessing }
-LoanexToy >> priority: anObject [
-	priority := anObject
+LoanexToy >> owner: anObject [
+
+	owner := anObject
 ]
 
 { #category : #'accessing-magritte' }
-LoanexToy >> priorityDescription [
+LoanexToy >> ownerDescription [
 	<magritteDescription>
 
-	^ MANumberDescription new
-		accessor: #priority;
-		default: 0;
-		label: 'Priority';
+	^ MAToOneRelationDescription new
+		accessor: #owner;
+		label: 'Owner';
+		classes: {LoanexUser};
 		cssClass: 'mcw-textfield';
-		priority: 60;
-		beInteger;
-		mcwSliderStep: 1;
-		mcwComponentClass: MCWSliderComponent;
+		priority: 50;
+		beRequired;
 		yourself
 ]
 
@@ -378,4 +198,10 @@ LoanexToy >> summaryDescription [
 		priority: 15;
 		beRequired;
 		yourself
+]
+
+{ #category : #accessing }
+LoanexToy >> summaryLine [
+
+	^ (self available ifTrue: [''] ifFalse: ['* ']), self summary
 ]
