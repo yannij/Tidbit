@@ -70,17 +70,9 @@ LoanexApp >> authenticateUsername: aUsername password: aPassword [
 ]
 
 { #category : #initialization }
-LoanexApp >> buildBodyRegion [
-
-	^ MDSBodyRegion new
-]
-
-{ #category : #initialization }
 LoanexApp >> buildLayout [
 
-	^ (MDSLayoutAutoResponsive on: self)
-		initializeComplete;
-		yourself
+	^ MDSLayoutAutoResponsive on: self
 ]
 
 { #category : #initialization }
@@ -130,39 +122,13 @@ LoanexApp >> buildPopupMenuSettings [
 ]
 
 { #category : #initialization }
-LoanexApp >> buildSideNav [
-
-	^ (MDSDrawer content: self buildSideNavList)
-		yourself
-]
-
-{ #category : #initialization }
 LoanexApp >> buildSideNavList [
 
 	^ MDSList new
-		itemsAdd: (MDSListItem itemText: 'Home' iconName: 'home' callback: [ self dismissMenuIfModalDrawer. self viewUserGo ]);
-		itemsAdd: (MDSListItem itemText: 'Loans' iconName: 'thumb_up' callback: [ self dismissMenuIfModalDrawer. self viewToyLoansGo ]);
-		itemsAdd: (MDSListItem itemText: 'Toys' iconName: 'widgets' callback: [ self dismissMenuIfModalDrawer. self viewTaskGo ]);
-		itemsAdd: (MDSListItem itemText: 'Users' iconName: 'perm_identity' callback: [ self dismissMenuIfModalDrawer. self viewUsersGo ]);
-		yourself
-]
-
-{ #category : #initialization }
-LoanexApp >> buildSideSheet [
-
-	^ MDSSideSheet new
-]
-
-{ #category : #initialization }
-LoanexApp >> buildTopAppBar [
-	| settingsPopup |
-
-	settingsPopup := self buildPopupMenuSettings.
-
-	^ (MDSTopAppBar title: self applicationTitle)
-		startSectionAdd: self buildNavigationIcon;
-		endSectionAdd: (MDSTopAppBarActionItem materialIcon: 'settings' onClickScript: settingsPopup openScript);
-		endSectionAdd: settingsPopup;
+		itemsAdd: (MDSListItem itemText: 'Home' iconName: 'home' callback: [ self layout sideNavDismissIfModal. self viewUserGo ]);
+		itemsAdd: (MDSListItem itemText: 'Loans' iconName: 'thumb_up' callback: [ self layout sideNavDismissIfModal. self viewToyLoansGo ]);
+		itemsAdd: (MDSListItem itemText: 'Toys' iconName: 'widgets' callback: [ self layout sideNavDismissIfModal. self viewTaskGo ]);
+		itemsAdd: (MDSListItem itemText: 'Users' iconName: 'perm_identity' callback: [ self layout sideNavDismissIfModal. self viewUsersGo ]);
 		yourself
 ]
 
@@ -232,15 +198,8 @@ LoanexApp >> initializeLayout [
 	self viewUsers: LoanexUserListView new.
 	self viewTask: (LoanexToyListView new filterView: LoanexToyFilterView new).
 
-	self topAppBar: self buildTopAppBar.
-	self sideNav: self buildSideNav.
-	self bodyRegion: self buildBodyRegion.
-	self sideSheet: self buildSideSheet.
-	self sideSheet beHidden.
-
 	self layout: self buildLayout.
-
-	self bodyRegion component: self viewUser
+	self setupLayout
 ]
 
 { #category : #accessing }
@@ -272,8 +231,8 @@ LoanexApp >> navTo: aModel  aspect: anAspect [
 					"addMessage: 'hello';"
 					yourself.
 
-	self bodyRegion component: newView.
-	self sideSheet beHidden
+	self layout bodyRegionContent: newView.
+	self layout sideSheetHide
 ]
 
 { #category : #'utility - login' }
@@ -345,6 +304,30 @@ LoanexApp >> saveObject: anObject [
 	self repository save: anObject
 ]
 
+{ #category : #initialization }
+LoanexApp >> setupLayout [
+
+	self setupTopAppBar.
+	self layout sideNav content: self buildSideNavList.
+	self layout sideSheetHide.
+	self layout bodyRegionContent: self viewUser.
+
+	self layout initializeComplete
+]
+
+{ #category : #initialization }
+LoanexApp >> setupTopAppBar [
+	| settingsPopup |
+
+	settingsPopup := self buildPopupMenuSettings.
+
+	self layout topAppBar
+		title: self applicationTitle;
+		startSectionAdd: self buildNavigationIcon;
+		endSectionAdd: (MDSTopAppBarActionItem materialIcon: 'settings' onClickScript: settingsPopup openScript);
+		endSectionAdd: settingsPopup
+]
+
 { #category : #updating }
 LoanexApp >> updateRootFonts: anHtmlRoot [
 
@@ -366,11 +349,11 @@ LoanexApp >> viewTask: anObject [
 { #category : #navigation }
 LoanexApp >> viewTaskGo [
 
-	self bodyRegion component: self viewTask.
-	self sideSheet component: self viewTask filterView.
+	self layout bodyRegionContent: self viewTask.
+	self layout sideSheetContent: self viewTask filterView.
 	self viewTask filterView
-		ifNil: [ self sideSheet beHidden ]
-		ifNotNil: [ :value | self sideSheet beUnHidden ]
+		ifNil: [ self layout sideSheetHide ]
+		ifNotNil: [ :value | self layout sideSheetUnhide ]
 ]
 
 { #category : #navigation }
@@ -378,11 +361,11 @@ LoanexApp >> viewToyLoansGo [
 	| newView |
 
 	newView := LoanexToyLoanListView new filterView: LoanexToyLoadFilterView new; yourself.
-	self bodyRegion component: newView.
-	self sideSheet component: newView filterView.
+	self layout bodyRegionContent: newView.
+	self layout sideSheetContent: newView filterView.
 	newView filterView
-		ifNil: [ self sideSheet beHidden ]
-		ifNotNil: [ :value | self sideSheet beUnHidden ]
+		ifNil: [ self layout sideSheetHide ]
+		ifNotNil: [ :value | self layout sideSheetUnhide ]
 ]
 
 { #category : #accessing }
@@ -398,8 +381,8 @@ LoanexApp >> viewUser: anObject [
 { #category : #navigation }
 LoanexApp >> viewUserGo [
 
-	self bodyRegion component: self viewUser.
-	self sideSheet beHidden
+	self layout bodyRegionContent: self viewUser.
+	self layout sideSheetHide
 ]
 
 { #category : #navigation }
@@ -430,6 +413,6 @@ LoanexApp >> viewUsers: anObject [
 { #category : #navigation }
 LoanexApp >> viewUsersGo [
 
-	self bodyRegion component: self viewUsers.
-	self sideSheet beHidden
+	self layout bodyRegionContent: self viewUsers.
+	self layout sideSheetHide
 ]

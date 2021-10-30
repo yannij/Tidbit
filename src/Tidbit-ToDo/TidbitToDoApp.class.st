@@ -91,17 +91,9 @@ TidbitToDoApp >> buildApplicationSettings [
 ]
 
 { #category : #initialization }
-TidbitToDoApp >> buildBodyRegion [
-
-	^ MDSBodyRegion new
-]
-
-{ #category : #initialization }
 TidbitToDoApp >> buildLayout [
 
-	^ (MDSLayoutAutoResponsive on: self)
-		initializeComplete;
-		yourself
+	^ MDSLayoutAutoResponsive on: self
 ]
 
 { #category : #initialization }
@@ -152,39 +144,13 @@ TidbitToDoApp >> buildPopupMenuSettings [
 ]
 
 { #category : #initialization }
-TidbitToDoApp >> buildSideNav [
-
-	^ (MDSDrawer content: self buildSideNavList)
-		yourself
-]
-
-{ #category : #initialization }
 TidbitToDoApp >> buildSideNavList [
 
 	^ MDSList new
-		itemsAdd: (MDSListItem itemText: 'Home' iconName: 'home' callback: [ self dismissMenuIfModalDrawer. self viewUserGo ]);
-		itemsAdd: (MDSListItem itemText: 'Tasks' iconName: 'checklist' callback: [ self dismissMenuIfModalDrawer. self viewTaskGo ]);
-		itemsAdd: (MDSListItem itemText: 'Users' iconName: 'perm_identity' callback: [ self dismissMenuIfModalDrawer. self viewUsersGo ]);
-		itemsAdd: (MDSListItem itemText: 'Tools' iconName: 'build_circle' callback: [ self dismissMenuIfModalDrawer. self viewToolsGo ]);
-		yourself
-]
-
-{ #category : #initialization }
-TidbitToDoApp >> buildSideSheet [
-
-	^ MDSSideSheet new
-]
-
-{ #category : #initialization }
-TidbitToDoApp >> buildTopAppBar [
-	| settingsPopup |
-
-	settingsPopup := self buildPopupMenuSettings.
-
-	^ (MDSTopAppBar title: self applicationTitle)
-		startSectionAdd: self buildNavigationIcon;
-		endSectionAdd: (MDSTopAppBarActionItem materialIcon: 'settings' onClickScript: settingsPopup openScript);
-		endSectionAdd: settingsPopup;
+		itemsAdd: (MDSListItem itemText: 'Home' iconName: 'home' callback: [ self layout sideNavDismissIfModal. self viewUserGo ]);
+		itemsAdd: (MDSListItem itemText: 'Tasks' iconName: 'checklist' callback: [ self layout sideNavDismissIfModal. self viewTaskGo ]);
+		itemsAdd: (MDSListItem itemText: 'Users' iconName: 'perm_identity' callback: [ self layout sideNavDismissIfModal. self viewUsersGo ]);
+		itemsAdd: (MDSListItem itemText: 'Tools' iconName: 'build_circle' callback: [ self layout sideNavDismissIfModal. self viewToolsGo ]);
 		yourself
 ]
 
@@ -240,16 +206,9 @@ TidbitToDoApp >> initializeLayout [
 
 	self appSettings: self buildApplicationSettings.
 	self settingsView: MDMApplicationSettingsView new.
-	self topAppBar: self buildTopAppBar.
-	self sideNav: self buildSideNav.
-	self bodyRegion: self buildBodyRegion.
-	self sideSheet: self buildSideSheet.
-	self sideSheet beHidden.
 
 	self layout: self buildLayout.
-
-	self sideSheet component: self viewTaskFilter.
-	self bodyRegion component: self viewUser
+	self setupLayout
 ]
 
 { #category : #accessing }
@@ -281,8 +240,8 @@ TidbitToDoApp >> navTo: aModel  aspect: anAspect [
 					"addMessage: 'hello';"
 					yourself.
 
-	self bodyRegion component: newView.
-	self sideSheet beHidden
+	self layout bodyRegionContent: newView.
+	self layout sideSheetHide
 ]
 
 { #category : #'utility - login' }
@@ -364,6 +323,30 @@ TidbitToDoApp >> settingsView [
 TidbitToDoApp >> settingsView: anObject [
 
 	settingsView := anObject
+]
+
+{ #category : #initialization }
+TidbitToDoApp >> setupLayout [
+
+	self setupTopAppBar.
+	self layout sideNav content: self buildSideNavList.
+	self layout bodyRegion component: self viewUser.
+	self layout sideSheet component: self viewTaskFilter.
+
+	self layout initializeComplete
+]
+
+{ #category : #initialization }
+TidbitToDoApp >> setupTopAppBar [
+	| settingsPopup |
+
+	settingsPopup := self buildPopupMenuSettings.
+
+	self layout topAppBar
+		title: self applicationTitle;
+		startSectionAdd: self buildNavigationIcon;
+		endSectionAdd: (MDSTopAppBarActionItem materialIcon: 'settings' onClickScript: settingsPopup openScript);
+		endSectionAdd: settingsPopup
 ]
 
 { #category : #rendering }
@@ -453,15 +436,15 @@ TidbitToDoApp >> viewTaskFilter: anObject [
 { #category : #navigation }
 TidbitToDoApp >> viewTaskGo [
 
-	self bodyRegion component: self viewTask.
-	self sideSheet beUnHidden
+	self layout bodyRegionContent: self viewTask.
+	self layout sideSheetUnhide
 ]
 
 { #category : #navigation }
 TidbitToDoApp >> viewToolsGo [
 
-	self bodyRegion component: (self viewMap at: #Tools).
-	self sideSheet beHidden
+	self layout bodyRegionContent: (self viewMap at: #Tools).
+	self layout sideSheetHide
 ]
 
 { #category : #accessing }
@@ -477,8 +460,8 @@ TidbitToDoApp >> viewUser: anObject [
 { #category : #navigation }
 TidbitToDoApp >> viewUserGo [
 
-	self bodyRegion component: self viewUser.
-	self sideSheet beHidden
+	self layout bodyRegionContent: self viewUser.
+	self layout sideSheetHide
 ]
 
 { #category : #navigation }
@@ -509,6 +492,6 @@ TidbitToDoApp >> viewUsers: anObject [
 { #category : #navigation }
 TidbitToDoApp >> viewUsersGo [
 
-	self bodyRegion component: self viewUsers.
-	self sideSheet beHidden
+	self layout bodyRegionContent: self viewUsers.
+	self layout sideSheetHide
 ]
