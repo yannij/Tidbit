@@ -43,7 +43,8 @@ LoanexDatabase class >> buildToys: itemCount repository: aRepository [
 			dateAdded: (today addDays: index negated);
 			owner: allUsers atRandom;
 			yourself.
-		100 atRandom even ifTrue: [ newObject description: self loremText ].
+		100 atRandom even ifTrue: [
+			newObject description: (String loremIpsum truncateTo: 123) ].
 		aRepository save: newObject ]
 ]
 
@@ -67,13 +68,8 @@ LoanexDatabase class >> buildUser: aUsername repository: aRepository [
 { #category : #'class initialization' }
 LoanexDatabase class >> initialize [
 
-	self repositorySetUpMemorySingleton
-]
-
-{ #category : #initalize }
-LoanexDatabase class >> loremText [
-
-	^ String loremIpsum truncateTo: 123
+	self repositorySetUpMemory1
+	"self repositorySetUpMemorySingleton"
 ]
 
 { #category : #accessing }
@@ -89,6 +85,7 @@ LoanexDatabase class >> memory1: anObject [
 { #category : #accessing }
 LoanexDatabase class >> memory1Clear [
 
+	Memory1 ifNotNil: [ :value | value reset ].
 	Memory1 := nil
 ]
 
@@ -192,9 +189,13 @@ LoanexDatabase class >> repositorySetUpMemory1 [
 	self repositorySetUpMemory1.
 	"
 
+	self memory1Clear.
 	self memory1: VOMemoryRepository new.
 
-	1 to: 10 do: [ :index | self buildUser: 'a', index printString repository: self memory1 ]
+	#('demo' 'guest' 'u1' 'u2' 'u3' 'u4' 'u5') do: [ :eachName |
+		self buildUser: eachName repository: self memory1 ].
+	self buildToys: 25 repository: self memory1.
+	self buildToyLoans: 9 repository: self memory1
 ]
 
 { #category : #initalize }

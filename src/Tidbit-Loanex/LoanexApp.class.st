@@ -283,14 +283,14 @@ LoanexApp >> renderLayoutOn: html [
 { #category : #'utility - repository' }
 LoanexApp >> repository [
 
-	"^ TidbitExampleDatabase memory1"
-	^ VORepository current
+	^ LoanexDatabase memory1
+	"^ VORepository current"
 ]
 
 { #category : #'utility - repository' }
 LoanexApp >> repositoryRecreateTestData [
 
-	LoanexDatabase repositorySetUpMemorySingleton
+	"LoanexDatabase repositorySetUpMemorySingleton"
 ]
 
 { #category : #'utility - repository' }

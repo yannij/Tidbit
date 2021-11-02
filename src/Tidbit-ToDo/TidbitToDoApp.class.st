@@ -292,8 +292,8 @@ TidbitToDoApp >> renderLayoutOn: html [
 { #category : #'utility - repository' }
 TidbitToDoApp >> repository [
 
-	"^ TidbitExampleDatabase memory1"
-	^ VORepository current
+	^ TidbitExampleDatabase memory1
+	"^ VORepository current"
 ]
 
 { #category : #'utility - repository' }

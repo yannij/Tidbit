@@ -11,7 +11,7 @@ Class {
 { #category : #initalize }
 TidbitExampleDatabase class >> buildUser: aUsername [
 
-	self buildUser: aUsername repository: VORepository current
+	self buildUser: aUsername repository: self memory1
 ]
 
 { #category : #initalize }
@@ -43,8 +43,9 @@ TidbitExampleDatabase class >> buildUser: aUsername repository: aRepository [
 			colorCode: (Color indexedColors at: 256 atRandom);
 			yourself.
 		(priority \\ 2) isZero ifTrue: [ todoItem done: true ].
-		(priority \\ 5) isZero ifTrue: [ todoItem description: self loremText ].
-		todoItem save.
+		(priority \\ 5) isZero ifTrue: [
+			todoItem description: (String loremIpsum truncateTo: 123) ].
+		aRepository save: todoItem.
 		userModel toDoItemsAdd: todoItem ].
 
 	aRepository save: userModel.
@@ -53,58 +54,11 @@ TidbitExampleDatabase class >> buildUser: aUsername repository: aRepository [
 
 ]
 
-{ #category : #initalize }
-TidbitExampleDatabase class >> buildUserDemo [
-	| userModel |
-
-	userModel := TidbitUser new
-		username: 'demo';
-		fullName: 'Demo User';
-		passwordHash: (MDSLogin passwordHashFor: 'secret');
-		yourself.
-
-	userModel
-		toDoItemsAdd: (TidbitToDoItem new summary: 'foobar-1'; priority: 1; colorCode: (Color indexedColors at: 8); done: true; yourself);
-		toDoItemsAdd: (TidbitToDoItem new summary: 'foobar-2'; priority: 2; colorCode: (Color indexedColors at: 9); description: self loremText; yourself).
-
-	VORepository current save: userModel.
-
-	^ userModel
-
-]
-
-{ #category : #initalize }
-TidbitExampleDatabase class >> buildUserGuest [
-	| userModel |
-
-	userModel := TidbitUser new
-		username: 'guest';
-		fullName: 'Guest User';
-		passwordHash: (MDSLogin passwordHashFor: 'secret');
-		yourself.
-
-	userModel
-		toDoItemsAdd: (TidbitToDoItem new summary: 'todo-1'; priority: 1; colorCode: (Color indexedColors at: 4); yourself);
-		toDoItemsAdd: (TidbitToDoItem new summary: 'todo-2'; priority: 2; colorCode: (Color indexedColors at: 5); description: self loremText; yourself);
-		toDoItemsAdd: (TidbitToDoItem new summary: 'todo-3'; priority: 3; colorCode: (Color indexedColors at: 6); done: true; yourself);
-		toDoItemsAdd: (TidbitToDoItem new summary: 'todo-4'; priority: 4; colorCode: (Color indexedColors at: 7); yourself).
-
-	VORepository current save: userModel.
-
-	^ userModel
-
-]
-
 { #category : #'class initialization' }
 TidbitExampleDatabase class >> initialize [
 
-	self repositorySetUpMemorySingleton
-]
-
-{ #category : #initalize }
-TidbitExampleDatabase class >> loremText [
-
-	^ String loremIpsum truncateTo: 123
+	self repositorySetUpMemory1
+	"self repositorySetUpMemorySingleton"
 ]
 
 { #category : #accessing }
@@ -120,6 +74,7 @@ TidbitExampleDatabase class >> memory1: anObject [
 { #category : #accessing }
 TidbitExampleDatabase class >> memory1Clear [
 
+	Memory1 ifNotNil: [ :value | value reset ].
 	Memory1 := nil
 ]
 
@@ -219,9 +174,13 @@ TidbitExampleDatabase class >> repositorySetUpMemory1 [
 	self repositorySetUpMemory1.
 	"
 
+	self memory1Clear.
 	self memory1: VOMemoryRepository new.
 
-	1 to: 10 do: [ :index | self buildUser: 'a', index printString repository: self memory1 ]
+	self buildUser: 'demo' repository: self memory1.
+	self buildUser: 'guest' repository: self memory1.
+	1 to: 10 do: [ :index |
+		self buildUser: 'user', index printString repository: self memory1 ]
 ]
 
 { #category : #initalize }
@@ -235,8 +194,8 @@ TidbitExampleDatabase class >> repositorySetUpMemorySingleton [
 	repository := VOMemoryRepository new.
 	repository enableSingleton.
 
-	self buildUserDemo.
-	self buildUserGuest.
+	self buildUser: 'demo' repository: VORepository current.
+	self buildUser: 'guest' repository: VORepository current.
 	1 to: 10 do: [ :index |
-		self buildUser: 'user', index printString ]
+		self buildUser: 'user', index printString repository: VORepository current ]
 ]

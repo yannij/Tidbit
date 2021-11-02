@@ -12,7 +12,11 @@ LoanexUserListView >> modelClass [
 
 { #category : #rendering }
 LoanexUserListView >> renderInstancesOn: html [
+	| app list |
+
+	app := self mcwApplicationGet.
+	list := app repository selectAll: self modelClass.
 
 	self renderTitle: 'Users' on: html.
-	self renderAsList: self modelClass selectAll on: html
+	self renderAsList: list on: html
 ]
