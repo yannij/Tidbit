@@ -14,7 +14,7 @@ TidbitViewTask >> buildReport [
 		showHeader: true;
 		showFooter: true;
 		addColumn: (MCWActionColumn new
-			commandBlock: (MessageSend receiver: self selector: #navTo:);
+			commandBlock: (MessageSend receiver: self selector: #navToView:);
 			yourself);
 		yourself
 ]
@@ -49,6 +49,14 @@ TidbitViewTask >> navTo: aModel [
 	self mcwApplicationGet navTo: aModel
 ]
 
+{ #category : #rendering }
+TidbitViewTask >> navToView: aModel [ 
+	| view |
+
+	view := (TidbitViewToDoItem on: aModel).
+	self mcwApplicationGet navToCustomView: view 
+]
+
 { #category : #'rendering - styles' }
 TidbitViewTask >> renderCards: aUser on: html [
 	| list selected |
@@ -77,7 +85,7 @@ TidbitViewTask >> renderCardsItems: anItemList on: html [
 								with: eachItem summary ] ].
 				html div mdcCard__primaryAction; style: 'padding: 4px';
 					onClick: ((html jQuery ajax)
-						callback: [ self mcwApplicationGet navTo: eachItem ];
+						callback: [ self navToView: eachItem ];
 						onComplete: html javascript refresh);
 					with: [
 						html heading level3; mdcTypography_subtitle2; with: eachItem mdSecondaryString.
@@ -130,7 +138,7 @@ TidbitViewTask >> renderChips: aUser on: html [
 						"style: 'margin: 0px 4px 8px 0px';"
 						style: 'background: #', eachItem colorCode asHexString;
 						onClick: ((html jQuery ajax)
-							callback: [ self mcwApplicationGet navTo: eachItem ];
+							callback: [ self navToView: eachItem ];
 							onComplete: html javascript refresh);
 						with: [
 							html span mdcMaterialIcons; mdcChip__icon; mdcChip__icon_leading;
@@ -176,10 +184,7 @@ TidbitViewTask >> renderListSingleLine: aUser on: html [
 				html listItem
 					mdcDeprecatedListItem;
 					onClick: ((html jQuery ajax)
-						callback: [ 
-							| view |
-							view := (TidbitViewToDoItem on: eachItem).
-							self mcwApplicationGet navToCustomView: view ];
+						callback: [ self navToView: eachItem ];
 						onComplete: html javascript refresh);
 					with: [
 						html span mdcDeprecatedListItem__text; with:
@@ -226,7 +231,7 @@ TidbitViewTask >> renderListTwoLineItems: anItemList on: html [
 		html listItem
 			mdcDeprecatedListItem;
 			onClick: ((html jQuery ajax)
-				callback: [ self mcwApplicationGet navTo: eachItem ];
+				callback: [ self navToView: eachItem ];
 				onComplete: html javascript refresh);
 			with: [
 				html span mdcDeprecatedListItem__text; with: [

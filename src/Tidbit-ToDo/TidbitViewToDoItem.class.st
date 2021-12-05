@@ -25,6 +25,7 @@ TidbitViewToDoItem >> initializeOn: aModel [
 	theDescription := aModel magritteDescription.
 	theDescription componentRenderer: TidbitViewTaskRenderer.
 	newComponent := theDescription componentClass memento: (aModel mementoClass model: aModel description: theDescription).
+	newComponent addValidatedForm.
 	self itemComponent: newComponent
 ]
 
