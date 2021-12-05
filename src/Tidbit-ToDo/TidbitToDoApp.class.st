@@ -244,6 +244,14 @@ TidbitToDoApp >> navTo: aModel  aspect: anAspect [
 	self layout sideSheetHide
 ]
 
+{ #category : #navigation }
+TidbitToDoApp >> navToCustomView: aView [
+
+
+	self layout bodyRegionContent: aView.
+	self layout sideSheetHide
+]
+
 { #category : #'utility - login' }
 TidbitToDoApp >> newUsername: aUsername password: aPassword [
 	| userModel |

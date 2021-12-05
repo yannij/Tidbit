@@ -11,7 +11,8 @@ Class {
 		'colorCode',
 		'estimatedDuration',
 		'importance',
-		'calendars'
+		'calendars',
+		'subtasks'
 	],
 	#category : #'Tidbit-ToDo-Model'
 }
@@ -308,6 +309,7 @@ TidbitToDoItem >> initialize [
 	self importance: self class importanceValueMedium.
 	self colorCode: Color new.
 	self calendars: OrderedCollection new.
+	self subtasks: OrderedCollection new.
 
 ]
 
@@ -353,6 +355,32 @@ TidbitToDoItem >> priorityDescription [
 		beInteger;
 		mcwSliderStep: 1;
 		mcwComponentClass: MCWSliderComponent;
+		yourself
+]
+
+{ #category : #accessing }
+TidbitToDoItem >> subtasks [
+
+	^ subtasks
+]
+
+{ #category : #accessing }
+TidbitToDoItem >> subtasks: anObject [
+
+	subtasks := anObject
+]
+
+{ #category : #'accessing-magritte' }
+TidbitToDoItem >> subtasksDescription [
+
+	<magritteDescription>
+	^ MAToManyRelationDescription new
+		accessor: #subtasks;
+		label: 'Subtasks';
+		cssClass: 'mcw-textfield';
+		priority: 210;
+		classes: (Array with: TidbitToDoSubtask);
+		mcwComponentClass: TidbitOneToManyComponent;
 		yourself
 ]
 

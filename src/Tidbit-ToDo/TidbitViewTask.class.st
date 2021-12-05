@@ -176,7 +176,10 @@ TidbitViewTask >> renderListSingleLine: aUser on: html [
 				html listItem
 					mdcDeprecatedListItem;
 					onClick: ((html jQuery ajax)
-						callback: [ self mcwApplicationGet navTo: eachItem ];
+						callback: [ 
+							| view |
+							view := (TidbitViewToDoItem on: eachItem).
+							self mcwApplicationGet navToCustomView: view ];
 						onComplete: html javascript refresh);
 					with: [
 						html span mdcDeprecatedListItem__text; with:
