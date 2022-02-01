@@ -15,8 +15,8 @@ BaselineOfTidbit >> baseline: spec [
 		self voyage: spec.
 
 		spec
-			package: 'Tidbit-ToDo' with: [ spec requires: #('MaterialComponentsWeb' 'Voyage') ];
-			package: 'Tidbit-Loanex' with: [ spec requires: #('MaterialComponentsWeb' 'Voyage') ].
+			package: 'Tidbit-ToDo' with: [ spec requires: #('Quasar-Magritte' 'MaterialComponentsWeb' 'Voyage') ];
+			package: 'Tidbit-Loanex' with: [ spec requires: #('Quasar-Magritte' 'MaterialComponentsWeb' 'Voyage') ].
 
 		spec
 			group: 'default' with: #('Tidbit-ToDo' 'Tidbit-Loanex');
