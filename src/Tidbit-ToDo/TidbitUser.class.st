@@ -65,6 +65,7 @@ TidbitUser >> descriptionDateCreated [
 		label: 'Date Created';
 		cssClass: 'mcw-textfield';
 		priority: 17;
+		"beReadonly;"
 		yourself
 ]
 
@@ -162,6 +163,7 @@ TidbitUser >> descriptionUsername [
 		label: 'Username';
 		cssClass: 'mcw-textfield';
 		priority: 10;
+		beReadonly;
 		yourself
 ]
 

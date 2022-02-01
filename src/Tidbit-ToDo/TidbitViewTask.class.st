@@ -136,12 +136,12 @@ TidbitViewTask >> renderChips: aUser on: html [
 				do: [ :eachItem |
 					html div mdcChip; mdcRippleUpgraded;
 						"style: 'margin: 0px 4px 8px 0px';"
-						style: 'background: #', eachItem colorCode asHexString;
 						onClick: ((html jQuery ajax)
 							callback: [ self navToView: eachItem ];
 							onComplete: html javascript refresh);
 						with: [
 							html span mdcMaterialIcons; mdcChip__icon; mdcChip__icon_leading;
+								style: 'background: #', eachItem colorCode asHexString;
 								with: (iconMap at: eachItem importance ifAbsent: [ 'star' ]).
 							html span mdcChip__text; with: [
 								html text: eachItem mdPrimaryString ] ] ]

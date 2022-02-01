@@ -7,23 +7,6 @@ Class {
 	#category : #'Tidbit-ToDo-Model'
 }
 
-{ #category : #accessing }
-TidbitRootObject class >> descriptionContainerClass [
-	"
-	self descriptionContainerClass: MCWPriorityContainer.
-	self descriptionContainerClass: MDLPriorityContainer.
-	"
-
-	DescriptionContainerClass ifNil: [ DescriptionContainerClass := MCWPriorityContainer ].
-	^ DescriptionContainerClass
-
-]
-
-{ #category : #accessing }
-TidbitRootObject class >> descriptionContainerClass: anObject [
-	DescriptionContainerClass := anObject
-]
-
 { #category : #printing }
 TidbitRootObject >> chipIconName [
 

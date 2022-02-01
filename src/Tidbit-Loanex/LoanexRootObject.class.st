@@ -13,11 +13,6 @@ LoanexRootObject class >> descriptionContainerClass [
 	^ MCWPriorityContainer
 ]
 
-{ #category : #accessing }
-LoanexRootObject class >> descriptionContainerClass: anObject [
-	DescriptionContainerClass := anObject
-]
-
 { #category : #voyage }
 LoanexRootObject >> cardParameters [
 

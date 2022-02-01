@@ -56,7 +56,6 @@ TidbitViewToDoItem >> model: anObject [
 { #category : #rendering }
 TidbitViewToDoItem >> renderContentOn: html [
 
-	html text: self model mdPrimaryString.
 	html render: self itemComponent
 ]
 
