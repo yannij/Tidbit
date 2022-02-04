@@ -55,7 +55,7 @@ QTidbitViewTask >> navTo: aModel [
 QTidbitViewTask >> navToView: aModel [ 
 	| view |
 
-	view := (TidbitViewToDoItem on: aModel).
+	view := (QTidbitViewToDoItem on: aModel).
 	self mcwApplicationGet navToCustomView: view 
 ]
 

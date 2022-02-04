@@ -50,6 +50,7 @@ QTidbitViewTaskSideSheet >> itemsStyle: anObject [
 { #category : #rendering }
 QTidbitViewTaskSideSheet >> renderContentOn: html [
 
+	self renderFieldLabel: 'Tasks Filter' on: html.
 	self renderFilterRadioButtonsOn: html.
 	self renderItemsStyleRadioButtonsOn: html
 ]
@@ -68,7 +69,7 @@ QTidbitViewTaskSideSheet >> renderFieldLabel: aString on: html [
 QTidbitViewTaskSideSheet >> renderFilterRadioButtonsOn: html [
 	| formId group |
 
-	self renderFieldLabel: 'Filter Done/Not-done' on: html.
+	self renderFieldLabel: 'Done/Not-done' on: html.
 
 	formId := html nextId.
 	html form id: formId; with: [
