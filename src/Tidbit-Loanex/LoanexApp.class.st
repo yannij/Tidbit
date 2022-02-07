@@ -79,7 +79,7 @@ LoanexApp >> authenticateUsername: aUsername password: aPassword [
 	^ (self findUser: aUsername)
 		ifNil: [ nil ]
 		ifNotNil: [ :value |
-			value passwordHash = (MDSLogin passwordHashFor: (aPassword ifNil: [ '' ] ifNotNil: [ :arg | arg ]))
+			value passwordHash = (MDQLogin passwordHashFor: (aPassword ifNil: [ '' ] ifNotNil: [ :arg | arg ]))
 				ifTrue: [ value ]
 				ifFalse: [ nil ] ]
 ]
@@ -247,7 +247,7 @@ LoanexApp >> newUsername: aUsername password: aPassword [
 	userModel := LoanexUser new
 		username: aUsername;
 		fullName: aUsername;
-		passwordHash: (MDSLogin passwordHashFor: aPassword);
+		passwordHash: (MDQLogin passwordHashFor: aPassword);
 		yourself.
 
 	self repository save: userModel.

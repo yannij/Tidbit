@@ -25,7 +25,7 @@ TidbitExampleDatabase class >> buildUser: aUsername repository: aRepository [
 		fullName: aUsername capitalized, ' Test';
 		email: aUsername, '@foo.com';
 		website: 'http://foo.com/', aUsername;
-		passwordHash: (MDSLogin passwordHashFor: 'secret');
+		passwordHash: (MDQLogin passwordHashFor: 'secret');
 		yourself.
 
 	today := Date today.

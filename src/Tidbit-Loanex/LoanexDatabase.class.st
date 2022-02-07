@@ -56,7 +56,7 @@ LoanexDatabase class >> buildUser: aUsername repository: aRepository [
 		username: aUsername;
 		fullName: aUsername capitalized, ' Test';
 		email: aUsername, '@foo.com';
-		passwordHash: (MDSLogin passwordHashFor: 'secret');
+		passwordHash: (MDQLogin passwordHashFor: 'secret');
 		yourself.
 
 	aRepository save: userModel.
