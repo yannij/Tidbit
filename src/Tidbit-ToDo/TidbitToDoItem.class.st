@@ -353,8 +353,8 @@ TidbitToDoItem >> priorityDescription [
 		cssClass: 'mcw-textfield';
 		priority: 60;
 		beInteger;
-		mcwSliderStep: 1;
-		mcwComponentClass: MCWSliderComponent;
+		"mcwSliderStep: 1;
+		mcwComponentClass: MCWSliderComponent;"
 		yourself
 ]
 
@@ -380,7 +380,7 @@ TidbitToDoItem >> subtasksDescription [
 		cssClass: 'mcw-textfield';
 		priority: 210;
 		classes: (Array with: TidbitToDoSubtask);
-		mcwComponentClass: TidbitOneToManyComponent;
+		"mcwComponentClass: TidbitOneToManyComponent;"
 		yourself
 ]
 

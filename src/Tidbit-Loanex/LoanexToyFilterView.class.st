@@ -34,18 +34,12 @@ LoanexToyFilterView >> renderFilterRadioButtonsOn: html [
 	{#both->'Both'. #availableOnly->'Available Only'. #notAvailableOnly->'Not Available Only'}
 		do: [ :each | | optionId |
 			optionId := html nextId.
-			html div mdcFormField; style: 'width: 200px'; mdcAutoInit: 'MDCFormField'; with: [
-				html div mdcRadio; mdcAutoInit: 'MDCRadio'; with: [
-					html radioButton mdcRadio__nativeControl; id: optionId; group: group;
+					html radioButton id: optionId; group: group;
 						selected: self toyAvailable = each key;
 						callback: [ self toyAvailable: each key ];
 						onChange: (html jQuery ajax script: [ :s | s << (s jQuery id: formId) call: 'submit' ]);
 						yourself.
-					html div mdcRadio__background; with: [
-						html div mdcRadio__outerCircle.
-						html div mdcRadio__innerCircle ].
-					html div mdcRadio__ripple ].
-				html label for: optionId; with: each value ] ]
+				html label for: optionId; with: each value ]
 		separatedBy: [ html break ] ]
 ]
 

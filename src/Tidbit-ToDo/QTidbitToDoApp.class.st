@@ -141,17 +141,6 @@ QTidbitToDoApp >> buildLoginComponent [
 		yourself
 ]
 
-{ #category : #initialization }
-QTidbitToDoApp >> buildSideNavList [
-
-	^ MDSList new
-		itemsAdd: (MDSListItem itemText: 'Home' iconName: 'home' callback: [ self layout sideNavDismissIfModal. self viewUserGo ]);
-		itemsAdd: (MDSListItem itemText: 'Tasks' iconName: 'checklist' callback: [ self layout sideNavDismissIfModal. self viewTaskGo ]);
-		itemsAdd: (MDSListItem itemText: 'Users' iconName: 'perm_identity' callback: [ self layout sideNavDismissIfModal. self viewUsersGo ]);
-		itemsAdd: (MDSListItem itemText: 'Tools' iconName: 'build_circle' callback: [ self layout sideNavDismissIfModal. self viewToolsGo ]);
-		yourself
-]
-
 { #category : #actions }
 QTidbitToDoApp >> configureStyle [
 	| tmp |

@@ -35,7 +35,7 @@ LoanexRootObject >> descriptionContainer [
 	<magritteContainer>
 
 	^ self class descriptionContainerClass new
-		componentRenderer: MCWCssRenderer;
+		componentRenderer: MDQCssRenderer;
 		label: self class label;
 		propertyAt: #cardWidth ifAbsentPut: [ 600 ];
 		yourself

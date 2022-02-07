@@ -10,7 +10,7 @@ Class {
 { #category : #private }
 TidbitOneToManyComponent >> buildReport [
 
-	^ (MCWReport rows: self value description: self reference)
+	^ (MDQReport rows: self value description: self reference)
 		showHeader: true;
 		showFooter: true;
 		"addColumn: (MCWActionColumn new
