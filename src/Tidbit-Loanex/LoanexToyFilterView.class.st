@@ -52,23 +52,23 @@ LoanexToyFilterView >> renderFilterRadioButtonsOn: html [
 { #category : #accessing }
 LoanexToyFilterView >> toyAvailable [
 
-	^ self mcwApplicationGet filterValues toyAvailable
+	^ self mdqApplicationGet filterValues toyAvailable
 ]
 
 { #category : #accessing }
 LoanexToyFilterView >> toyAvailable: anObject [
 
-	self mcwApplicationGet filterValues toyAvailable: anObject
+	self mdqApplicationGet filterValues toyAvailable: anObject
 ]
 
 { #category : #accessing }
 LoanexToyFilterView >> toyOwner [
 
-	^ self mcwApplicationGet filterValues toyOwner
+	^ self mdqApplicationGet filterValues toyOwner
 ]
 
 { #category : #accessing }
 LoanexToyFilterView >> toyOwner: anObject [
 
-	self mcwApplicationGet filterValues toyOwner: anObject
+	self mdqApplicationGet filterValues toyOwner: anObject
 ]

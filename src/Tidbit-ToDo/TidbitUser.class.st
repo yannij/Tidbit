@@ -3,6 +3,7 @@ Class {
 	#superclass : #TidbitRootObject,
 	#instVars : [
 		'dateCreated',
+		'dateInactive',
 		'username',
 		'passwordHash',
 		'fullName',
@@ -52,6 +53,18 @@ TidbitUser >> dateCreated: anObject [
 	dateCreated := anObject
 ]
 
+{ #category : #accessing }
+TidbitUser >> dateInactive [
+
+	^ dateInactive
+]
+
+{ #category : #accessing }
+TidbitUser >> dateInactive: anObject [
+
+	dateInactive := anObject
+]
+
 { #category : #'accessing-magritte' }
 TidbitUser >> descriptionDateCreated [
 	<magritteDescription>
@@ -65,7 +78,23 @@ TidbitUser >> descriptionDateCreated [
 		label: 'Date Created';
 		cssClass: 'mcw-textfield';
 		priority: 17;
-		"beReadonly;"
+		beReadonly;
+		yourself
+]
+
+{ #category : #'accessing-magritte' }
+TidbitUser >> descriptionDateInactive [
+	<magritteDescription>
+
+	^ MADateAndTimeDescription new
+		"accessor: #dateInactive;"
+		accessor: (MAPluggableAccessor 
+			read: [ :item | item dateInactive ]
+			write: [ :item :value | value ifNotNil: [ :arg | item dateInactive: value ] ]);
+		default: DateAndTime now printString;
+		label: 'Date Inactive';
+		cssClass: 'mcw-textfield';
+		priority: 18;
 		yourself
 ]
 

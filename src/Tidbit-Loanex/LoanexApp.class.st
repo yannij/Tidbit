@@ -3,14 +3,16 @@ I am an example loan/borrow exchange app, built using Material Design Seaside, M
 "
 Class {
 	#name : #LoanexApp,
-	#superclass : #MDSResponsiveApp,
+	#superclass : #QuasarApplication,
 	#instVars : [
 		'loginComponent',
+		'pageComponent',
 		'currentUser',
 		'viewUser',
 		'viewUsers',
 		'viewTask',
-		'filterValues'
+		'filterValues',
+		'appSettings'
 	],
 	#category : #'Tidbit-Loanex-MaterialWeb'
 }
@@ -25,7 +27,7 @@ LoanexApp class >> applicationPath [
 LoanexApp class >> dockerDeployPostLoad [
 	<dockerDeployPostLoad>
 
-	WAComponent mcwPublicServerUrlInstallDockerConfig
+	WAComponent mdqPublicServerUrlInstallDockerConfig
 ]
 
 { #category : #'class initialization' }
@@ -38,16 +40,29 @@ LoanexApp class >> dockerDeployPreLoad [
 { #category : #'class initialization' }
 LoanexApp class >> initialize [
 	"Register path with Seaside.
+	self initialize.
 	WAAdmin unregister: self applicationPath.
 	"
 
-	^ self mcwRegisterDeployment: self applicationPath
+	^ self mdqRegisterDeployment: self applicationPath
 ]
 
 { #category : #testing }
 LoanexApp >> anonymousLoginAllowed [
 
 	^ false
+]
+
+{ #category : #accessing }
+LoanexApp >> appSettings [
+
+	^ appSettings
+]
+
+{ #category : #accessing }
+LoanexApp >> appSettings: anObject [
+
+	appSettings := anObject
 ]
 
 { #category : #accessing }
@@ -69,16 +84,32 @@ LoanexApp >> authenticateUsername: aUsername password: aPassword [
 				ifFalse: [ nil ] ]
 ]
 
-{ #category : #initialization }
-LoanexApp >> buildLayout [
+{ #category : #rendering }
+LoanexApp >> buildColorTheme [
 
-	^ MDSLayoutAutoResponsive on: self
+	^ MDQTheme fromString:
+'{
+	"name": "Loanex",
+	"isDark": false,
+	"colors": {
+		"primary": "#1EB980",
+		"secondary": "#26a69a",
+		"accent": "#9c27b0",
+
+		"positive": "#21ba45",
+		"negative": "#c10015",
+		"info": "#31ccec",
+		"warning": "#f2c037",
+
+		"background": "#fff"
+	}
+}'
 ]
 
 { #category : #initialization }
 LoanexApp >> buildLoginComponent [
 
-	^ MDSLogin new
+	^ MDQLogin new
 		loginTitle: self applicationTitle;
 		authenticationBlock: [ :username :password |
 			| userOrNil |
@@ -105,35 +136,8 @@ LoanexApp >> buildLoginComponent [
 		yourself
 ]
 
-{ #category : #initialization }
-LoanexApp >> buildPopupMenuSettings [
-	| list |
-
-	list := (MDSMenuList id: 'settingsPopup')
-		itemsAdd: (MDSListItem iconName: 'view_sidebar' itemText: 'Side Sheet' callback: [ self layout sideSheetHiddenToggle ]);
-		itemsAdd: (MDSListItem iconName: 'minimize' itemText: 'Collapse' callback: [ self layout topAppBarCollapsedToggle ]);
-		itemsAdd: (MDSListItem iconName: 'all_out' itemText: 'Dense' callback: [ self layout denseViewToggle ]);
-		"itemsAdd: (MDSListItem iconName: 'color_lens' itemText: 'Style' callback: [ self configureStyle ]);"
-		itemsAdd: (MDSListItem iconName: 'login' itemText: 'Login' callback: [ self login ]);
-		itemsAdd: (MDSListItem iconName: 'logout' itemText: 'Logout' callback: [ self logout ]);
-		yourself.
-
-	^ list
-]
-
-{ #category : #initialization }
-LoanexApp >> buildSideNavList [
-
-	^ MDSList new
-		itemsAdd: (MDSListItem itemText: 'Home' iconName: 'home' callback: [ self layout sideNavDismissIfModal. self viewUserGo ]);
-		itemsAdd: (MDSListItem itemText: 'Loans' iconName: 'thumb_up' callback: [ self layout sideNavDismissIfModal. self viewToyLoansGo ]);
-		itemsAdd: (MDSListItem itemText: 'Toys' iconName: 'widgets' callback: [ self layout sideNavDismissIfModal. self viewTaskGo ]);
-		itemsAdd: (MDSListItem itemText: 'Users' iconName: 'perm_identity' callback: [ self layout sideNavDismissIfModal. self viewUsersGo ]);
-		yourself
-]
-
 { #category : #accessing }
-LoanexApp >> colorTheme [
+LoanexApp >> colorThemeOLD [
 
 	^ {
 #'primary' -> '1EB980'.
@@ -184,6 +188,8 @@ LoanexApp >> initialize [
 
 	super initialize.
 
+	self colorTheme: self buildColorTheme.
+
 	self filterValues: LoanexFilterValues new.
 	self filterValues toyAvailable: #both.
 	self initializeLayout
@@ -192,14 +198,14 @@ LoanexApp >> initialize [
 { #category : #initialization }
 LoanexApp >> initializeLayout [
 
-	self materialVersionDefault.
-
 	self loginComponent: self buildLoginComponent.
 	self viewUsers: LoanexUserListView new.
 	self viewTask: (LoanexToyListView new filterView: LoanexToyFilterView new).
 
-	self layout: self buildLayout.
-	self setupLayout
+	"self layout: self buildLayout.
+	self setupLayout"
+	self appSettings: MDQApplicationSettings new.
+	"self settingsView: MDQApplicationSettingsView new."
 ]
 
 { #category : #accessing }
@@ -231,8 +237,7 @@ LoanexApp >> navTo: aModel  aspect: anAspect [
 					"addMessage: 'hello';"
 					yourself.
 
-	self layout bodyRegionContent: newView.
-	self layout sideSheetHide
+	self pageComponentSet: newView
 ]
 
 { #category : #'utility - login' }
@@ -251,6 +256,25 @@ LoanexApp >> newUsername: aUsername password: aPassword [
 
 ]
 
+{ #category : #accessing }
+LoanexApp >> pageComponent [
+
+	^ pageComponent
+]
+
+{ #category : #accessing }
+LoanexApp >> pageComponent: anObject [
+
+	pageComponent := anObject
+]
+
+{ #category : #rendering }
+LoanexApp >> pageComponentSet: anObject [
+
+	self quasarDataClear.
+	self pageComponent: anObject
+]
+
 { #category : #'utility - login' }
 LoanexApp >> registerUsername: aUsername password: aPassword [
 	"Answer a new user instance built from the userId/password,
@@ -265,19 +289,115 @@ LoanexApp >> registerUsername: aUsername password: aPassword [
 LoanexApp >> renderLayoutOn: html [
 
 	self renderSetColorTheme: self colorTheme on: html.
-	self renderSetTypographyFont: 'Roboto Condensed' on: html.
+	"self renderSetTypographyFont: self themeFontFamily on: html."
 
 	self isLoggedIn
-		ifTrue: [ html render: self layout ]
+		ifTrue: [ self renderLoanexOn: html ]
 		ifFalse: [
 			self loginComponent
 				ifNotNil: [ :value | html render: value  ]
 				ifNil: [
 					self anonymousLoginAllowed
-						ifTrue: [ html render: self layout ]
+						ifTrue: [ self renderLoanexOn: html ]
 						ifFalse: [
 							self loginComponent ifNil: [ self loginComponent: self buildLoginComponent ].
 							html render: self loginComponent ] ] ]
+]
+
+{ #category : #rendering }
+LoanexApp >> renderLayoutPageOn: html [
+
+	html qPageContainer with: [
+		html qPage with: [
+			"self renderSettingsFabOn: html."
+			self renderPageContentOn: html ] ]
+]
+
+{ #category : #rendering }
+LoanexApp >> renderLeftDrawerOn: html [
+
+	html qDrawer ref: 'leftDrawer'; showIfAbove; side: 'left';
+		"class: 'bg-secondary'; style: 'color: white';"
+		style: 'background: blue-2';
+		with: [
+			html qScrollArea class: 'fit'; with: [
+				"self renderNavBrandingOn: html."
+				self renderNavOn: html ] ]
+]
+
+{ #category : #rendering }
+LoanexApp >> renderLoanexOn: html [
+
+	html qApp with: [
+		html qLayout view: 'hHh lpR fFf'; with: [
+			html qHeader heightHint: 98; with: [
+				html qToolbar with: [
+					html qBtn dense; flat; round; icon: 'menu'; vOnClick: 'this.$refs.leftDrawer.toggle($event)'.
+					html qToolbarTitle with: [ html text: 'Loanex' ].
+					html qBtn dense; flat; round; icon: 'filter'; vOnClick: 'this.$refs.sideSheet.toggle($event)'. ] ].
+			self renderLeftDrawerOn: html.
+			self renderLayoutPageOn: html.
+			self renderSideSheetOn: html ] ]
+]
+
+{ #category : #rendering }
+LoanexApp >> renderNavOn: html [
+	| navList |
+
+	navList := OrderedCollection new
+		add: #('Home' 'home') -> [ self viewUserGo ];
+		add: #('Loans' 'thumb_up') -> [ self viewToyLoansGo ];
+		add: #('Toys' 'widgets') -> [ self viewTaskGo ];
+		add: #('Users' 'perm_identity') -> [ self viewUsersGo ];
+		yourself.
+
+	html qList with: [
+		navList do: [ :eachItem |
+			html qItem
+				qTag: 'a'; href: (html urlForAction: eachItem value);
+				with: [
+					html qItemSection avatar; with: [
+						html qIcon name: eachItem key second ].
+					html qItemSection with: eachItem key first ] ] ]
+]
+
+{ #category : #rendering }
+LoanexApp >> renderPageContentOn: html [
+
+	html div class: 'q-pa-md'; with: [
+		html render: self pageComponent ]
+]
+
+{ #category : #rendering }
+LoanexApp >> renderQuasarSetupOn: html [
+	| exports vueRefsDefine list |
+
+	exports := ',' join: (self quasarData, (self vueRefs keys)).
+
+	list := OrderedCollection new.
+	self vueRefs keysAndValuesDo: [ :key :value | list add: 'const ', key, ' = ref(', value asJson, ')' ].
+	vueRefsDefine := ';' join: list.
+
+	html document addLoadScript: (JSStream on:
+'const { ref } = Vue;
+const app = Vue.createApp({
+	setup () {', vueRefsDefine, ';
+		return {', exports, '}
+	}
+})
+app.use(Quasar)
+app.mount(''q-app'')')
+]
+
+{ #category : #rendering }
+LoanexApp >> renderSideSheetOn: html [
+
+	html qDrawer ref: 'sideSheet'; showIfAbove; side: 'right';
+		class: 'q-pa-md';
+		"class: 'bg-secondary';" style: 'background: #E0F2F1';
+		with: [
+			html qScrollArea class: 'fit'; with: [
+				html render: self viewTask filterView ] ]
 ]
 
 { #category : #'utility - repository' }
@@ -304,28 +424,22 @@ LoanexApp >> saveObject: anObject [
 	self repository save: anObject
 ]
 
-{ #category : #initialization }
-LoanexApp >> setupLayout [
+{ #category : #rendering }
+LoanexApp >> themeColors [
+	| result |
 
-	self setupTopAppBar.
-	self layout sideNav content: self buildSideNavList.
-	self layout sideSheetHide.
-	self layout bodyRegionContent: self viewUser.
+	result := OrderedDictionary new.
 
-	self layout initializeComplete
+	self appSettings mdcTheme themeItems keysAndValuesDo: [ :eachKey :eachValue |
+		result at: eachKey put: eachValue asHexString ].
+
+	^ result
 ]
 
-{ #category : #initialization }
-LoanexApp >> setupTopAppBar [
-	| settingsPopup |
+{ #category : #rendering }
+LoanexApp >> themeFontFamily [
 
-	settingsPopup := self buildPopupMenuSettings.
-
-	self layout topAppBar
-		title: self applicationTitle;
-		startSectionAdd: self buildNavigationIcon;
-		endSectionAdd: (MDSTopAppBarActionItem materialIcon: 'settings' onClickScript: settingsPopup openScript);
-		endSectionAdd: settingsPopup
+	^ self appSettings mdcTypography fontFamily
 ]
 
 { #category : #updating }
@@ -349,11 +463,11 @@ LoanexApp >> viewTask: anObject [
 { #category : #navigation }
 LoanexApp >> viewTaskGo [
 
-	self layout bodyRegionContent: self viewTask.
-	self layout sideSheetContent: self viewTask filterView.
+	self pageComponentSet: self viewTask.
+	"self layout sideSheetContent: self viewTask filterView.
 	self viewTask filterView
 		ifNil: [ self layout sideSheetHide ]
-		ifNotNil: [ :value | self layout sideSheetUnhide ]
+		ifNotNil: [ :value | self layout sideSheetUnhide ]"
 ]
 
 { #category : #navigation }
@@ -361,11 +475,11 @@ LoanexApp >> viewToyLoansGo [
 	| newView |
 
 	newView := LoanexToyLoanListView new filterView: LoanexToyLoadFilterView new; yourself.
-	self layout bodyRegionContent: newView.
-	self layout sideSheetContent: newView filterView.
+	self pageComponentSet: newView.
+	"self layout sideSheetContent: newView filterView.
 	newView filterView
 		ifNil: [ self layout sideSheetHide ]
-		ifNotNil: [ :value | self layout sideSheetUnhide ]
+		ifNotNil: [ :value | self layout sideSheetUnhide ]"
 ]
 
 { #category : #accessing }
@@ -381,8 +495,7 @@ LoanexApp >> viewUser: anObject [
 { #category : #navigation }
 LoanexApp >> viewUserGo [
 
-	self layout bodyRegionContent: self viewUser.
-	self layout sideSheetHide
+	self pageComponentSet: self viewUser
 ]
 
 { #category : #navigation }
@@ -413,6 +526,5 @@ LoanexApp >> viewUsers: anObject [
 { #category : #navigation }
 LoanexApp >> viewUsersGo [
 
-	self layout bodyRegionContent: self viewUsers.
-	self layout sideSheetHide
+	self pageComponentSet: self viewUsers
 ]

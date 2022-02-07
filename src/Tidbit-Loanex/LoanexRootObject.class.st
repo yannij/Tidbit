@@ -1,16 +1,13 @@
 Class {
 	#name : #LoanexRootObject,
-	#superclass : #MDMModel,
-	#classInstVars : [
-		'DescriptionContainerClass'
-	],
+	#superclass : #MDQModel,
 	#category : #'Tidbit-Loanex-Model'
 }
 
 { #category : #accessing }
 LoanexRootObject class >> descriptionContainerClass [
 
-	^ MCWPriorityContainer
+	^ MDQPriorityContainer
 ]
 
 { #category : #voyage }

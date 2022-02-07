@@ -14,7 +14,7 @@ LoanexUserListView >> modelClass [
 LoanexUserListView >> renderInstancesOn: html [
 	| app list |
 
-	app := self mcwApplicationGet.
+	app := self mdqApplicationGet.
 	list := app repository selectAll: self modelClass.
 
 	self renderTitle: 'Users' on: html.

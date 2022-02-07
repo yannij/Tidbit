@@ -4,8 +4,6 @@ Class {
 	#instVars : [
 		'loginComponent',
 		'pageComponent',
-		'quasarData',
-		'vueRefs',
 		'currentUser',
 		'settingsView',
 		'viewMap',
@@ -28,7 +26,7 @@ QTidbitToDoApp class >> applicationPath [
 QTidbitToDoApp class >> dockerDeployPostLoad [
 	<dockerDeployPostLoad>
 
-	WAComponent mcwPublicServerUrlInstallDockerConfig
+	WAComponent mdqPublicServerUrlInstallDockerConfig
 ]
 
 { #category : #'class initialization' }
@@ -45,7 +43,7 @@ QTidbitToDoApp class >> initialize [
 	WAAdmin unregister: self applicationPath.
 	"
 
-	^ self mdsRegisterDeployment: self applicationPath
+	^ self mdqRegisterDeployment: self applicationPath
 ]
 
 { #category : #testing }
@@ -88,7 +86,7 @@ QTidbitToDoApp >> authenticateUsername: aUsername password: aPassword [
 { #category : #initialization }
 QTidbitToDoApp >> buildApplicationSettings [
 
-	^ MDMApplicationSettings new
+	^ MDQApplicationSettings new
 ]
 
 { #category : #rendering }
@@ -195,8 +193,6 @@ QTidbitToDoApp >> initialize [
 
 	super initialize.
 
-	self vueRefsClear.
-	self quasarDataClear.
 	self colorTheme: self buildColorTheme.
 
 	self initializeLayout.
@@ -214,7 +210,7 @@ QTidbitToDoApp >> initializeLayout [
 	self viewTaskFilter: QTidbitViewTaskSideSheet new.
 
 	self appSettings: self buildApplicationSettings.
-	self settingsView: MDMApplicationSettingsView new.
+	self settingsView: MDQApplicationSettingsView new.
 ]
 
 { #category : #accessing }
@@ -290,36 +286,6 @@ QTidbitToDoApp >> pageComponentSet: anObject [
 
 	self quasarDataClear.
 	self pageComponent: anObject
-]
-
-{ #category : #accessing }
-QTidbitToDoApp >> quasarData [
-
-	^ quasarData
-]
-
-{ #category : #accessing }
-QTidbitToDoApp >> quasarData: anObject [
-
-	quasarData := anObject
-]
-
-{ #category : #accessing }
-QTidbitToDoApp >> quasarDataAdd: anObject [
-
-	self quasarData addIfNotPresent: anObject
-]
-
-{ #category : #accessing }
-QTidbitToDoApp >> quasarDataClear [
-
-	self quasarData: OrderedCollection new
-]
-
-{ #category : #accessing }
-QTidbitToDoApp >> quasarDataRemove: anObject [
-
-	self quasarData remove: anObject ifAbsent: [ nil ]
 ]
 
 { #category : #'utility - login' }
@@ -633,34 +599,4 @@ QTidbitToDoApp >> viewUsers: anObject [
 QTidbitToDoApp >> viewUsersGo [
 
 	self pageComponentSet: self viewUsers
-]
-
-{ #category : #accessing }
-QTidbitToDoApp >> vueRefs [
-
-	^ vueRefs
-]
-
-{ #category : #accessing }
-QTidbitToDoApp >> vueRefs: anObject [
-
-	vueRefs := anObject
-]
-
-{ #category : #accessing }
-QTidbitToDoApp >> vueRefsAdd: anObject [
-
-	self vueRefs at: anObject key put: anObject value
-]
-
-{ #category : #accessing }
-QTidbitToDoApp >> vueRefsClear [
-
-	self vueRefs: Dictionary new
-]
-
-{ #category : #accessing }
-QTidbitToDoApp >> vueRefsRemove: anObject [
-
-	self vueRefs remove: anObject ifAbsent: [ nil ]
 ]

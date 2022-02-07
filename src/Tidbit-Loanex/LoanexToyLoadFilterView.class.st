@@ -24,11 +24,11 @@ LoanexToyLoadFilterView >> renderFilterBorrowerOn: html [
 { #category : #accessing }
 LoanexToyLoadFilterView >> toyLoanBorrower [
 
-	^ self mcwApplicationGet filterValues toyLoanBorrower
+	^ self mdqApplicationGet filterValues toyLoanBorrower
 ]
 
 { #category : #accessing }
 LoanexToyLoadFilterView >> toyLoanBorrower: anObject [
 
-	self mcwApplicationGet filterValues toyLoanBorrower: anObject
+	self mdqApplicationGet filterValues toyLoanBorrower: anObject
 ]

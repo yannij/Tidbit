@@ -14,7 +14,7 @@ LoanexToyListView >> modelClass [
 LoanexToyListView >> renderInstancesOn: html [
 	| app list ownerName |
 
-	app := self mcwApplicationGet.
+	app := self mdqApplicationGet.
 	list := app repository selectAll: self modelClass.
 
 	ownerName := app filterValues toyOwner.

@@ -15,7 +15,7 @@ QTidbitViewUsers >> buildReport [
 		refNameRows: self quasarDataRowName;
 		showHeader: true;
 		showFooter: true;
-		addColumn: (MCWActionColumn new
+		addColumn: (MDQActionColumn new
 			commandBlock: (MessageSend receiver: self selector: #navTo:);
 			yourself);
 		yourself
@@ -24,7 +24,7 @@ QTidbitViewUsers >> buildReport [
 { #category : #rendering }
 QTidbitViewUsers >> navTo: aModel [
 
-	self mcwApplicationGet navTo: aModel
+	self mdqApplicationGet navTo: aModel
 ]
 
 { #category : #accessing }
@@ -56,7 +56,7 @@ QTidbitViewUsers >> renderTableOn: html [
 
 	html span class: 'text-subtitle1'; with: 'Users'.
 
-	self mcwApplicationGet
+	self mdqApplicationGet
 		quasarDataAdd: self quasarDataColumnName;
 		quasarDataAdd: self quasarDataRowName.
 	self report ifNil: [ self report: self buildReport ].
@@ -76,5 +76,5 @@ QTidbitViewUsers >> report: anObject [
 { #category : #rendering }
 QTidbitViewUsers >> users [
 
-	^ self mcwApplicationGet repository selectAll: TidbitUser
+	^ self mdqApplicationGet repository selectAll: TidbitUser
 ]

@@ -14,7 +14,7 @@ LoanexToyLoanListView >> modelClass [
 LoanexToyLoanListView >> renderInstancesOn: html [
 	| app list borrowerName |
 
-	app := self mcwApplicationGet.
+	app := self mdqApplicationGet.
 	list := app repository selectAll: self modelClass.
 
 	borrowerName := app filterValues toyLoanBorrower.

@@ -1,6 +1,6 @@
 Class {
 	#name : #LoanexFilterView,
-	#superclass : #MDSComponent,
+	#superclass : #QuasarComponent,
 	#category : #'Tidbit-Loanex-MaterialWeb'
 }
 

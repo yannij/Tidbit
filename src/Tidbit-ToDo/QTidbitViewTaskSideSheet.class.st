@@ -24,7 +24,7 @@ QTidbitViewTaskSideSheet >> filterDone: anObject [
 QTidbitViewTaskSideSheet >> filterDoneSet: anObject [
 
 	self filterDone: anObject.
-	self mcwApplicationGet viewTask report: nil
+	self mdqApplicationGet viewTask report: nil
 ]
 
 { #category : #initialization }

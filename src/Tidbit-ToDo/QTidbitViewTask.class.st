@@ -15,7 +15,7 @@ QTidbitViewTask >> buildReport [
 		refNameRows: self quasarDataRowName;
 		showHeader: true;
 		showFooter: true;
-		addColumn: (MCWActionColumn new
+		addColumn: (MDQActionColumn new
 			commandBlock: (MessageSend receiver: self selector: #navToView:);
 			yourself);
 		yourself
@@ -42,13 +42,13 @@ QTidbitViewTask >> dataRows [
 { #category : #accessing }
 QTidbitViewTask >> denseView [
 
-	^ self mcwApplicationGet denseView
+	^ self mdqApplicationGet denseView
 ]
 
 { #category : #rendering }
 QTidbitViewTask >> navTo: aModel [
 
-	self mcwApplicationGet navTo: aModel
+	self mdqApplicationGet navTo: aModel
 ]
 
 { #category : #rendering }
@@ -56,7 +56,7 @@ QTidbitViewTask >> navToView: aModel [
 	| view |
 
 	view := (QTidbitViewToDoItem on: aModel).
-	self mcwApplicationGet navToCustomView: view 
+	self mdqApplicationGet navToCustomView: view 
 ]
 
 { #category : #accessing }
@@ -160,7 +160,7 @@ QTidbitViewTask >> renderChips: aUser on: html [
 QTidbitViewTask >> renderContentOn: html [
 	| user heading |
 
-	user := self mcwApplicationGet currentUser.	
+	user := self mdqApplicationGet currentUser.	
 	user ifNil: [ ^ self ].
 
 	heading := user mdPrimaryString.
@@ -238,7 +238,7 @@ QTidbitViewTask >> renderListTwoLineItems: anItemList on: html [
 QTidbitViewTask >> renderStyledItemsFor: user on: html [
 	| itemsStyle |
 
-	self mcwApplicationGet
+	self mdqApplicationGet
 		quasarDataRemove: self quasarDataColumnName;
 		quasarDataRemove: self quasarDataRowName.
 
@@ -262,7 +262,7 @@ QTidbitViewTask >> renderStyledItemsFor: user on: html [
 { #category : #'rendering - styles' }
 QTidbitViewTask >> renderTable: aUser on: html [
 
-	self mcwApplicationGet
+	self mdqApplicationGet
 		quasarDataAdd: self quasarDataColumnName;
 		quasarDataAdd: self quasarDataRowName.
 	self report ifNil: [ self report: self buildReport ].
@@ -282,14 +282,14 @@ QTidbitViewTask >> report: anObject [
 { #category : #accessing }
 QTidbitViewTask >> sideSheet [
 
-	^ self mcwApplicationGet viewTaskFilter
+	^ self mdqApplicationGet viewTaskFilter
 ]
 
 { #category : #accessing }
 QTidbitViewTask >> tasksFiltered [
 	| user tasksFilterDone tasksAll |
 
-	user := self mcwApplicationGet currentUser.
+	user := self mdqApplicationGet currentUser.
 	user ifNil: [ ^ #() ].
 
 	tasksAll := user toDoItems.
