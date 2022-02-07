@@ -1,6 +1,6 @@
 Class {
 	#name : #TidbitViewTools,
-	#superclass : #MDSComponent,
+	#superclass : #QuasarComponent,
 	#category : #'Tidbit-ToDo-MaterialWeb'
 }
 

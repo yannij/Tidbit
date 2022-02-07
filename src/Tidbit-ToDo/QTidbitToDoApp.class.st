@@ -195,8 +195,7 @@ QTidbitToDoApp >> initialize [
 
 	self colorTheme: self buildColorTheme.
 
-	self initializeLayout.
-	self pageComponent: TidbitViewUsers new
+	self initializeLayout
 ]
 
 { #category : #initialization }

@@ -11,7 +11,7 @@ BaselineOfTidbit >> baseline: spec [
 	spec for: #common do: [
 
 		"self neoJSON: spec."
-		self materialComponentsWeb: spec.
+		self quasar: spec.
 		self voyage: spec.
 
 		spec
@@ -24,13 +24,12 @@ BaselineOfTidbit >> baseline: spec [
 ]
 
 { #category : #dependencies }
-BaselineOfTidbit >> materialComponentsWeb: spec [
+BaselineOfTidbit >> quasar: spec [
 
 	spec
 		baseline: 'MaterialComponentsWeb'
 		with: [ spec repository: 'github://yannij/MaterialComponentsWeb:master/src';
-			loads: #('Quasar-Demo' 'Material-Web-Responsive' 'Material-Web-Magritte') ].
-
+			loads: #('Quasar-Demo') ]
 ]
 
 { #category : #dependencies }

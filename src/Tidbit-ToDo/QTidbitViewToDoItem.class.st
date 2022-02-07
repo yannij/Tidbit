@@ -1,6 +1,6 @@
 Class {
 	#name : #QTidbitViewToDoItem,
-	#superclass : #MDSComponent,
+	#superclass : #QuasarComponent,
 	#instVars : [
 		'model',
 		'itemComponent',

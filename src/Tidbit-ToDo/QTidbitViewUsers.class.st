@@ -1,6 +1,6 @@
 Class {
 	#name : #QTidbitViewUsers,
-	#superclass : #MDSComponent,
+	#superclass : #QuasarComponent,
 	#instVars : [
 		'report'
 	],

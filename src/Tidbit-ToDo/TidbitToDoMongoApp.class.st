@@ -13,7 +13,7 @@ pharo Pharo.image eval ""TidbitExampleDatabase repositorySetUpMongo1Host: 'mongo
 "
 Class {
 	#name : #TidbitToDoMongoApp,
-	#superclass : #TidbitToDoApp,
+	#superclass : #QTidbitToDoApp,
 	#category : #'Tidbit-ToDo-MaterialWeb'
 }
 

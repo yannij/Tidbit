@@ -1,6 +1,6 @@
 Class {
 	#name : #TidbitRootObject,
-	#superclass : #MDMModel,
+	#superclass : #MDQModel,
 	#classInstVars : [
 		'DescriptionContainerClass'
 	],

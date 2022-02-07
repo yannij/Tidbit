@@ -1,6 +1,6 @@
 Class {
 	#name : #QTidbitViewTaskSideSheet,
-	#superclass : #MDSComponent,
+	#superclass : #QuasarComponent,
 	#instVars : [
 		'user',
 		'filterDone',

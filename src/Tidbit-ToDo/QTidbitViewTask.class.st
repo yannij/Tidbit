@@ -1,6 +1,6 @@
 Class {
 	#name : #QTidbitViewTask,
-	#superclass : #MDSComponent,
+	#superclass : #QuasarComponent,
 	#instVars : [
 		'report'
 	],
