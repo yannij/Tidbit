@@ -259,7 +259,7 @@ QTidbitToDoApp >> newUsername: aUsername password: aPassword [
 	userModel := TidbitUser new
 		username: aUsername;
 		fullName: aUsername;
-		passwordHash: (MDSLogin passwordHashFor: aPassword);
+		passwordHash: (MDQLogin passwordHashFor: aPassword);
 		yourself.
 
 	self repository save: userModel.
