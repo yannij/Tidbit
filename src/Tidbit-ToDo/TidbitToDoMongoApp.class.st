@@ -33,10 +33,11 @@ TidbitToDoMongoApp class >> dockerDeployPostLoad [
 { #category : #'class initialization' }
 TidbitToDoMongoApp class >> initialize [
 	"Register path with Seaside.
+	self initialize.
 	WAAdmin unregister: self applicationPath.
 	"
 
-	^ self mcwRegisterDeployment: self applicationPath
+	^ self mdqRegisterDeployment: self applicationPath
 ]
 
 { #category : #accessing }
