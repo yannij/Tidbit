@@ -1,3 +1,5 @@
+# NOTE: Code moved to Seaside-Quasar, where work will continue
+
 # Tidbit
 Web framework using Seaside, Material Components Web, Voyage/Magritte and MongoDB
 
